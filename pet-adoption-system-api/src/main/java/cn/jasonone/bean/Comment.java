@@ -5,7 +5,7 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * 
+ * 评论表
  * @TableName comment
  */
 @Data

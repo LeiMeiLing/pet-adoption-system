@@ -3,6 +3,7 @@ import useLogin from "../stores/LoginStore"
 import NProgress from 'nprogress'
 
 
+
 const routes = [
     {
         path: '/login',
@@ -26,6 +27,11 @@ const routes = [
         path: '/',
         name: 'main',
         component: () => import('../views/user/Index.vue'),
+        children:[{
+            path:'/stores',
+            name:'stores',
+            component:()=>import('../views/user/stores/Index.vue')
+        }]
     }
 ]
 
