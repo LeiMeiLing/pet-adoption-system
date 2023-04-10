@@ -24,8 +24,8 @@
       </lay-row>
       <lay-row>
         <lay-col md="4" md-offset="19" lg="4" lg-offset="19" xm="8" xm-offset="16" sm="8" sm-offset="16">
-          <a href="" >
-            忘记密码
+          <a href="http://127.0.0.1/#/manager" >
+            管理员登录
           </a>
         </lay-col>
       </lay-row>

@@ -16,6 +16,8 @@
         <param-value>
             /user/login
             /user/register
+            /manager/login
+            /manager/register
         </param-value>
     </context-param>
 </web-app>
