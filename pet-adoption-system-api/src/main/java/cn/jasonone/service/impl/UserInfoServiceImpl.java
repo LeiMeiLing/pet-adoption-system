@@ -6,7 +6,14 @@ import cn.jasonone.mapper.UserInfoMapper;
 import cn.jasonone.service.UserInfoService;
 import cn.hutool.core.util.RandomUtil;
 import lombok.Setter;
+import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
 public class UserInfoServiceImpl implements UserInfoService {
     @Setter
@@ -38,5 +45,22 @@ public class UserInfoServiceImpl implements UserInfoService {
             }
         }
         return null;
+    }
+    @Override
+    public List<UserInfo> userFindAll() {
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = null;
+        try {
+            inputStream = Resources.getResourceAsStream(resource);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        UserInfoMapper mapper = sqlSession.getMapper(UserInfoMapper.class);
+        List<UserInfo> userInfos = mapper.userFindAll();
+        return userInfos;
     }
 }

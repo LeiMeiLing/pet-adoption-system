@@ -15,8 +15,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.StringJoiner;
 
 @WebServlet("/user/*")
 public class UserInfoServlet extends HttpServlet {
@@ -119,5 +123,25 @@ public class UserInfoServlet extends HttpServlet {
         result.put("code", 200);
         result.put("msg", "注册成功");
         resp.getWriter().write(gson.toJson(result));
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json;charset=utf-8");
+        List<UserInfo> list = userInfoService.userFindAll();
+        StringJoiner sj = new StringJoiner(",", "[", "]");
+        String template = "{\"id\":%d,\"username\":\"%s\",\"email\":\"%s\",\"phone\":\"%s\",\"createTime\":\"%s\",\"updateTime\":\"%s\" }";
+        DateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        for (UserInfo userInfo : list) {
+            Integer id = userInfo.getId();
+            String username = userInfo.getUsername();
+            String email = userInfo.getEmail();
+            String phone = userInfo.getPhone();
+            String createTime = dateFormat.format(userInfo.getCreateTime());
+            String updateTime = dateFormat.format(userInfo.getUpdateTime());
+            String json = String.format(template, id, username, email,phone, createTime, updateTime);
+            sj.add(json);
+        }
+        resp.getWriter().write(sj.toString());
     }
 }
