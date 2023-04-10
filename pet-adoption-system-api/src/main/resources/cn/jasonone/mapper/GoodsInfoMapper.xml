@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jasonone.mapper.GoodsInfoMapper">
+
+    <resultMap id="BaseResultMap" type="cn.jasonone.bean.GoodsInfo">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="goodsType" column="goods_type" jdbcType="VARCHAR"/>
+            <result property="goodsname" column="goodsname" jdbcType="VARCHAR"/>
+            <result property="goodsPicture" column="goods_picture" jdbcType="VARCHAR"/>
+            <result property="goodsPrice" column="goods_price" jdbcType="DECIMAL"/>
+            <result property="goodsDesc" column="goods_desc" jdbcType="VARCHAR"/>
+            <result property="goodsStatus" column="goods_status" jdbcType="INTEGER"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,goods_type,goodsname,
+        goods_picture,goods_price,goods_desc,
+        goods_status,create_time,update_time
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from goods_info
+        where  id = #{id,jdbcType=INTEGER} 
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from goods_info
+        where  id = #{id,jdbcType=INTEGER} 
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.jasonone.bean.GoodsInfo" useGeneratedKeys="true">
+        insert into goods_info
+        ( id,goods_type,goodsname
+        ,goods_picture,goods_price,goods_desc
+        ,goods_status,create_time,update_time
+        )
+        values (#{id,jdbcType=INTEGER},#{goodsType,jdbcType=VARCHAR},#{goodsname,jdbcType=VARCHAR}
+        ,#{goodsPicture,jdbcType=VARCHAR},#{goodsPrice,jdbcType=DECIMAL},#{goodsDesc,jdbcType=VARCHAR}
+        ,#{goodsStatus,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cn.jasonone.bean.GoodsInfo" useGeneratedKeys="true">
+        insert into goods_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null">id,</if>
+                <if test="goodsType != null">goods_type,</if>
+                <if test="goodsname != null">goodsname,</if>
+                <if test="goodsPicture != null">goods_picture,</if>
+                <if test="goodsPrice != null">goods_price,</if>
+                <if test="goodsDesc != null">goods_desc,</if>
+                <if test="goodsStatus != null">goods_status,</if>
+                <if test="createTime != null">create_time,</if>
+                <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null">#{id,jdbcType=INTEGER},</if>
+                <if test="goodsType != null">#{goodsType,jdbcType=VARCHAR},</if>
+                <if test="goodsname != null">#{goodsname,jdbcType=VARCHAR},</if>
+                <if test="goodsPicture != null">#{goodsPicture,jdbcType=VARCHAR},</if>
+                <if test="goodsPrice != null">#{goodsPrice,jdbcType=DECIMAL},</if>
+                <if test="goodsDesc != null">#{goodsDesc,jdbcType=VARCHAR},</if>
+                <if test="goodsStatus != null">#{goodsStatus,jdbcType=INTEGER},</if>
+                <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
+                <if test="updateTime != null">#{updateTime,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.jasonone.bean.GoodsInfo">
+        update goods_info
+        <set>
+                <if test="goodsType != null">
+                    goods_type = #{goodsType,jdbcType=VARCHAR},
+                </if>
+                <if test="goodsname != null">
+                    goodsname = #{goodsname,jdbcType=VARCHAR},
+                </if>
+                <if test="goodsPicture != null">
+                    goods_picture = #{goodsPicture,jdbcType=VARCHAR},
+                </if>
+                <if test="goodsPrice != null">
+                    goods_price = #{goodsPrice,jdbcType=DECIMAL},
+                </if>
+                <if test="goodsDesc != null">
+                    goods_desc = #{goodsDesc,jdbcType=VARCHAR},
+                </if>
+                <if test="goodsStatus != null">
+                    goods_status = #{goodsStatus,jdbcType=INTEGER},
+                </if>
+                <if test="createTime != null">
+                    create_time = #{createTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="updateTime != null">
+                    update_time = #{updateTime,jdbcType=TIMESTAMP},
+                </if>
+        </set>
+        where   id = #{id,jdbcType=INTEGER} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.jasonone.bean.GoodsInfo">
+        update goods_info
+        set 
+            goods_type =  #{goodsType,jdbcType=VARCHAR},
+            goodsname =  #{goodsname,jdbcType=VARCHAR},
+            goods_picture =  #{goodsPicture,jdbcType=VARCHAR},
+            goods_price =  #{goodsPrice,jdbcType=DECIMAL},
+            goods_desc =  #{goodsDesc,jdbcType=VARCHAR},
+            goods_status =  #{goodsStatus,jdbcType=INTEGER},
+            create_time =  #{createTime,jdbcType=TIMESTAMP},
+            update_time =  #{updateTime,jdbcType=TIMESTAMP}
+        where   id = #{id,jdbcType=INTEGER} 
+    </update>
+</mapper>
