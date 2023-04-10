@@ -32,10 +32,22 @@
         select <include refid="Base_Column_List"></include>
         from user_info where username = #{username}
     </select>
+
+    <!-- 管理员界面把所有用户信息查找出来-->
+    <select id="userFindAll" resultType="cn.jasonone.bean.UserInfo">
+        select * from user_info
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from user_info
         where  id = #{id,jdbcType=INTEGER} 
     </delete>
+
+<!--管理员界面进行用户删除-->
+    <delete id="deleteUser" parameterType="cn.jasonone.bean.UserInfo">
+        delete from user_info where id = #{id}
+    </delete>
+
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.jasonone.bean.UserInfo" useGeneratedKeys="true">
         insert into user_info
         ( username,password
@@ -106,5 +118,15 @@
             create_time =  #{createTime,jdbcType=TIMESTAMP},
             update_time =  #{updateTime,jdbcType=TIMESTAMP}
         where   id = #{id,jdbcType=INTEGER} 
+    </update>
+    <!--根据用户id找到需要修改的用户信息-->
+    <update id="updateUser" parameterType="cn.jasonone.bean.UserInfo">
+        update user_info
+        set username=#{username},
+            email=#{email},
+            phone=#{phone},
+            createTime=#{createTime},
+            updateTime=#{updateTime}
+        where id = #{id}
     </update>
 </mapper>

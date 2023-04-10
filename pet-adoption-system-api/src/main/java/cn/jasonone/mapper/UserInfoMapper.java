@@ -2,6 +2,8 @@ package cn.jasonone.mapper;
 
 import cn.jasonone.bean.UserInfo;
 
+import java.util.List;
+
 /**
 * @author DELL
 * @description 针对表【user_info(用户信息表)】的数据库操作Mapper
@@ -22,5 +24,19 @@ public interface UserInfoMapper {
 
     int updateByPrimaryKey(UserInfo record);
     UserInfo findByUsername(String username);
+
+    /*
+    查找所有用户信息
+     */
+    List<UserInfo> userFindAll();
+    /*
+    根据用户id删除用户信息
+    */
+    void deleteUser(Integer id);
+    /*
+    根据用户id修改用户信息
+     */
+    void updateUser(UserInfo user);
+
 
 }
