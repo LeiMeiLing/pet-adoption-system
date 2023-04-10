@@ -12,6 +12,14 @@ const routes = [
             // 标记该路由不需要登录
             noLogin: true
         }
+    },{
+        path: '/manager',
+        name: 'manager',
+        component: () => import('../views/manager/login/Index.vue'),
+        meta: {
+            // 标记该路由不需要登录
+            noLogin: true
+        }
     },
     {
         path: '/register',
