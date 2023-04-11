@@ -4,3 +4,5 @@
 /pet-adoption-system-api/target/
 /.idea/
 /src/
+/**/*.log
+/**/*.lock
