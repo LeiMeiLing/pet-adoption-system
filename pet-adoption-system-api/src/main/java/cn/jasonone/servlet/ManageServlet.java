@@ -23,62 +23,36 @@ public class ManageServlet extends HttpServlet {
     private ManagerService managerService = new ManagerServiceImpl();
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
-        managerService.setSqlSession(sqlSession);
-        try {
             String requestURI = req.getRequestURI();
             // 去除contextPath
             requestURI = requestURI.substring(req.getContextPath().length());
             switch (requestURI) {
                 case "/manager/register":
-                    register((BodyHttpServletRequestWrapper) req, resp);
+                    register(req, resp);
                     break;
                 default:
                     super.doPut(req, resp);
             }
-            // 如果没有异常，提交事务
-            sqlSession.commit();
-        } catch (IOException e) {
-            // 如果有异常，回滚事务
-            sqlSession.rollback();
-            throw new RuntimeException(e);
-        }
+
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
-        managerService.setSqlSession(sqlSession);
-        try {
             String requestURI = req.getRequestURI();
             // 去除contextPath
             requestURI = requestURI.substring(req.getContextPath().length());
             switch (requestURI) {
                 case "/manager/login":
-                    login((BodyHttpServletRequestWrapper) req, resp);
+                    login(req, resp);
                     break;
                 default:
                     super.doPost(req, resp);
             }
-            // 如果没有异常，提交事务
-            sqlSession.commit();
-        } catch (IOException e) {
-            // 如果有异常，回滚事务
-            sqlSession.rollback();
-            throw new RuntimeException(e);
-        }
+
     }
 
-    private void login(BodyHttpServletRequestWrapper req, HttpServletResponse resp) throws IOException  {
-//        Gson gson = new Gson();
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd HH:mm:ss")
-                // 是否显示值为null的字段
-                .serializeNulls()
-                // 是否格式化json
-                .setPrettyPrinting()
-                .create();
-        String body = req.getBody();
-        ManagerInfo managerInfo = gson.fromJson(body, ManagerInfo.class);
+    private void login(HttpServletRequest req, HttpServletResponse resp) throws IOException  {
+        Gson gson = new Gson();
+        ManagerInfo managerInfo = gson.fromJson(req.getReader(), ManagerInfo.class);
         System.out.println(managerInfo);
         managerInfo=managerService.login(managerInfo);
         Map<String,Object> result = new HashMap<>();
@@ -107,12 +81,11 @@ public class ManageServlet extends HttpServlet {
         resp.getWriter().write(gson.toJson(result));
 
     }
-    private void register(BodyHttpServletRequestWrapper req, HttpServletResponse resp) throws IOException {
+    private void register(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 //        String username = req.getParameter("username");
 //        String password = req.getParameter("password");
         Gson gson = new Gson();
-        String body = req.getBody();
-        ManagerInfo managerInfo= gson.fromJson(body, ManagerInfo.class);
+        ManagerInfo managerInfo= gson.fromJson(req.getReader(), ManagerInfo.class);
 
         managerService.register(managerInfo);
         Map<String,Object> result = new HashMap<String, Object>();
