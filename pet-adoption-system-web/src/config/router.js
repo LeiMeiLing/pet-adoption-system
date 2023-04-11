@@ -39,7 +39,18 @@ const routes = [
             path:'/stores',
             name:'stores',
             component:()=>import('../views/user/stores/Index.vue')
-        }]
+        },
+        {
+        path: '/petKnowledge',
+        name:'petKnowledge',
+        component:()=>import('../views/user/petKnowledge/Index.vue')
+        },
+        {
+        path:'/essay',
+        name:'essay',
+        component:()=>import('../views/user/petKnowledge/Essay.vue')
+        }
+        ]
     }
 ]
 

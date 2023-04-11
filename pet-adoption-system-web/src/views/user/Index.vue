@@ -3,7 +3,7 @@
     <lay-header>
       <lay-menu v-model:selected-key="selectedKey" v-model:open-keys="openKeys">
       <lay-menu-item id="1" to="main">主页</lay-menu-item>
-      <lay-menu-item id="2" to="">宠物知识</lay-menu-item>
+      <lay-menu-item id="2" to="/petKnowledge">宠物知识</lay-menu-item>
       <lay-menu-item id="3" to="">领养中心</lay-menu-item>
       <lay-menu-item id="4" to="stores">宠物用品商城</lay-menu-item>
         <lay-menu-item id="5" to="">个人中心</lay-menu-item>
