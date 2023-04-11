@@ -14,6 +14,7 @@ const routes = [
             noLogin: true
         }
     },{
+    //管理员登录界面
         path: '/manager',
         name: 'manager',
         component: () => import('../views/manager/login/Index.vue'),
@@ -31,24 +32,34 @@ const routes = [
             noLogin: true
         }
     },
+
     {
         path: '/',
         name: 'main',
         component: () => import('../views/user/Index.vue'),
+        redirect:'/home',
         children:[{
             path:'/stores',
             name:'stores',
             component:()=>import('../views/user/stores/Index.vue')
-        },]
-    },{
-        path: '/home',
-        name: 'home',
-        component: () => import('../views/manager/layout/Index.vue'),
-        children:[{
-            path:'/userDisplay',
-            name:'userDisplay',
-            component:()=>import('../views/manager/userDisplay/UserDisplay.vue')
-        },]
+        },{
+            //首页
+            path:'/home',
+            name:'home',
+            component:()=>import('../views/user/main/Index.vue')
+        },{
+            //领养中心
+            path:'/adoption',
+            name:'adoption',
+            component:()=>import('../views/user/adoption/Index.vue')
+        },
+            {
+                //宠物领养详细信息界面
+                path: '/Info',
+                name: 'Info',
+                component: () => import('../views/user/adoption/Info/Index.vue')
+            }
+]
     }
 ]
 
