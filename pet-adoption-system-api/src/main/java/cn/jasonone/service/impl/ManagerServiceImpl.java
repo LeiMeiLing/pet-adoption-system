@@ -3,6 +3,7 @@ package cn.jasonone.service.impl;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.crypto.digest.MD5;
 import cn.jasonone.bean.ManagerInfo;
+import cn.jasonone.bean.UserInfo;
 import cn.jasonone.mapper.GoodsInfoMapper;
 import cn.jasonone.mapper.ManagerInfoMapper;
 import cn.jasonone.service.ManagerService;
@@ -43,4 +44,5 @@ public class ManagerServiceImpl implements ManagerService {
         }
         return null;
     }
+
 }

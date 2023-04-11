@@ -3,6 +3,8 @@ package cn.jasonone.mapper;
 import cn.jasonone.bean.ManagerInfo;
 import cn.jasonone.bean.UserInfo;
 
+import java.util.List;
+
 /**
 * @author DELL
 * @description 针对表【manager_info(管理员信息表)】的数据库操作Mapper
@@ -19,8 +21,7 @@ public interface ManagerInfoMapper {
 
     ManagerInfo selectByPrimaryKey(Long id);
     ManagerInfo findByUsername(String username);
-
-    int updateByPrimaryKeySelective(ManagerInfo record);
+    int updateByPrimaryKeySelective(UserInfo userInfo);
 
     int updateByPrimaryKey(ManagerInfo record);
 

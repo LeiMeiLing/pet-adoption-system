@@ -37,6 +37,13 @@
     <select id="userFindAll" resultType="cn.jasonone.bean.UserInfo">
         select * from user_info
     </select>
+    <select id="fuzzyQueries" resultType="cn.jasonone.bean.UserInfo">
+        select * from user_info <where>
+        <if test="username != null">username like concat('%',#{username},'%') and</if>
+        <if test="email != null">email like concat('%',#{email},'%') and</if>
+        <if test="phone != null">phone like concat('%',#{phone},'%')</if>
+    </where>
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from user_info

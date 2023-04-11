@@ -1,5 +1,6 @@
 package cn.jasonone.mapper;
 
+import cn.jasonone.bean.GoodsInfo;
 import cn.jasonone.bean.UserInfo;
 
 import java.util.List;
@@ -11,7 +12,9 @@ import java.util.List;
 * @Entity cn.jasonone.bean.UserInfo
 */
 public interface UserInfoMapper {
-
+    /*
+        根据用户id删除用户信息
+        */
     int deleteByPrimaryKey(Long id);
 
     int insert(UserInfo record);
@@ -19,7 +22,9 @@ public interface UserInfoMapper {
     int insertSelective(UserInfo record);
 
     UserInfo selectByPrimaryKey(Long id);
-
+    /*
+    根据用户id修改用户信息
+     */
     int updateByPrimaryKeySelective(UserInfo record);
 
     int updateByPrimaryKey(UserInfo record);
@@ -29,14 +34,10 @@ public interface UserInfoMapper {
     查找所有用户信息
      */
     List<UserInfo> userFindAll();
-    /*
-    根据用户id删除用户信息
-    */
-    void deleteUser(Integer id);
-    /*
-    根据用户id修改用户信息
+    /**
+     * 模糊查询
+     * @param goods
+     * @return
      */
-    void updateUser(UserInfo user);
-
-
+    List<UserInfo> fuzzyQueries(UserInfo goods);
 }

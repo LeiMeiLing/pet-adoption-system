@@ -1,12 +1,16 @@
 package cn.jasonone.service.impl;
 
 import cn.hutool.crypto.digest.MD5;
+import cn.jasonone.bean.GoodsInfo;
 import cn.jasonone.bean.UserInfo;
 import cn.jasonone.mapper.GoodsInfoMapper;
+import cn.jasonone.mapper.ManagerInfoMapper;
 import cn.jasonone.mapper.UserInfoMapper;
 import cn.jasonone.service.UserInfoService;
 import cn.hutool.core.util.RandomUtil;
 import cn.jasonone.util.MyBatisUtil;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.Setter;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -49,21 +53,40 @@ public class UserInfoServiceImpl implements UserInfoService {
         }
         return null;
     }
+
+    /*
+    查找所有用户信息
+     */
     @Override
-    public List<UserInfo> userFindAll() {
-        String resource = "mybatis-config.xml";
-        InputStream inputStream = null;
-        try {
-            inputStream = Resources.getResourceAsStream(resource);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+    public PageInfo<UserInfo> userFindAll(int pageNum, int pageSize) {
+        UserInfoMapper userInfoMapper = MyBatisUtil.getSession().getMapper(UserInfoMapper.class);
+        PageHelper.startPage(pageNum, pageSize);
+        List<UserInfo> userInfos = userInfoMapper.userFindAll();
+        return new PageInfo<>(userInfos);
+    }
+    /*
+    在管理员界面根据用户id删除用户信息
+     */
+    @Override
+    public void delete(Long id) {
+        UserInfoMapper userInfoMapper =MyBatisUtil.getSession().getMapper(UserInfoMapper.class);
+        userInfoMapper.deleteByPrimaryKey(id);
+    }
 
-        SqlSession sqlSession = sqlSessionFactory.openSession();
+    /*
+    在管理员界面修改用户信息
+     */
+    @Override
+    public void update(UserInfo userInfo) {
+        UserInfoMapper userInfoMapper =MyBatisUtil.getSession().getMapper(UserInfoMapper.class);
+        userInfoMapper.updateByPrimaryKeySelective(userInfo);
+    }
 
-        UserInfoMapper mapper = sqlSession.getMapper(UserInfoMapper.class);
-        List<UserInfo> userInfos = mapper.userFindAll();
-        return userInfos;
+    @Override
+    public PageInfo<UserInfo> selectNameOrType(int pageNum, int pageSize, UserInfo userInfo) {
+        UserInfoMapper userInfoMapper = MyBatisUtil.getSession().getMapper(UserInfoMapper.class);
+        PageHelper.startPage(pageNum, pageSize);
+        List<UserInfo> userInfos = userInfoMapper.fuzzyQueries(userInfo);
+        return new PageInfo<>(userInfos);
     }
 }

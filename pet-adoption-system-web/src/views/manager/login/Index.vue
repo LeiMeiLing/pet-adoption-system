@@ -31,7 +31,7 @@ const labelPosition = ref('right');
 function onLogin(){
   login(managerInfo.value).then(res=>{
     layer.msg('登录成功')
-    router.push('')
+    router.push({name:'userDisplay'})
   }).catch(err=>{
     layer.msg('用户名或密码错误')
   })

@@ -1,10 +1,12 @@
 package cn.jasonone.servlet;
 
 import cn.hutool.jwt.JWTUtil;
+import cn.jasonone.bean.GoodsInfo;
 import cn.jasonone.bean.UserInfo;
 import cn.jasonone.filter.BodyHttpServletRequestWrapper;
 import cn.jasonone.service.UserInfoService;
 import cn.jasonone.service.impl.UserInfoServiceImpl;
+import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.ibatis.session.SqlSession;
@@ -25,14 +27,18 @@ import java.util.StringJoiner;
 @WebServlet("/user/*")
 public class UserInfoServlet extends HttpServlet {
     private UserInfoService userInfoService = new UserInfoServiceImpl();
+
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String requestURI = req.getRequestURI();
         // 去除contextPath
         requestURI = requestURI.substring(req.getContextPath().length());
         switch (requestURI) {
-                case "/user/register":
+            case "/user/register":
                 register(req, resp);
+                break;
+            case "/user/update":
+                update(req, resp);
                 break;
             default:
                 super.doPut(req, resp);
@@ -43,22 +49,21 @@ public class UserInfoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
         userInfoService.setSqlSession(sqlSession);
-            String requestURI = req.getRequestURI();
-            // 去除contextPath
-            requestURI = requestURI.substring(req.getContextPath().length());
-            switch (requestURI) {
-                case "/user/login":
-                    login(req, resp);
-                    break;
-                default:
-                    super.doPost(req, resp);
-            }
-
+        String requestURI = req.getRequestURI();
+        // 去除contextPath
+        requestURI = requestURI.substring(req.getContextPath().length());
+        switch (requestURI) {
+            case "/user/login":
+                login(req, resp);
+                break;
+            default:
+                super.doPost(req, resp);
+        }
 
 
     }
 
-    private void login(HttpServletRequest req, HttpServletResponse resp) throws IOException  {
+    private void login(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd HH:mm:ss")
                 // 是否显示值为null的字段
@@ -70,21 +75,21 @@ public class UserInfoServlet extends HttpServlet {
         UserInfo userInfo = gson.fromJson(req.getReader(), UserInfo.class);
 
         userInfo = userInfoService.login(userInfo);
-        Map<String,Object> result = new HashMap<>();
+        Map<String, Object> result = new HashMap<>();
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        if(userInfo == null){
+        if (userInfo == null) {
             result.put("code", 400);
             result.put("msg", "用户名或密码错误");
-        }else{
+        } else {
             // 创建token
-            Map<String,Object> token = new HashMap<>();
+            Map<String, Object> token = new HashMap<>();
             token.put("username", userInfo.getUsername());
             token.put("id", userInfo.getId());
-            token.put("exp", System.currentTimeMillis()+1000*60*30);
+            token.put("exp", System.currentTimeMillis() + 1000 * 60 * 30);
             String jwtPassword = req.getServletContext().getInitParameter("jwt_password");
             String token1 = JWTUtil.createToken(token, jwtPassword.getBytes());
 
@@ -104,7 +109,7 @@ public class UserInfoServlet extends HttpServlet {
         UserInfo userInfo = gson.fromJson(req.getReader(), UserInfo.class);
 
         userInfoService.register(userInfo);
-        Map<String,Object> result = new HashMap<String, Object>();
+        Map<String, Object> result = new HashMap<String, Object>();
         result.put("code", 200);
         result.put("msg", "注册成功");
         resp.getWriter().write(gson.toJson(result));
@@ -112,21 +117,71 @@ public class UserInfoServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("application/json;charset=utf-8");
-        List<UserInfo> list = userInfoService.userFindAll();
-        StringJoiner sj = new StringJoiner(",", "[", "]");
-        String template = "{\"id\":%d,\"username\":\"%s\",\"email\":\"%s\",\"phone\":\"%s\",\"createTime\":\"%s\",\"updateTime\":\"%s\" }";
-        DateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        for (UserInfo userInfo : list) {
-            Integer id = userInfo.getId();
-            String username = userInfo.getUsername();
-            String email = userInfo.getEmail();
-            String phone = userInfo.getPhone();
-            String createTime = dateFormat.format(userInfo.getCreateTime());
-            String updateTime = dateFormat.format(userInfo.getUpdateTime());
-            String json = String.format(template, id, username, email,phone, createTime, updateTime);
-            sj.add(json);
+        String page = req.getParameter("page");
+        String limit = req.getParameter("limit");
+        int pageNum = 1;
+        int pageSize = 10;
+        if (page != null) {
+            pageNum = Integer.parseInt(page);
         }
-        resp.getWriter().write(sj.toString());
+        if (limit != null) {
+            pageSize = Integer.parseInt(limit);
+        }
+
+        String requestURI = req.getRequestURI();
+        requestURI = requestURI.substring(req.getContextPath().length());
+        Gson gson = new Gson();
+        switch (requestURI) {
+            case "/user/findAll":
+                PageInfo<UserInfo> userInfo = userInfoService.userFindAll(pageNum, pageSize);
+                Map<String, Object> result = new HashMap<>();
+                result.put("code", 200);
+                result.put("msg", "获取成功");
+                result.put("data", userInfo);
+                resp.getWriter().write(gson.toJson(result));
+                break;
+            case "/user/findSome":
+                PageInfo<UserInfo> some = findSome(req, resp, pageNum, pageSize);
+                gson.toJson(some, resp.getWriter());
+
+                break;
+
+            default:
+                super.doPut(req, resp);
+        }
+    }
+
+    /*
+    管理员界面删除用户信息
+     */
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Gson gson = new Gson();
+        UserInfo userInfo = gson.fromJson(req.getReader(), UserInfo.class);
+        userInfoService.delete((long) userInfo.getId());
+        Map<String, Object> result = new HashMap<>();
+        result.put("code", 200);
+        result.put("msg", "删除成功");
+        resp.getWriter().write(gson.toJson(result));
+    }
+
+    /*
+    管理员界面对用户信息进行更新
+     */
+    private void update(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        Gson gson = new Gson();
+        UserInfo userInfo = gson.fromJson(req.getReader(), UserInfo.class);
+        userInfoService.update(userInfo);
+        Map<String, Object> result = new HashMap<>();
+        result.put("code", 200);
+        result.put("msg", "修改成功");
+        resp.getWriter().write(gson.toJson(result));
+    }
+
+    private PageInfo<UserInfo> findSome(HttpServletRequest req, HttpServletResponse resp, Integer pageNum, Integer pageSize) throws IOException {
+        Gson gson = new Gson();
+        UserInfo userInfo = gson.fromJson(req.getReader(), UserInfo.class);
+        return userInfoService.selectNameOrType(pageNum, pageSize, userInfo);
+
     }
 }

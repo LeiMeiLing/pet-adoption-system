@@ -31,8 +31,11 @@
         select <include refid="Base_Column_List"></include>
         from manager_info where username = #{username}
     </select>
+    <select id="userFindAll" resultType="cn.jasonone.bean.UserInfo">
+        select * from user_info
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        delete from manager_info
+        delete from user_info
         where  id = #{id,jdbcType=INTEGER} 
     </delete>
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.jasonone.bean.ManagerInfo" useGeneratedKeys="true">
@@ -67,29 +70,17 @@
                 <if test="updateTime != null">#{updateTime,jdbcType=TIMESTAMP},</if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="cn.jasonone.bean.ManagerInfo">
-        update manager_info
+    <update id="updateByPrimaryKeySelective" parameterType="cn.jasonone.bean.UserInfo">
+        update user_info
         <set>
                 <if test="username != null">
                     username = #{username,jdbcType=VARCHAR},
-                </if>
-                <if test="password != null">
-                    password = md5(#{password,jdbcType=CHAR}),
                 </if>
                 <if test="email != null">
                     email = #{email,jdbcType=VARCHAR},
                 </if>
                 <if test="phone != null">
                     phone = #{phone,jdbcType=VARCHAR},
-                </if>
-                <if test="salt != null">
-                    salt = #{salt,jdbcType=CHAR},
-                </if>
-                <if test="createTime != null">
-                    create_time = #{createTime,jdbcType=TIMESTAMP},
-                </if>
-                <if test="updateTime != null">
-                    update_time = #{updateTime,jdbcType=TIMESTAMP},
                 </if>
         </set>
         where   id = #{id,jdbcType=INTEGER} 

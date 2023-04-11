@@ -1,6 +1,7 @@
 package cn.jasonone.servlet;
 
 import cn.hutool.jwt.JWTUtil;
+import cn.jasonone.bean.GoodsInfo;
 import cn.jasonone.bean.ManagerInfo;
 import cn.jasonone.bean.UserInfo;
 import cn.jasonone.filter.BodyHttpServletRequestWrapper;
@@ -96,4 +97,6 @@ public class ManageServlet extends HttpServlet {
         result.put("msg", "注册成功");
         resp.getWriter().write(gson.toJson(result));
     }
+
+
 }

@@ -39,7 +39,16 @@ const routes = [
             path:'/stores',
             name:'stores',
             component:()=>import('../views/user/stores/Index.vue')
-        }]
+        },]
+    },{
+        path: '/home',
+        name: 'home',
+        component: () => import('../views/manager/layout/Index.vue'),
+        children:[{
+            path:'/userDisplay',
+            name:'userDisplay',
+            component:()=>import('../views/manager/userDisplay/UserDisplay.vue')
+        },]
     }
 ]
 

@@ -11,13 +11,6 @@ import java.util.List;
 
 public class App {
     public static void main(String[] args) throws IOException {
-        String resource = "mybatis-config.xml";
-        InputStream inputStream = Resources.getResourceAsStream(resource);
-        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-        UserInfoMapper mapper = sqlSession.getMapper(UserInfoMapper.class);
-        mapper.deleteUser(2);
-        sqlSession.close();
     }
 }
