@@ -4,7 +4,9 @@
     <div class="selectShopping">
       <lay-input placeholder="请输入商品名进行查询" v-model="goodsInfo.goodsName" prefix-icon="layui-icon-search">
       </lay-input>
-      <lay-button type="primary">搜索</lay-button>
+      <lay-input placeholder="请输入商品类型进行查询" v-model="goodsInfo.goodsType" prefix-icon="layui-icon-search">
+      </lay-input>
+      <lay-button type="primary" @click="getSome">搜索</lay-button>
     </div>
     <div id="app">
         <ul v-for="(item,index) in dataSource">
@@ -22,13 +24,13 @@
 
 <script setup>
 import {reactive, ref} from "vue";
-import {findAll} from "./api.js";
+import {findAll, findSome} from "./api.js";
 
 let dataSource = reactive([])
 findAll().then(res=>{
+    dataSource.length=0
     dataSource.push(...res.data.list);
 })
-console.log(dataSource)
 
 const mockData = ref([{
     "id": 1,
@@ -37,7 +39,16 @@ const mockData = ref([{
     "price": 2799
 }]);
 
-const goodsInfo = ref({
+function getSome(){
+  findSome(goodsInfo.goodsName,goodsInfo.goodsType).then(res=>{
+  dataSource.length=0
+  dataSource.push(...res.data.list);
+})
+}
+
+
+
+const goodsInfo = reactive({
     id:0,
     goodsType:"",
     goodsName: "",

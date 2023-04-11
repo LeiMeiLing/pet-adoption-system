@@ -12,7 +12,8 @@ import org.apache.ibatis.session.SqlSession;
 import java.util.List;
 
 public class GoodsInfoServiceImpl implements GoodsInfoService {
-
+    @Setter
+    private SqlSession sqlSession;
 
     @Override
     public PageInfo<GoodsInfo> findAll(int pageNum, int pageSize) {

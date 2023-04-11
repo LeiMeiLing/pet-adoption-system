@@ -1,12 +1,11 @@
 package cn.jasonone.servlet;
 
 import cn.jasonone.bean.GoodsInfo;
-import cn.jasonone.bean.PetInfo;
-import cn.jasonone.filter.BodyHttpServletRequestWrapper;
 import cn.jasonone.service.GoodsInfoService;
 import cn.jasonone.service.impl.GoodsInfoServiceImpl;
 import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
+import org.apache.ibatis.session.SqlSession;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,6 +21,8 @@ public class GoodsServlet extends HttpServlet {
     GoodsInfoService gs = new GoodsInfoServiceImpl();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
+        gs.setSqlSession(sqlSession);
         String page = req.getParameter("page");
         String limit = req.getParameter("limit");
         int pageNum = 1;
@@ -46,8 +47,12 @@ public class GoodsServlet extends HttpServlet {
                 resp.getWriter().write(gson.toJson(result));
                 break;
             case "/petstore/findSome":
-                PageInfo<GoodsInfo> some = findSome(req, resp, pageNum, pageSize);
-                gson.toJson(some,resp.getWriter());
+                PageInfo<GoodsInfo> some = findSome(req, resp, pageNum, pageSize,gs);
+                Map<String,Object> result1 = new HashMap<>();
+                result1.put("code", 200);
+                result1.put("msg", "获取成功");
+                result1.put("data",some);
+                resp.getWriter().write(gson.toJson(result1));
 
                 break;
 
@@ -123,9 +128,13 @@ public class GoodsServlet extends HttpServlet {
         resp.getWriter().write(gson.toJson(result));
     }
 
-    private PageInfo<GoodsInfo> findSome(HttpServletRequest req,HttpServletResponse resp,Integer pageNum,Integer pageSize) throws IOException{
+    private PageInfo<GoodsInfo> findSome(HttpServletRequest req, HttpServletResponse resp, Integer pageNum, Integer pageSize, GoodsInfoService gs) throws IOException{
         Gson gson = new Gson();
-        GoodsInfo goods = gson.fromJson(req.getReader(), GoodsInfo.class);
+        String goodsname = req.getParameter("goodsname");
+        String goodsType = req.getParameter("goodsType");
+        GoodsInfo goods = new GoodsInfo();
+        goods.setGoodsname(goodsname);
+        goods.setGoodsType(goodsType);
         return gs.selectNameOrType(pageNum,pageSize,goods);
 
     }

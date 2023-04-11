@@ -2,8 +2,10 @@ package cn.jasonone.service;
 
 import cn.jasonone.bean.GoodsInfo;
 import com.github.pagehelper.PageInfo;
+import org.apache.ibatis.session.SqlSession;
 
 public interface GoodsInfoService {
+    void setSqlSession(SqlSession session);
     //查询所有并分页
     PageInfo<GoodsInfo> findAll(int pageNum, int pageSize);
     //添加商品
