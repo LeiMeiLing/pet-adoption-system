@@ -1,7 +1,6 @@
-import {createRouter,createWebHashHistory} from "vue-router";
+import {createRouter, createWebHashHistory} from "vue-router";
 import useLogin from "../stores/LoginStore"
 import NProgress from 'nprogress'
-
 
 
 const routes = [
@@ -13,8 +12,8 @@ const routes = [
             // 标记该路由不需要登录
             noLogin: true
         }
-    },{
-    //管理员登录界面
+    }, {
+        //管理员登录界面
         path: '/manager',
         name: 'manager',
         component: () => import('../views/manager/login/Index.vue'),
@@ -37,29 +36,36 @@ const routes = [
         path: '/',
         name: 'main',
         component: () => import('../views/user/Index.vue'),
-        redirect:'/home',
-        children:[{
-            path:'/stores',
-            name:'stores',
-            component:()=>import('../views/user/stores/Index.vue')
-        },{
+        redirect: '/home',
+        children: [{
+            path: '/stores',
+            name: 'stores',
+            component: () => import('../views/user/stores/Index.vue')
+        }, {
             //首页
-            path:'/home',
-            name:'home',
-            component:()=>import('../views/user/main/Index.vue')
-        },{
+            path: '/home',
+            name: 'home',
+            component: () => import('../views/user/main/Index.vue')
+        }, {
             //领养中心
-            path:'/adoption',
-            name:'adoption',
-            component:()=>import('../views/user/adoption/Index.vue')
-        },
-            {
-                //宠物领养详细信息界面
-                path: '/Info',
-                name: 'Info',
-                component: () => import('../views/user/adoption/Info/Index.vue')
-            }
-]
+            path: '/adoption',
+            name: 'adoption',
+            component: () => import('../views/user/adoption/Index.vue')
+        }, {
+            //宠物领养详细信息界面
+            path: '/Info',
+            name: 'Info',
+            component: () => import('../views/user/adoption/Info/Index.vue')
+        }]
+    }, {
+        path: '/admin',
+        name: 'admin',
+        component: () => import('../views/manager/layout/Index.vue'),
+        children: [{
+            path: '/userDisplay',
+            name: 'userDisplay',
+            component: () => import('../views/manager/userDisplay/UserDisplay.vue')
+        },]
     }
 ]
 
@@ -72,13 +78,13 @@ const router = createRouter({
 router.beforeEach((to, from) => {
     // 如果是目标路由不需要登录,则直接跳转
     NProgress.start()
-    if(to.meta.noLogin){
+    if (to.meta.noLogin) {
         return true;
     }
-    const loginInfo  = useLogin();
-    if(loginInfo.isLogin()){
+    const loginInfo = useLogin();
+    if (loginInfo.isLogin()) {
         return true;
-    }else{
+    } else {
         // 如果没有登录,则跳转到登录页面
         return {name: "login"};
     }
