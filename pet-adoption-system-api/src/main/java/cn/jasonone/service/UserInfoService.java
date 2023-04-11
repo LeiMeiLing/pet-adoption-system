@@ -15,7 +15,6 @@ public interface UserInfoService {
      * @param userInfo  用户信息
      */
     void register(UserInfo userInfo);
-
     void setSqlSession(SqlSession session);
 
     /**

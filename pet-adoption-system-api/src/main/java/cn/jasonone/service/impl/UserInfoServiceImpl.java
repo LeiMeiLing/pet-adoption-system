@@ -2,9 +2,11 @@ package cn.jasonone.service.impl;
 
 import cn.hutool.crypto.digest.MD5;
 import cn.jasonone.bean.UserInfo;
+import cn.jasonone.mapper.GoodsInfoMapper;
 import cn.jasonone.mapper.UserInfoMapper;
 import cn.jasonone.service.UserInfoService;
 import cn.hutool.core.util.RandomUtil;
+import cn.jasonone.util.MyBatisUtil;
 import lombok.Setter;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -24,13 +26,14 @@ public class UserInfoServiceImpl implements UserInfoService {
         String salt = RandomUtil.randomString(6);
         userInfo.setSalt(salt);
         userInfo.setPassword(salt+userInfo.getPassword()+salt);
-        sqlSession.getMapper(UserInfoMapper.class).insertSelective(userInfo);
+        UserInfoMapper userInfoMapper = sqlSession.getMapper(UserInfoMapper.class);
+        userInfoMapper.insertSelective(userInfo);
     }
 
     @Override
     public UserInfo login(UserInfo userInfo) {
-        UserInfoMapper mapper = sqlSession.getMapper(UserInfoMapper.class);
-        UserInfo user = mapper.findByUsername(userInfo.getUsername());
+        UserInfoMapper userInfoMapper = sqlSession.getMapper(UserInfoMapper.class);
+        UserInfo user = userInfoMapper.findByUsername(userInfo.getUsername());
         if(user != null){
             // 获得盐
             String salt = user.getSalt();
