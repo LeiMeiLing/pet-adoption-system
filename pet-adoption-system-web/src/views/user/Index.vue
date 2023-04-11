@@ -28,8 +28,6 @@
       </lay-carousel-item>
     </lay-carousel>-->
     </lay-body>
-    <lay-footer>
-     </lay-footer>
   </lay-layout>
 </template>
 

@@ -39,7 +39,11 @@ public class GoodsServlet extends HttpServlet {
         switch (requestURI) {
             case "/petstore/findAll":
                 PageInfo<GoodsInfo> goods= gs.findAll(pageNum,pageSize);
-                gson.toJson(goods,resp.getWriter());
+                Map<String,Object> result = new HashMap<>();
+                result.put("code", 200);
+                result.put("msg", "获取成功");
+                result.put("data",goods);
+                resp.getWriter().write(gson.toJson(result));
                 break;
             case "/petstore/findSome":
                 PageInfo<GoodsInfo> some = findSome(req, resp, pageNum, pageSize);
