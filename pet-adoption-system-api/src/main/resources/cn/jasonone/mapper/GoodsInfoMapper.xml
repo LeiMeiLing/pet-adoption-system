@@ -28,21 +28,29 @@
         from goods_info
         where  id = #{id,jdbcType=INTEGER} 
     </select>
+    <select id="selectAll" resultType="cn.jasonone.bean.GoodsInfo">
+        select * from goods_info
+    </select>
+    <select id="fuzzyQueries" resultType="cn.jasonone.bean.GoodsInfo">
+        select * from goods_info <where>
+        <if test="goodsType != null">goods_type like concat('%',#{goodsType},'%') and</if>
+        <if test="goodsname != null">goodsname like concat('%',#{goodsname},'%')</if>
+    </where>
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        delete from goods_info
-        where  id = #{id,jdbcType=INTEGER} 
+        delete from goods_info where id = #{id}
     </delete>
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.jasonone.bean.GoodsInfo" useGeneratedKeys="true">
         insert into goods_info
-        ( id,goods_type,goodsname
-        ,goods_picture,goods_price,goods_desc
-        ,goods_status,create_time,update_time
+        ( goods_type,goodsname
+        ,goods_price,goods_desc
+        ,goods_status
         )
-        values (#{id,jdbcType=INTEGER},#{goodsType,jdbcType=VARCHAR},#{goodsname,jdbcType=VARCHAR}
-        ,#{goodsPicture,jdbcType=VARCHAR},#{goodsPrice,jdbcType=DECIMAL},#{goodsDesc,jdbcType=VARCHAR}
-        ,#{goodsStatus,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP}
-        )
+        values (#{goodsType,jdbcType=VARCHAR},#{goodsname,jdbcType=VARCHAR}
+               ,#{goodsPrice,jdbcType=DECIMAL},#{goodsDesc,jdbcType=VARCHAR}
+               ,#{goodsStatus,jdbcType=INTEGER}
+               )
     </insert>
     <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cn.jasonone.bean.GoodsInfo" useGeneratedKeys="true">
         insert into goods_info

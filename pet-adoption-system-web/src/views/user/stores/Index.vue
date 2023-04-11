@@ -1,30 +1,66 @@
 <template>
 
-        <div class="selectShopping">
-            <lay-input placeholder="请输入商品名进行查询" v-model="shoppingInfo.shoppingName" prefix-icon="layui-icon-search">
-            </lay-input>
-            <lay-button type="primary">搜索</lay-button>
-        </div>
+<div>
+    <div class="selectShopping">
+      <lay-input placeholder="请输入商品名进行查询" v-model="goodsInfo.goodsName" prefix-icon="layui-icon-search">
+      </lay-input>
+      <lay-button type="primary">搜索</lay-button>
+    </div>
+    <div id="app">
+        <ul v-for="(item,index) in dataSource">
+            <li class="item">
+                <div class="img_box"><img v-bind:src="item.goodsPicture" alt=""></div>
+                <p v-html="item.goodsDesc"></p>
+                <span :style="{color:'red'}">&yen;{{item.goodsPrice}}</span>
+            </li>
+        </ul>
+    </div>
 
+</div>
 </template>
 
 
 <script setup>
-import {ref} from "vue";
-import router from "../../../config/router.js";
+import {reactive, ref} from "vue";
+import {findAll} from "./api.js";
 
-const shoppingInfo = ref({
-    shoppingName: "",
-    password:"",
-    checkPassword:"",
-    email: "",
-    phone: "",
+let dataSource = reactive([])
+findAll().then(res=>{
+    dataSource.push(...res.data.list);
+})
+console.log(dataSource)
+
+const mockData = ref([{
+    "id": 1,
+    "img": "https://img14.360buyimg.com/n1/jfs/t1/211613/18/13726/41078/61c48368E5fb2871c/88a2fe8a369cb2e1.jpg",
+    "text": "亿匚鑫 意式轻奢岩板餐桌椅组合家用小户型现代简约可伸缩方圆两用折叠实木圆桌子吃饭桌 【进口岩板】1.35米1桌6椅",
+    "price": 2799
+}]);
+
+const goodsInfo = ref({
+    id:0,
+    goodsType:"",
+    goodsName: "",
+    goodsPicture:"",
+    goodsPrice:"",
+    goodsDesc:"",
+    goodsStatus:""
+
 });
 
 </script>
 
 
 <style scoped lang="scss">
+.div1{
+    margin: 0 15%;
+    display: flex;
+    .div2{
+        width: 30%;
+        height: 250px;
+        border: solid 5px #cccccc;
+    }
+}
 .selectShopping{
     display: flex;
     margin: 10px auto;
@@ -32,6 +68,72 @@ const shoppingInfo = ref({
     .layui-input{
         margin: 0 5px;
     }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+body {
+    background: #e3e4e5;
+    margin: auto;
+}
+
+#app {
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+}
+
+
+.item {
+    float: left;
+    width: 190px;
+    height: 266px;
+    margin: 0 5px 8px;
+    text-align: center;
+    background: #fff;
+}
+
+.item .img_box {
+    width: 120px;
+    height: 120px;
+    margin: 30px auto;
+}
+
+.img_box img {
+    width: 100%;
+    height: 100%;
+}
+
+.item p {
+    font-size: 12px;
+    line-height: 20px;
+    height: 40px;
+    padding: 0 10px;
+    /* white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; */
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.more2_info_self {
+    background-color: #e1251b;
+    border-radius: 2px;
+    color: #fff;
+    padding: 0 5px;
+    margin-right: 4px;
+    line-height: 16px;
+    height: 16px;
+    font-size: 12px;
+    font-style: normal;
 }
 
 </style>

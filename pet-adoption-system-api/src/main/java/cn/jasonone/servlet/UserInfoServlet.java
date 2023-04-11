@@ -27,53 +27,38 @@ public class UserInfoServlet extends HttpServlet {
     private UserInfoService userInfoService = new UserInfoServiceImpl();
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
-        userInfoService.setSqlSession(sqlSession);
-        try {
-            String requestURI = req.getRequestURI();
-            // 去除contextPath
-            requestURI = requestURI.substring(req.getContextPath().length());
-            switch (requestURI) {
+        String requestURI = req.getRequestURI();
+        // 去除contextPath
+        requestURI = requestURI.substring(req.getContextPath().length());
+        switch (requestURI) {
                 case "/user/register":
-                    register((BodyHttpServletRequestWrapper) req, resp);
-                    break;
-                default:
-                    super.doPut(req, resp);
-            }
-            // 如果没有异常，提交事务
-            sqlSession.commit();
-        } catch (IOException e) {
-            // 如果有异常，回滚事务
-            sqlSession.rollback();
-            throw new RuntimeException(e);
+                register(req, resp);
+                break;
+            default:
+                super.doPut(req, resp);
         }
     }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
         userInfoService.setSqlSession(sqlSession);
-        try {
             String requestURI = req.getRequestURI();
             // 去除contextPath
             requestURI = requestURI.substring(req.getContextPath().length());
             switch (requestURI) {
                 case "/user/login":
-                    login((BodyHttpServletRequestWrapper) req, resp);
+                    login(req, resp);
                     break;
                 default:
                     super.doPost(req, resp);
             }
-            // 如果没有异常，提交事务
-            sqlSession.commit();
-        } catch (IOException e) {
-            // 如果有异常，回滚事务
-            sqlSession.rollback();
-            throw new RuntimeException(e);
-        }
+
+
+
     }
 
-    private void login(BodyHttpServletRequestWrapper req, HttpServletResponse resp) throws IOException  {
-//        Gson gson = new Gson();
+    private void login(HttpServletRequest req, HttpServletResponse resp) throws IOException  {
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd HH:mm:ss")
                 // 是否显示值为null的字段
@@ -81,8 +66,9 @@ public class UserInfoServlet extends HttpServlet {
                 // 是否格式化json
                 .setPrettyPrinting()
                 .create();
-        String body = req.getBody();
-        UserInfo userInfo = gson.fromJson(body, UserInfo.class);
+
+        UserInfo userInfo = gson.fromJson(req.getReader(), UserInfo.class);
+
         userInfo = userInfoService.login(userInfo);
         Map<String,Object> result = new HashMap<>();
         try {
@@ -111,12 +97,11 @@ public class UserInfoServlet extends HttpServlet {
 
     }
 
-    private void register(BodyHttpServletRequestWrapper req, HttpServletResponse resp) throws IOException {
+    private void register(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 //        String username = req.getParameter("username");
 //        String password = req.getParameter("password");
         Gson gson = new Gson();
-        String body = req.getBody();
-        UserInfo userInfo = gson.fromJson(body, UserInfo.class);
+        UserInfo userInfo = gson.fromJson(req.getReader(), UserInfo.class);
 
         userInfoService.register(userInfo);
         Map<String,Object> result = new HashMap<String, Object>();
