@@ -2,6 +2,8 @@ package cn.jasonone.mapper;
 
 import cn.jasonone.bean.GoodsInfo;
 
+import java.util.List;
+
 /**
 * @author DELL
 * @description 针对表【goods_info(商品信息表)】的数据库操作Mapper
@@ -9,16 +11,40 @@ import cn.jasonone.bean.GoodsInfo;
 * @Entity cn.jasonone.bean.GoodsInfo
 */
 public interface GoodsInfoMapper {
+    /**
+     * 查询所有商品
+     * @return
+     */
+    List<GoodsInfo> selectAll();
 
+    /**
+     * 添加商品
+     * @param record
+     * @return
+     */
+    int insert(GoodsInfo record);
+
+    /**
+     * 通过id删除商品
+     * @param id
+     * @return
+     */
     int deleteByPrimaryKey(Long id);
 
-    int insert(GoodsInfo record);
+    /**
+     * 通过id修改商品
+     * @param record
+     * @return
+     */
+    int updateByPrimaryKeySelective(GoodsInfo record);
+
+
 
     int insertSelective(GoodsInfo record);
 
     GoodsInfo selectByPrimaryKey(Long id);
 
-    int updateByPrimaryKeySelective(GoodsInfo record);
+
 
     int updateByPrimaryKey(GoodsInfo record);
 
