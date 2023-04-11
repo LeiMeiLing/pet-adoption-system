@@ -38,6 +38,12 @@ public interface GoodsInfoMapper {
      */
     int updateByPrimaryKeySelective(GoodsInfo record);
 
+    /**
+     * 模糊查询
+     * @param goods
+     * @return
+     */
+    List<GoodsInfo> fuzzyQueries(GoodsInfo goods);
 
 
     int insertSelective(GoodsInfo record);

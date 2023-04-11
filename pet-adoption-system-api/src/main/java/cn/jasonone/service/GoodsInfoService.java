@@ -10,6 +10,8 @@ public interface GoodsInfoService {
     void add(GoodsInfo goods);
     //删除商品
     void delete(Long id);
-
+    //修改商品
     void update(GoodsInfo goods);
+    //根据商品类型和名字模糊查询
+    PageInfo<GoodsInfo> selectNameOrType(int pageNum, int pageSize, GoodsInfo goods);
 }

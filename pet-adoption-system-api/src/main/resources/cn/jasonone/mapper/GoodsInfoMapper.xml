@@ -31,19 +31,24 @@
     <select id="selectAll" resultType="cn.jasonone.bean.GoodsInfo">
         select * from goods_info
     </select>
+    <select id="fuzzyQueries" resultType="cn.jasonone.bean.GoodsInfo">
+        select * from goods_info <where>
+        <if test="goodsType != null">goods_type like concat('%',#{goodsType},'%') and</if>
+        <if test="goodsname != null">goodsname like concat('%',#{goodsname},'%')</if>
+    </where>
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        delete from goods_info
-        where  id = #{id,jdbcType=INTEGER} 
+        delete from goods_info where id = #{id}
     </delete>
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.jasonone.bean.GoodsInfo" useGeneratedKeys="true">
         insert into goods_info
         ( goods_type,goodsname
-        ,goods_picture,goods_price,goods_desc
+        ,goods_price,goods_desc
         ,goods_status
         )
         values (#{goodsType,jdbcType=VARCHAR},#{goodsname,jdbcType=VARCHAR}
-               ,#{goodsPicture,jdbcType=VARCHAR},#{goodsPrice,jdbcType=DECIMAL},#{goodsDesc,jdbcType=VARCHAR}
+               ,#{goodsPrice,jdbcType=DECIMAL},#{goodsDesc,jdbcType=VARCHAR}
                ,#{goodsStatus,jdbcType=INTEGER}
                )
     </insert>
