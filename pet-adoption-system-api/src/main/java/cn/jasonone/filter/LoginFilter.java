@@ -48,13 +48,11 @@ public class LoginFilter implements Filter {
             // 获取请求头中的token
             String token = req.getHeader("hm-token");
             Map<String, Object> result = new HashMap<>();
-            filterChain.doFilter(servletRequest, servletResponse);
             // 如果token为不空，且验证通过
             if(!StrUtil.isBlank(token) && JWTUtil.verify(token, jwtPassword.getBytes())){
                 JWT jwt = JWTUtil.parseToken(token);
                 // 验证token是否过期
-                NumberWithFormat expNwf= (NumberWithFormat) jwt.getPayload("exp");
-                long exp  = expNwf.longValue();
+                long exp = (long) jwt.getPayload("exp");
                 if(exp < System.currentTimeMillis()) {
                     result.put("code", 401);
                     result.put("msg", "登录已过期，请重新登录");

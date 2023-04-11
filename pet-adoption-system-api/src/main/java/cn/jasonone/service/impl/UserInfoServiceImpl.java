@@ -18,18 +18,21 @@ import java.io.InputStream;
 import java.util.List;
 
 public class UserInfoServiceImpl implements UserInfoService {
-    UserInfoMapper userInfoMapper = MyBatisUtil.getSession().getMapper(UserInfoMapper.class);
+    @Setter
+    private SqlSession sqlSession;
     @Override
     public void register(UserInfo userInfo) {
         // 生成盐
         String salt = RandomUtil.randomString(6);
         userInfo.setSalt(salt);
         userInfo.setPassword(salt+userInfo.getPassword()+salt);
+        UserInfoMapper userInfoMapper = sqlSession.getMapper(UserInfoMapper.class);
         userInfoMapper.insertSelective(userInfo);
     }
 
     @Override
     public UserInfo login(UserInfo userInfo) {
+        UserInfoMapper userInfoMapper = sqlSession.getMapper(UserInfoMapper.class);
         UserInfo user = userInfoMapper.findByUsername(userInfo.getUsername());
         if(user != null){
             // 获得盐

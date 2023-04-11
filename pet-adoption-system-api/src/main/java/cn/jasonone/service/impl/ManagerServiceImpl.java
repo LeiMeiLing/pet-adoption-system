@@ -11,10 +11,12 @@ import lombok.Setter;
 import org.apache.ibatis.session.SqlSession;
 
 public class ManagerServiceImpl implements ManagerService {
-    ManagerInfoMapper managerInfoMapper = MyBatisUtil.getSession().getMapper(ManagerInfoMapper.class);
+    @Setter
+    private SqlSession sqlSession;
 
     @Override
     public void register(ManagerInfo managerInfo) {
+        ManagerInfoMapper managerInfoMapper =sqlSession.getMapper(ManagerInfoMapper.class);
         String salt = RandomUtil.randomString(6);
         managerInfo.setSalt(salt);
         System.out.println(managerInfo.getSalt());
@@ -24,6 +26,7 @@ public class ManagerServiceImpl implements ManagerService {
     }
     @Override
     public ManagerInfo login(ManagerInfo managerInfo) {
+        ManagerInfoMapper managerInfoMapper = MyBatisUtil.getSession().getMapper(ManagerInfoMapper.class);
         ManagerInfo manager = managerInfoMapper.findByUsername(managerInfo.getUsername());
         if(manager != null){
             // 获得盐

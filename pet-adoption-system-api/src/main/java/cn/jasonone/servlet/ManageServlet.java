@@ -23,6 +23,7 @@ public class ManageServlet extends HttpServlet {
     private ManagerService managerService = new ManagerServiceImpl();
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
             String requestURI = req.getRequestURI();
             // 去除contextPath
             requestURI = requestURI.substring(req.getContextPath().length());
@@ -37,6 +38,8 @@ public class ManageServlet extends HttpServlet {
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
+        managerService.setSqlSession(sqlSession);
             String requestURI = req.getRequestURI();
             // 去除contextPath
             requestURI = requestURI.substring(req.getContextPath().length());

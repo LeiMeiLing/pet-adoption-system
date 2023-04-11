@@ -41,7 +41,8 @@ public class UserInfoServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
+        userInfoService.setSqlSession(sqlSession);
             String requestURI = req.getRequestURI();
             // 去除contextPath
             requestURI = requestURI.substring(req.getContextPath().length());
@@ -58,9 +59,16 @@ public class UserInfoServlet extends HttpServlet {
     }
 
     private void login(HttpServletRequest req, HttpServletResponse resp) throws IOException  {
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd HH:mm:ss")
+                // 是否显示值为null的字段
+                .serializeNulls()
+                // 是否格式化json
+                .setPrettyPrinting()
+                .create();
 
         UserInfo userInfo = gson.fromJson(req.getReader(), UserInfo.class);
+
         userInfo = userInfoService.login(userInfo);
         Map<String,Object> result = new HashMap<>();
         try {
