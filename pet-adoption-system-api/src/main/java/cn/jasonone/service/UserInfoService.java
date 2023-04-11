@@ -16,7 +16,6 @@ public interface UserInfoService {
      */
     void register(UserInfo userInfo);
 
-    void setSqlSession(SqlSession session);
 
     /**
      * 用户登录
