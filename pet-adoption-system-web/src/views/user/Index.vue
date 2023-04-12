@@ -1,45 +1,45 @@
 <template>
-  <lay-layout class="main">
+  <lay-layout>
     <lay-header>
-      <lay-menu v-model:selected-key="selectedKey" v-model:open-keys="openKeys">
-      <lay-menu-item id="1" to="main">主页</lay-menu-item>
-      <lay-menu-item id="2" to="/petKnowledge">宠物知识</lay-menu-item>
-      <lay-menu-item id="3" to="">领养中心</lay-menu-item>
-      <lay-menu-item id="4" to="stores">宠物用品商城</lay-menu-item>
-        <lay-menu-item id="5" to="">个人中心</lay-menu-item>
+      <lay-menu  v-model:selected-key="selectedKey" v-model:open-keys="openKeys">
+        <lay-space :size="customSize">
+          <lay-menu-item><span class="menu-item">宠物领养系统</span></lay-menu-item>
+      <lay-menu-item id="1" to="/home">主页</lay-menu-item>
+      <lay-menu-item id="2" to="petKnowledge">宠物知识</lay-menu-item>
+      <lay-menu-item id="3" to="/adoption">领养中心</lay-menu-item>
+      <lay-menu-item id="4" to="stores">宠物商铺</lay-menu-item>
+        <lay-menu-item id="5" to="">宠物转让</lay-menu-item>
+        <lay-menu-item id="6" to="">宠物秀</lay-menu-item>
+          <lay-button>个人中心</lay-button>
+        </lay-space>
     </lay-menu>
     </lay-header>
     <lay-body>
-        <router-view></router-view>
-<!--    以下注释代码为轮播图,应放在某一组件中,而非放在此处    -->
-<!--
-      <lay-carousel v-model="active">
-      <lay-carousel-item id="1">
-        <div style="color: white;text-align: center;width:100%;height:300px;line-height:300px;background-color:#009688;">图片</div>
-      </lay-carousel-item>
-      <lay-carousel-item id="2">
-        <div style="color: white;text-align: center;width:100%;height:300px;line-height:300px;background-color:#5FB878;">图片</div>
-      </lay-carousel-item>
-      <lay-carousel-item id="3">
-        <div style="color: white;text-align: center;width:100%;height:300px;line-height:300px;background-color:#FFB800;">图片</div>
-      </lay-carousel-item>
-      <lay-carousel-item id="4">
-        <div style="color: white;text-align: center;width:100%;height:300px;line-height:300px;background-color:#FF5722;">图片</div>
-      </lay-carousel-item>
-    </lay-carousel>-->
+     <router-view/>
     </lay-body>
   </lay-layout>
 </template>
 
 <script setup>
 import {ref} from "vue";
-const selectedKey = ref("5")
-const openKeys = ref(["7"])
-const active = ref("1")
+const selectedKey = ref("1")
+const openKeys = ref(["1"])
+const customSize = ref(50);
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.layui-header{
+
+}
+:deep(.layui-nav) *{
+  font-size: 18px !important;
+  color: white;
+}
+.menu-item{
+  font-size: 30px !important;
+  font-family: 黑体;
+}
 .layui-body{
-    min-height: 615px;
+  min-height: 1000px;
 }
 </style>
