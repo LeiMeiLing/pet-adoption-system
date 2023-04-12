@@ -84,7 +84,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public PageInfo<UserInfo> selectNameOrType(int pageNum, int pageSize, UserInfo userInfo) {
-        UserInfoMapper userInfoMapper = MyBatisUtil.getSession().getMapper(UserInfoMapper.class);
+        UserInfoMapper userInfoMapper = sqlSession.getMapper(UserInfoMapper.class);
         PageHelper.startPage(pageNum, pageSize);
         List<UserInfo> userInfos = userInfoMapper.fuzzyQueries(userInfo);
         return new PageInfo<>(userInfos);

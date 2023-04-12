@@ -68,14 +68,20 @@ const routes = [
             component: () => import('../views/user/petKnowledge/Essay.vue')
         },]
     }, {
+        //管理员界面
         path: '/admin',
         name: 'admin',
         component: () => import('../views/manager/layout/Index.vue'),
         children: [{
+            //用户信息界面
             path: '/userDisplay',
             name: 'userDisplay',
             component: () => import('../views/manager/component/userDisplay/UserDisplay.vue')
-        },]
+        },{
+            path: '/petManger',
+            name: 'petManger',
+            component: () => import('../views/manager/component/petManager/petManger.vue')
+        }]
     }
 ]
 
@@ -85,22 +91,22 @@ const router = createRouter({
 })
 
 // 导航守卫
-router.beforeEach((to, from) => {
-    // 如果是目标路由不需要登录,则直接跳转
-    NProgress.start()
-    if (to.meta.noLogin) {
-        return true;
-    }
-    const loginInfo = useLogin();
-    if (loginInfo.isLogin()) {
-        return true;
-    } else {
-        // 如果没有登录,则跳转到登录页面
-        return {name: "login"};
-    }
-})
-router.afterEach((to, from) => {
-    NProgress.done()
-})
+// router.beforeEach((to, from) => {
+//     // 如果是目标路由不需要登录,则直接跳转
+//     NProgress.start()
+//     if (to.meta.noLogin) {
+//         return true;
+//     }
+//     const loginInfo = useLogin();
+//     if (loginInfo.isLogin()) {
+//         return true;
+//     } else {
+//         // 如果没有登录,则跳转到登录页面
+//         return {name: "login"};
+//     }
+// })
+// router.afterEach((to, from) => {
+//     NProgress.done()
+// })
 
 export default router

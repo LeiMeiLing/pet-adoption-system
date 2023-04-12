@@ -30,15 +30,19 @@ public class UserInfoServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
+        userInfoService.setSqlSession(sqlSession);
         String requestURI = req.getRequestURI();
         // 去除contextPath
         requestURI = requestURI.substring(req.getContextPath().length());
         switch (requestURI) {
             case "/user/register":
                 register(req, resp);
+                sqlSession.commit();
                 break;
             case "/user/update":
                 update(req, resp);
+                sqlSession.commit();
                 break;
             default:
                 super.doPut(req, resp);
@@ -117,6 +121,8 @@ public class UserInfoServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
+        userInfoService.setSqlSession(sqlSession);
         String page = req.getParameter("page");
         String limit = req.getParameter("limit");
         int pageNum = 1;
@@ -139,11 +145,16 @@ public class UserInfoServlet extends HttpServlet {
                 result.put("msg", "获取成功");
                 result.put("data", userInfo);
                 resp.getWriter().write(gson.toJson(result));
+                sqlSession.commit();
                 break;
             case "/user/findSome":
                 PageInfo<UserInfo> some = findSome(req, resp, pageNum, pageSize);
-                gson.toJson(some, resp.getWriter());
-
+                Map<String, Object> result1 = new HashMap<>();
+                result1.put("code", 200);
+                result1.put("msg", "获取成功");
+                result1.put("data", some);
+                gson.toJson(result1, resp.getWriter());
+                sqlSession.commit();
                 break;
 
             default:
@@ -179,8 +190,13 @@ public class UserInfoServlet extends HttpServlet {
     }
 
     private PageInfo<UserInfo> findSome(HttpServletRequest req, HttpServletResponse resp, Integer pageNum, Integer pageSize) throws IOException {
-        Gson gson = new Gson();
-        UserInfo userInfo = gson.fromJson(req.getReader(), UserInfo.class);
+        String userName = req.getParameter("userName");
+        String email = req.getParameter("email");
+        String phone = req.getParameter("phone");
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUsername(userName);
+        userInfo.setEmail(email);
+        userInfo.setPhone(phone);
         return userInfoService.selectNameOrType(pageNum, pageSize, userInfo);
 
     }
