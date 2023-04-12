@@ -84,8 +84,8 @@ const routes = [
             component: () => import('../views/user/main/Index.vue')
         }, {
             //领养中心
-            path: '/adoption',
-            name: 'adoption',
+            path: '/userAdoption',
+            name: 'userAdoption',
             component: () => import('../views/user/adoption/Index.vue')
         }, {
             //宠物领养详细信息界面
@@ -102,6 +102,16 @@ const routes = [
             path: '/essay',
             name: 'essay',
             component: () => import('../views/user/petKnowledge/Essay.vue')
+        },{
+            //宠物转让界面
+            path: '/transfer',
+            name: 'transfer',
+            component: () => import('../views/user/transfer/Index.vue')
+        },{
+            //宠物转让详情界面
+            path: '/detailed',
+            name: 'detailed',
+            component: () => import('../views/user/transfer/Info/Index.vue')
         },]
     }, {
         path: '/admin',
@@ -111,7 +121,27 @@ const routes = [
             path: '/userDisplay',
             name: 'userDisplay',
             component: () => import('../views/manager/component/userDisplay/UserDisplay.vue')
-        },]
+
+        },{
+            path:'/petInfo',
+            name:"petInfo",
+            component:()=>import('../views/manager/component/petManager/petManger.vue')
+        },{
+            path:'/adoption',
+            name:"adoption",
+            component:()=>import('../views/manager/component/AdoptionManger/AdoptionManger.vue')
+        },{
+            path:'/shopping',
+            name:"shopping",
+            component:()=>import('../views/manager/component/ShoppingManger/ShoppingManger.vue')
+        },{
+            path:'/comment',
+            name:"comment",
+            component:()=>import('../views/manager/component/CommentManger/CommentManger.vue')
+        }
+
+
+        ]
     }
 ]
 

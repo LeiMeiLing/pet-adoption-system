@@ -58,11 +58,9 @@ public class UserInfoServiceImpl implements UserInfoService {
     查找所有用户信息
      */
     @Override
-    public PageInfo<UserInfo> userFindAll(int pageNum, int pageSize) {
+    public List<UserInfo> userFindAll() {
         UserInfoMapper userInfoMapper = MyBatisUtil.getSession().getMapper(UserInfoMapper.class);
-        PageHelper.startPage(pageNum, pageSize);
-        List<UserInfo> userInfos = userInfoMapper.userFindAll();
-        return new PageInfo<>(userInfos);
+        return userInfoMapper.userFindAll();
     }
     /*
     在管理员界面根据用户id删除用户信息
