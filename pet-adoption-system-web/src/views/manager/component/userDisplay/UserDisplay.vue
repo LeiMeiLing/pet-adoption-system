@@ -5,14 +5,15 @@
   <lay-input v-model="data1" type="number" :max="300" :min="100"></lay-input>
 
   <lay-table :columns="columns"
-             :data-source="dataSource"
+             :data-source="data"
              :page="page">
 
   </lay-table>
 </template>
 
 <script setup>
-import {reactive} from "vue";
+import {onMounted, onUpdated, reactive} from "vue";
+import {list} from "./api.js";
 // import {userFindAll} from "./api.js";
 // import {list} from "./api.js";
 
@@ -24,13 +25,16 @@ const columns = [
   {title: '创建时间', key: 'createTime'},
   {title: '更新时间', key: 'updateTime'},
 ]
-const dataSource = reactive([])
-// function reload(){
-//   list().then(res =>{
-//     dataSource.length = 0
-//     dataSource.push(...res.data)
-//   })
-// }
+const data = reactive([])
+function reload(){
+  list().then(res=>{
+    data.length=0
+    data.push(...res.data)
+  })
+}
+onMounted(reload)
+onUpdated(reload)
+
 
 const page = reactive({
   total: 8,

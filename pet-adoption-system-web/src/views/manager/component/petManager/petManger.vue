@@ -6,10 +6,10 @@
         <lay-col md="8"><lay-input placeholder="请输入宠物id">
           <template #prepend>宠物id</template>
         </lay-input></lay-col>
-        <lay-col md="8"><lay-input placeholder="请输入宠物名">
+        <lay-col md="8"><lay-input placeholder="请输入宠物名" v-model="petInfo.petName">
           <template #prepend>宠物名</template>
         </lay-input></lay-col>
-        <lay-col md="8"><lay-input placeholder="请输入宠物品种">
+        <lay-col md="8"><lay-input placeholder="请输入宠物品种" >
           <template #prepend>品种</template>
         </lay-input></lay-col>
       </lay-col >
@@ -20,11 +20,11 @@
       <lay-col md="11"><lay-input placeholder="请输入性别">
         <template #prepend>性别</template>
       </lay-input></lay-col>
-      <lay-col md="11"><lay-input placeholder="请输入领养状态">
+      <lay-col md="11"><lay-input placeholder="请输入领养状态" v-model="petInfo.petStatus">
         <template #prepend>领养状态</template>
       </lay-input></lay-col>
       <lay-col md="2">
-        <lay-button type="normal">
+        <lay-button type="normal" @click="find">
           <lay-icon type="layui-icon-search">
           </lay-icon>
         </lay-button>
@@ -53,7 +53,7 @@
 <script setup>
 import {onMounted, onUpdated, reactive, ref} from 'vue';
 import { layer } from "@layui/layer-vue";
-import {list} from "./api.js";
+import {findSome, list} from "./api.js";
 
 var list1 = list();
 console.log(list1)
@@ -113,6 +113,19 @@ const page = ref({
       data.length=0
       data.push(...res.data.list)
     })
+    }
+
+
+    const petInfo=reactive({
+      petName:'',
+      petStatus:''
+
+    })
+    function find(){
+  findSome(petInfo.petName,petInfo.petStatus).then(res=>{
+    data.length=0;
+    data.push(...res.data.list)
+  })
     }
     onMounted(reload)
     onUpdated(reload)

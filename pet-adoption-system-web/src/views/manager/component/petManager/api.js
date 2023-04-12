@@ -6,3 +6,11 @@ export function list(){
         return res;
     })
 }
+
+export function findSome(petName,petStatus){
+    return http.get("/pet/findSome?petName="+petName+"&petStatus="+petStatus,{
+
+    }).then(res=>{
+        return res;
+    })
+}

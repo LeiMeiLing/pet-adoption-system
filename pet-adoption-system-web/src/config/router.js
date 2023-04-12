@@ -75,7 +75,27 @@ const routes = [
             path: '/userDisplay',
             name: 'userDisplay',
             component: () => import('../views/manager/component/userDisplay/UserDisplay.vue')
-        },]
+
+        },{
+            path:'/petInfo',
+            name:"petInfo",
+            component:()=>import('../views/manager/component/petManager/petManger.vue')
+        },{
+            path:'/adoption',
+            name:"adoption",
+            component:()=>import('../views/manager/component/AdoptionManger/AdoptionManger.vue')
+        },{
+            path:'/shopping',
+            name:"shopping",
+            component:()=>import('../views/manager/component/ShoppingManger/ShoppingManger.vue')
+        },{
+            path:'/comment',
+            name:"comment",
+            component:()=>import('../views/manager/component/CommentManger/CommentManger.vue')
+        }
+
+
+        ]
     }
 ]
 
