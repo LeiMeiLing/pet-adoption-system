@@ -9,7 +9,7 @@
         <lay-input placeholder="请输入密码" v-model="managerInfo.password" type="password"></lay-input>
       </lay-form-item>
       <lay-form-item class="btn">
-        <lay-button class="btn2" @click="onLogin" >登录</lay-button>
+        <lay-button  @click="onLogin" >登录</lay-button>
       </lay-form-item>
     </lay-form>
   </div>
@@ -42,18 +42,18 @@ function onLogin(){
 .manager{
   width: 100%;
   height: 100%;
-  background-image: url("../../../../public/注册.png");
+  background-image: url("../../../../public/注册1.png");
   background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;
 .manager-form{
   width: 450px;
-  height: 400px;
+  height: 300px;
   border: #ccc solid 1px;
   border-radius: 10px;
   background-color: rgba(255,255,255,0.5,);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(5px);
 .title{
   text-align: center;
   margin-bottom: 30px;
@@ -61,13 +61,14 @@ function onLogin(){
 .layui-input{
   width: 300px;
 }
-.btn{
-  width: 100%;
-  border: #638863;
-  color: white;
-.btn1{
-  background: #638863;
-}
+  .btn{
+    border: #638863;
+  }
+.layui-btn{
+  width: 200px;
+  color: #231b1b;
+  margin-left: 30px;
+
 }
 }
 }

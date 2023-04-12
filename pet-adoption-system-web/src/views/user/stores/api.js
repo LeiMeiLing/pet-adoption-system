@@ -3,7 +3,6 @@ import axios from "axios";
 
 export function findAll(){
     return http.get("/petstore/findAll", {
-
     }).then(res=>{
         return res;
     })
