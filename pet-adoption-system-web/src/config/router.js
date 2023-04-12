@@ -48,8 +48,8 @@ const routes = [
             component: () => import('../views/user/main/Index.vue')
         }, {
             //领养中心
-            path: '/adoption',
-            name: 'adoption',
+            path: '/userAdoption',
+            name: 'userAdoption',
             component: () => import('../views/user/adoption/Index.vue')
         }, {
             //宠物领养详细信息界面
