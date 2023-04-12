@@ -11,7 +11,7 @@
     <div id="app">
         <ul v-for="(item,index) in dataSource">
             <li class="item">
-                <div class="img_box"><img v-bind:src="item.goodsPicture" alt=""></div>
+                <div class="img_box" @click="click(item)"><img v-bind:src="item.goodsPicture" alt=""></div>
                 <p v-html="item.goodsDesc"></p>
                 <span :style="{color:'red'}">&yen;{{item.goodsPrice}}</span>
             </li>
@@ -25,6 +25,7 @@
 <script setup>
 import {reactive, ref} from "vue";
 import {findAll, findSome} from "./api.js";
+import router from "../../../config/router.js";
 
 let dataSource = reactive([])
 findAll().then(res=>{
@@ -32,22 +33,20 @@ findAll().then(res=>{
     dataSource.push(...res.data.list);
 })
 
-const mockData = ref([{
-    "id": 1,
-    "img": "https://img14.360buyimg.com/n1/jfs/t1/211613/18/13726/41078/61c48368E5fb2871c/88a2fe8a369cb2e1.jpg",
-    "text": "亿匚鑫 意式轻奢岩板餐桌椅组合家用小户型现代简约可伸缩方圆两用折叠实木圆桌子吃饭桌 【进口岩板】1.35米1桌6椅",
-    "price": 2799
-}]);
-
+function click(item){
+    router.push({
+        path:'/storesDetail',
+        query:item
+    })
+    // console.log(item)
+    // router.push({ name: 'storesDetail', params: { id }})
+}
 function getSome(){
   findSome(goodsInfo.goodsName,goodsInfo.goodsType).then(res=>{
   dataSource.length=0
   dataSource.push(...res.data.list);
 })
 }
-
-
-
 const goodsInfo = reactive({
     id:0,
     goodsType:"",

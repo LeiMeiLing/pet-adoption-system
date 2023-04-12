@@ -38,9 +38,16 @@ const routes = [
         component: () => import('../views/user/Index.vue'),
         redirect: '/home',
         children: [{
+            //商城界面
             path: '/stores',
             name: 'stores',
-            component: () => import('../views/user/stores/Index.vue')
+            component: () => import('../views/user/stores/Index.vue'),
+        }, {
+            //商品详情页
+            path: '/storesDetail',
+            name: 'storesDetail',
+            component: () => import('../views/user/stores/storesDetail.vue'),
+            props: { default: true, sidebar: false }
         }, {
             //首页
             path: '/home',

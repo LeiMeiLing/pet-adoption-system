@@ -97,6 +97,4 @@ public class ManageServlet extends HttpServlet {
         result.put("msg", "注册成功");
         resp.getWriter().write(gson.toJson(result));
     }
-
-
 }
