@@ -31,7 +31,43 @@ const routes = [
             noLogin: true
         }
     },
-
+    {
+        //个人中心主界面
+        path: '/personalCenter',
+        name: 'personalCenter',
+        redirect:'/center',
+        component: () => import('../views/user/personalCenter/Index.vue'),
+        meta: {
+            // 标记该路由不需要登录
+            noLogin: true
+        },
+        //个人中心
+        children: [{
+            path: '/center',
+            name: 'center',
+            component: () => import('../views/user/personalCenter/Center.vue')
+        },{//个人信息
+            path: '/information',
+            name: 'information',
+            component: () => import('../views/user/personalCenter/Information.vue')
+        },{//收货地址
+            path: '/address',
+            name: 'address',
+            component: () => import('../views/user/personalCenter/Address.vue')
+        },{//我的帖子
+            path: '/invitation',
+            name: 'invitation',
+            component: () => import('../views/user/personalCenter/Invitation.vue')
+        },{//领养申请
+            path: '/application',
+            name: 'application',
+            component: () => import('../views/user/personalCenter/Application.vue')
+        },{//转送宠物
+            path: '/transfer',
+            name: 'transfer',
+            component: () => import('../views/user/personalCenter/Transfer.vue')
+        },]
+    },
     {
         path: '/',
         name: 'main',
@@ -62,7 +98,7 @@ const routes = [
             name: 'petKnowledge',
             component: () => import('../views/user/petKnowledge/Index.vue')
         },{
-            //宠物领养详细信息界面
+            //宠物知识详细信息界面
             path: '/essay',
             name: 'essay',
             component: () => import('../views/user/petKnowledge/Essay.vue')
@@ -84,7 +120,7 @@ const router = createRouter({
     routes
 })
 
-// 导航守卫
+//导航守卫
 router.beforeEach((to, from) => {
     // 如果是目标路由不需要登录,则直接跳转
     NProgress.start()
