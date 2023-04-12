@@ -64,7 +64,7 @@ const routes = [
         children: [{
             path: '/userDisplay',
             name: 'userDisplay',
-            component: () => import('../views/manager/userDisplay/UserDisplay.vue')
+            component: () => import('../views/manager/component/userDisplay/UserDisplay.vue')
         },]
     }
 ]

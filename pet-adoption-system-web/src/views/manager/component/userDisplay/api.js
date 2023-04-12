@@ -1,7 +1,7 @@
 import axios, {get} from "axios";
 
-import http from "../../../config/http.js";
-import useLogin from "../../../stores/LoginStore.js";
+import http from "../../../../config/http.js";
+import useLogin from "../../../../stores/LoginStore.js";
 
 
 // export function userFindAll(username,email,phone,createTime,updateTime) {
