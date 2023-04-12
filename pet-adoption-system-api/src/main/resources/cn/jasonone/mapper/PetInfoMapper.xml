@@ -26,6 +26,22 @@
         from pet_info
         where  pet_id = #{petId,jdbcType=INTEGER} 
     </select>
+    <select id="findAllPet" resultType="cn.jasonone.bean.PetInfo">
+        select * from pet_info
+    </select>
+    <select id="findSome" resultType="cn.jasonone.bean.PetInfo">
+        select
+        <include refid="Base_Column_List" />
+        from pet_info
+        <where>
+            <if test="petName != null">pet_name like concat('%',#{petName},'%') </if>
+            <if test="petStatus != null">and pet_status like concat('%',#{petStatus},'%')</if>
+
+        </where>
+
+
+    </select>
+
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from pet_info

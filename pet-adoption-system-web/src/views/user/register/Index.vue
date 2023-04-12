@@ -42,7 +42,6 @@ const userInfo = ref({
 const labelPosition = ref('right');
 
 function onRegister(){
-  console.log(userInfo.value)
   register(userInfo.value).then(res=>{
     layer.msg(res.msg)
     router.push('/login')
@@ -59,7 +58,7 @@ function login(){
 .register{
   width: 100%;
   height: 100%;
-  background-image: url("../../../../public/注册.png");
+  background-image: url("../../../../public/注册2.png");
   background-size: cover;
   display: flex;
   justify-content: center;
@@ -79,15 +78,15 @@ function login(){
     .layui-input{
       width: 300px;
     }
+    .layui-btn{
+      margin-left: 35px;
+    }
     .btn{
       width: 100%;
       border: #638863;
       color: white;
       .btn1{
         background: #638863;
-      }
-      .btn2{
-
       }
     }
   }

@@ -30,12 +30,15 @@ public class UserInfoServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
+        userInfoService.setSqlSession(sqlSession);
         String requestURI = req.getRequestURI();
         // 去除contextPath
         requestURI = requestURI.substring(req.getContextPath().length());
         switch (requestURI) {
             case "/user/register":
                 register(req, resp);
+                sqlSession.commit();
                 break;
             case "/user/update":
                 update(req, resp);
@@ -133,7 +136,7 @@ public class UserInfoServlet extends HttpServlet {
         Gson gson = new Gson();
         switch (requestURI) {
             case "/user/findAll":
-                PageInfo<UserInfo> userInfo = userInfoService.userFindAll(pageNum, pageSize);
+                List<UserInfo> userInfo = userInfoService.userFindAll();
                 Map<String, Object> result = new HashMap<>();
                 result.put("code", 200);
                 result.put("msg", "获取成功");
