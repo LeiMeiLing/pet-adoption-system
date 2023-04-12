@@ -49,4 +49,11 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
         List<GoodsInfo> goodsInfos = goodsInfoMapper.fuzzyQueries(goods);
         return new PageInfo<>(goodsInfos);
     }
+
+    @Override
+    public GoodsInfo selectById(Integer id) {
+        GoodsInfoMapper goodsInfoMapper = MyBatisUtil.getSession().getMapper(GoodsInfoMapper.class);
+        GoodsInfo goodsInfo = goodsInfoMapper.selectByPrimaryKey((long) id);
+        return goodsInfo;
+    }
 }

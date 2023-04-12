@@ -1,11 +1,11 @@
 <template>
-<!--个人中心-->
+
 </template>
 
-<script>
+<script setup>
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
 </style>
