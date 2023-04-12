@@ -53,10 +53,20 @@ const routes = [
             component: () => import('../views/user/adoption/Index.vue')
         }, {
             //宠物领养详细信息界面
-            path: '/Info',
-            name: 'Info',
+            path: '/info',
+            name: 'info',
             component: () => import('../views/user/adoption/Info/Index.vue')
-        }]
+        },{
+            //宠物知识
+            path: '/petKnowledge',
+            name: 'petKnowledge',
+            component: () => import('../views/user/petKnowledge/Index.vue')
+        },{
+            //宠物领养详细信息界面
+            path: '/essay',
+            name: 'essay',
+            component: () => import('../views/user/petKnowledge/Essay.vue')
+        },]
     }, {
         path: '/admin',
         name: 'admin',
