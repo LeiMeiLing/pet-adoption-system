@@ -77,7 +77,7 @@ function cancel(){
   visible.value = !visible.value
 }
 function back(){
-  router.push('/adoption')
+  router.push('/userAdoption')
 }
 const petInfo=ref({
 
