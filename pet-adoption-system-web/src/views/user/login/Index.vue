@@ -19,7 +19,7 @@
           密&emsp;码：
         </lay-col>
         <lay-col md="16" lg="16" xm="24" sm="24">
-          <lay-input v-model="userInfo.password" placeholder="请输入密码"></lay-input>
+          <lay-input v-model="userInfo.password" type="password" placeholder="请输入密码"></lay-input>
         </lay-col>
       </lay-row>
       <lay-row>
@@ -76,7 +76,7 @@ function onLogin(e) {
   height: 100%;
   display: flex;
   align-items: center;
-  background: url("../../../../public/注册.png");
+  background: url("../../../../public/注册1.png");
   background-size: cover;
 &>.layui-col{
    line-height: 50px;
@@ -84,6 +84,9 @@ function onLogin(e) {
    backdrop-filter: blur(2px);
    border-radius: 5px;
  }
+  a{
+    color: #231b1b;
+  }
 }
 .title{
   display: flex;

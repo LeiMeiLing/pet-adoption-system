@@ -66,6 +66,16 @@ const routes = [
             path: '/essay',
             name: 'essay',
             component: () => import('../views/user/petKnowledge/Essay.vue')
+        },{
+            //宠物转让界面
+            path: '/transfer',
+            name: 'transfer',
+            component: () => import('../views/user/transfer/Index.vue')
+        },{
+            //宠物转让详情界面
+            path: '/detailed',
+            name: 'detailed',
+            component: () => import('../views/user/transfer/Info/Index.vue')
         },]
     }, {
         path: '/admin',
