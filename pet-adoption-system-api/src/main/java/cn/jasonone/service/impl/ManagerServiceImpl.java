@@ -7,7 +7,6 @@ import cn.jasonone.bean.UserInfo;
 import cn.jasonone.mapper.GoodsInfoMapper;
 import cn.jasonone.mapper.ManagerInfoMapper;
 import cn.jasonone.service.ManagerService;
-import cn.jasonone.util.MyBatisUtil;
 import lombok.Setter;
 import org.apache.ibatis.session.SqlSession;
 
@@ -27,7 +26,7 @@ public class ManagerServiceImpl implements ManagerService {
     }
     @Override
     public ManagerInfo login(ManagerInfo managerInfo) {
-        ManagerInfoMapper managerInfoMapper = MyBatisUtil.getSession().getMapper(ManagerInfoMapper.class);
+        ManagerInfoMapper managerInfoMapper = sqlSession.getMapper(ManagerInfoMapper.class);
         ManagerInfo manager = managerInfoMapper.findByUsername(managerInfo.getUsername());
         if(manager != null){
             // 获得盐

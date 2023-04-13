@@ -76,6 +76,8 @@ public class GoodsServlet extends HttpServlet {
      */
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
+        gs.setSqlSession(sqlSession);
         String requestURI = req.getRequestURI();
         requestURI = requestURI.substring(req.getContextPath().length());
         switch (requestURI) {
@@ -100,6 +102,8 @@ public class GoodsServlet extends HttpServlet {
      */
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
+        gs.setSqlSession(sqlSession);
         Gson gson = new Gson();
 
         GoodsInfo goods = gson.fromJson(req.getReader(), GoodsInfo.class);

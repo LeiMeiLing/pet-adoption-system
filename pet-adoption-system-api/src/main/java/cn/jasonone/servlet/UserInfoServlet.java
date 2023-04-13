@@ -1,5 +1,6 @@
 package cn.jasonone.servlet;
 
+import cn.hutool.json.ObjectMapper;
 import cn.hutool.jwt.JWTUtil;
 import cn.jasonone.bean.GoodsInfo;
 import cn.jasonone.bean.UserInfo;
@@ -144,7 +145,7 @@ public class UserInfoServlet extends HttpServlet {
                 result.put("code", 200);
                 result.put("msg", "获取成功");
                 result.put("data", userInfo);
-                resp.getWriter().write(gson.toJson(result));
+                gson.toJson(result,resp.getWriter());
                 sqlSession.commit();
                 break;
             case "/user/findSome":

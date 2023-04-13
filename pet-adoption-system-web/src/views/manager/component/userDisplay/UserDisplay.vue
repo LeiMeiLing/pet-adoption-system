@@ -119,13 +119,13 @@ function updateUserInfo() {
 
   layer.msg("修改成功")
   updateUserDisplay.value = false
-  find()
+  reload()
 }
 
 function reload() {
   list(user.username, user.email, user.phone, page.limit, page.current).then(res => {
     data.length = 0
-    console.log(res);
+    console.log(res.data);
     data.push(...res.data.list)
     page.current = res.data.current
     page.total = res.data.total
@@ -161,7 +161,7 @@ function deleteUser(row) {
           deleteUserInfo(row)
           layer.msg("删除成功")
           layer.close(id)
-          find()
+          reload()
         }
       }
     ]
@@ -188,7 +188,7 @@ function onPageChange({current, limit}) {
 
 
 onMounted(reload)
-onUpdated(reload)
+/*onUpdated(reload)*/
 </script>
 
 <style scoped lang="scss">
