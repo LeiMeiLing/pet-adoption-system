@@ -50,5 +50,10 @@ public class AdoptInfo implements Serializable {
      */
     private Date updateTime;
 
+    /**
+     * 申请说明
+     */
+    private String describe;
+
     private static final long serialVersionUID = 1L;
 }
