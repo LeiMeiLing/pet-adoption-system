@@ -3,20 +3,26 @@
     <lay-layout>
       <lay-side >
         <lay-menu  class="menu" :selected-key="selectedKey" @change-selected-Key="changeSelectedKey" @change-open-keys="changeOpenKeys" v-model:openKeys="openKeys2" :tree="true">
-        <lay-menu-item id="1" to="/center">个人中心</lay-menu-item>
-        <lay-menu-item id="2"  @click="changeVisible1">个人信息
-          <lay-layer title="基础使用" v-model="visible1" :area="['500px','500px']">
-            内容
-          </lay-layer>
-        </lay-menu-item>
-        <lay-menu-item id="3" to="/address">收货地址</lay-menu-item>
-        <lay-menu-item id="4" to="/invitation">我的帖子</lay-menu-item>
-        <lay-menu-item id="5" to="application">领养申请</lay-menu-item>
-        <lay-menu-item id="6" to="transfer">转送宠物</lay-menu-item>
+          <lay-menu-item id="1" to="center">个人中心</lay-menu-item>
+          <lay-menu-item id="2"  @click="visible1=true">个人信息</lay-menu-item>
+          <lay-menu-item id="3"  @click="visible2=true">收货地址</lay-menu-item>
+          <lay-menu-item id="4"  @click="visible3=true">修改密码</lay-menu-item>
+          <lay-menu-item id="5" to="application">领养申请</lay-menu-item>
+          <lay-menu-item id="6" >转送宠物</lay-menu-item>
+          <lay-menu-item id="7"  @click="visible1=true">退出登录</lay-menu-item>
       </lay-menu></lay-side>
       <lay-body>
        <router-view></router-view>
       </lay-body>
+      <lay-layer :title="'个人信息'" v-model="visible1">
+        <information/>
+      </lay-layer>
+      <lay-layer :title="'收货地址'" v-model="visible2">
+        <Address/>
+      </lay-layer>
+      <lay-layer :title="'修改密码'" v-model="visible3">
+        <Password/>
+      </lay-layer>
     </lay-layout>
 
 
@@ -25,12 +31,15 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
-import { useRoute, useRouter } from "vue-router";
-const visible1 = ref(false)
-const changeVisible1 = function() {
-  visible1.value = !visible1.value
-}
+import { ref} from "vue";
+import Information from "./information/Information.vue";
+import Address from "./address/Address.vue";
+import Password from "./password/Password.vue"
+import {layer} from "@layui/layui-vue";
+
+const visible1= ref(false)
+const visible2= ref(false)
+const visible3= ref(false)
 const openKeys2 = ref(["1"])
 const selectedKey = ref("1")
 const changeSelectedKey = (val) => {

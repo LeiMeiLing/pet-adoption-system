@@ -81,11 +81,6 @@ public class UserInfoServlet extends HttpServlet {
 
         userInfo = userInfoService.login(userInfo);
         Map<String, Object> result = new HashMap<>();
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         if (userInfo == null) {
             result.put("code", 400);
             result.put("msg", "用户名或密码错误");
