@@ -21,9 +21,24 @@ public class TransferInfo implements Serializable {
     private String title;
 
     /**
-     * 宠物名
+     * 宠物昵称
      */
     private String petname;
+
+    /**
+     * 转让人用户名
+     */
+    private String transferName;
+
+    /**
+     * 转让情况说明
+     */
+    private String transferCause;
+
+    /**
+     * 宠物照片
+     */
+    private String picture;
 
     /**
      * 种类

@@ -38,7 +38,7 @@ const total = ref(10)
 const currentPage = ref(1);
 
 function onAdoption(){
-  router.push('/Info')
+  router.push('/info')
 }
 </script>
 
@@ -54,13 +54,21 @@ function onAdoption(){
   justify-content: center;
   align-items: center;
 }
-
+.layui-page{
+  text-align: center;
+}
   img{
     border: 5px solid #638863;
     height: 300px;
     width: 300px;
     border-radius: 50%;
     margin-right: 50px;
+    cursor: pointer;
+  }
+  img:hover{
+    transition: all 0.3s;/* 上浮这个过程需要的时间 */
+    box-shadow: 0 16px 32px 0 rgba(48, 55, 66, 0.15);/* 鼠标悬浮时盒子出现的阴影 */
+    transform: translate(0, -5px);/* 鼠标悬浮时盒子上移10px */
   }
   text-align: center;
 h1{

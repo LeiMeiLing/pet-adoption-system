@@ -58,8 +58,8 @@ function onEssay(){
   }
 }
 .title{
+  cursor:pointer;
   font-size: 28px;
-
 }
 .content{
   color: #5b5454;

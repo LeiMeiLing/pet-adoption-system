@@ -13,12 +13,13 @@
             <result property="petStatus" column="pet_status" jdbcType="VARCHAR"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="describe" column="describe" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,username,petName,
         variety,pet_sex,pet_status,
-        create_time,update_time
+        create_time,update_time,describe
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -36,10 +37,12 @@
         insert into adopt_info
         ( id,username,petName
         ,variety,pet_sex,pet_status
-        ,create_time,update_time)
+        ,create_time,update_time,describe
+        )
         values (#{id,jdbcType=INTEGER},#{username,jdbcType=VARCHAR},#{petname,jdbcType=VARCHAR}
         ,#{variety,jdbcType=CHAR},#{petSex,jdbcType=CHAR},#{petStatus,jdbcType=VARCHAR}
-        ,#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP})
+        ,#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},#{describe,jdbcType=VARCHAR}
+        )
     </insert>
     <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cn.jasonone.bean.AdoptInfo" useGeneratedKeys="true">
         insert into adopt_info
@@ -52,6 +55,7 @@
                 <if test="petStatus != null">pet_status,</if>
                 <if test="createTime != null">create_time,</if>
                 <if test="updateTime != null">update_time,</if>
+                <if test="describe != null">describe,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
                 <if test="id != null">#{id,jdbcType=INTEGER},</if>
@@ -62,6 +66,7 @@
                 <if test="petStatus != null">#{petStatus,jdbcType=VARCHAR},</if>
                 <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
                 <if test="updateTime != null">#{updateTime,jdbcType=TIMESTAMP},</if>
+                <if test="describe != null">#{describe,jdbcType=VARCHAR},</if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="cn.jasonone.bean.AdoptInfo">
@@ -88,6 +93,9 @@
                 <if test="updateTime != null">
                     update_time = #{updateTime,jdbcType=TIMESTAMP},
                 </if>
+                <if test="describe != null">
+                    describe = #{describe,jdbcType=VARCHAR},
+                </if>
         </set>
         where   id = #{id,jdbcType=INTEGER} 
     </update>
@@ -100,7 +108,8 @@
             pet_sex =  #{petSex,jdbcType=CHAR},
             pet_status =  #{petStatus,jdbcType=VARCHAR},
             create_time =  #{createTime,jdbcType=TIMESTAMP},
-            update_time =  #{updateTime,jdbcType=TIMESTAMP}
+            update_time =  #{updateTime,jdbcType=TIMESTAMP},
+            describe =  #{describe,jdbcType=VARCHAR}
         where   id = #{id,jdbcType=INTEGER} 
     </update>
 </mapper>

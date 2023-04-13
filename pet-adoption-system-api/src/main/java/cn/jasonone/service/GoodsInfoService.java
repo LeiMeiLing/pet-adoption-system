@@ -16,4 +16,6 @@ public interface GoodsInfoService {
     void update(GoodsInfo goods);
     //根据商品类型和名字模糊查询
     PageInfo<GoodsInfo> selectNameOrType(int pageNum, int pageSize, GoodsInfo goods);
+
+    GoodsInfo selectById(Integer id);
 }

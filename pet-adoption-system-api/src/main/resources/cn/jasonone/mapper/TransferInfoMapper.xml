@@ -8,6 +8,9 @@
             <id property="id" column="id" jdbcType="INTEGER"/>
             <result property="title" column="title" jdbcType="VARCHAR"/>
             <result property="petname" column="petName" jdbcType="VARCHAR"/>
+            <result property="transferName" column="transfer_name" jdbcType="VARCHAR"/>
+            <result property="transferCause" column="transfer_cause" jdbcType="VARCHAR"/>
+            <result property="picture" column="picture" jdbcType="VARCHAR"/>
             <result property="variety" column="variety" jdbcType="CHAR"/>
             <result property="petSex" column="pet_sex" jdbcType="CHAR"/>
             <result property="city" column="city" jdbcType="VARCHAR"/>
@@ -18,6 +21,7 @@
 
     <sql id="Base_Column_List">
         id,title,petName,
+        transfer_name,transfer_cause,picture,
         variety,pet_sex,city,
         pet_status,create_time,update_time
     </sql>
@@ -36,10 +40,12 @@
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.jasonone.bean.TransferInfo" useGeneratedKeys="true">
         insert into transfer_info
         ( id,title,petName
+        ,transfer_name,transfer_cause,picture
         ,variety,pet_sex,city
         ,pet_status,create_time,update_time
         )
         values (#{id,jdbcType=INTEGER},#{title,jdbcType=VARCHAR},#{petname,jdbcType=VARCHAR}
+        ,#{transferName,jdbcType=VARCHAR},#{transferCause,jdbcType=VARCHAR},#{picture,jdbcType=VARCHAR}
         ,#{variety,jdbcType=CHAR},#{petSex,jdbcType=CHAR},#{city,jdbcType=VARCHAR}
         ,#{petStatus,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP}
         )
@@ -50,6 +56,9 @@
                 <if test="id != null">id,</if>
                 <if test="title != null">title,</if>
                 <if test="petname != null">petName,</if>
+                <if test="transferName != null">transfer_name,</if>
+                <if test="transferCause != null">transfer_cause,</if>
+                <if test="picture != null">picture,</if>
                 <if test="variety != null">variety,</if>
                 <if test="petSex != null">pet_sex,</if>
                 <if test="city != null">city,</if>
@@ -61,6 +70,9 @@
                 <if test="id != null">#{id,jdbcType=INTEGER},</if>
                 <if test="title != null">#{title,jdbcType=VARCHAR},</if>
                 <if test="petname != null">#{petname,jdbcType=VARCHAR},</if>
+                <if test="transferName != null">#{transferName,jdbcType=VARCHAR},</if>
+                <if test="transferCause != null">#{transferCause,jdbcType=VARCHAR},</if>
+                <if test="picture != null">#{picture,jdbcType=VARCHAR},</if>
                 <if test="variety != null">#{variety,jdbcType=CHAR},</if>
                 <if test="petSex != null">#{petSex,jdbcType=CHAR},</if>
                 <if test="city != null">#{city,jdbcType=VARCHAR},</if>
@@ -77,6 +89,15 @@
                 </if>
                 <if test="petname != null">
                     petName = #{petname,jdbcType=VARCHAR},
+                </if>
+                <if test="transferName != null">
+                    transfer_name = #{transferName,jdbcType=VARCHAR},
+                </if>
+                <if test="transferCause != null">
+                    transfer_cause = #{transferCause,jdbcType=VARCHAR},
+                </if>
+                <if test="picture != null">
+                    picture = #{picture,jdbcType=VARCHAR},
                 </if>
                 <if test="variety != null">
                     variety = #{variety,jdbcType=CHAR},
@@ -104,6 +125,9 @@
         set 
             title =  #{title,jdbcType=VARCHAR},
             petName =  #{petname,jdbcType=VARCHAR},
+            transfer_name =  #{transferName,jdbcType=VARCHAR},
+            transfer_cause =  #{transferCause,jdbcType=VARCHAR},
+            picture =  #{picture,jdbcType=VARCHAR},
             variety =  #{variety,jdbcType=CHAR},
             pet_sex =  #{petSex,jdbcType=CHAR},
             city =  #{city,jdbcType=VARCHAR},
