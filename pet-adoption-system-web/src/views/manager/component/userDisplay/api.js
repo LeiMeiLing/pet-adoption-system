@@ -9,7 +9,6 @@ export function updateUser(row) {
             "username":row.username,
             "email":row.email,
             "phone":row.phone
-
     }).then(res=>{
         return res;
     })
@@ -36,10 +35,10 @@ export function findSome(username,email,phone){
 /*
 删除用户方法
  */
-export function deleteUserInfo(row){
+export function deleteUserInfo(id){
     return http.delete("/user", {
         data:{
-            "id":row.id
+            "id":id
         }
     },).then(res=>{
         return res;

@@ -168,6 +168,8 @@ public class UserInfoServlet extends HttpServlet {
      */
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
+        userInfoService.setSqlSession(sqlSession);
         Gson gson = new Gson();
         UserInfo userInfo = gson.fromJson(req.getReader(), UserInfo.class);
         userInfoService.delete((long) userInfo.getId());
@@ -175,12 +177,15 @@ public class UserInfoServlet extends HttpServlet {
         result.put("code", 200);
         result.put("msg", "删除成功");
         resp.getWriter().write(gson.toJson(result));
+        sqlSession.commit();
     }
 
     /*
     管理员界面对用户信息进行更新
      */
     private void update(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
+        userInfoService.setSqlSession(sqlSession);
         Gson gson = new Gson();
         UserInfo userInfo = gson.fromJson(req.getReader(), UserInfo.class);
         userInfoService.update(userInfo);
@@ -199,6 +204,5 @@ public class UserInfoServlet extends HttpServlet {
         userInfo.setEmail(email);
         userInfo.setPhone(phone);
         return userInfoService.selectNameOrType(pageNum, pageSize, userInfo);
-
     }
 }
