@@ -13,6 +13,7 @@
           <root url="file://$MODULE_DIR$/pet-adoption-system-api/src/main/java" />
           <root url="file://$MODULE_DIR$/pet-adoption-system-api/src/main/resources" />
           <root url="file://$MODULE_DIR$/pet-adoption-system-api/target/generated-sources/annotations" />
+
         </sourceRoots>
       </configuration>
     </facet>
