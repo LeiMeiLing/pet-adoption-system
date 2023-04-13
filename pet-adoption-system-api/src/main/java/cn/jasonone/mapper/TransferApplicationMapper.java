@@ -2,6 +2,8 @@ package cn.jasonone.mapper;
 
 import cn.jasonone.bean.TransferApplication;
 
+import java.util.List;
+
 /**
 * @author DELL
 * @description 针对表【transfer_application(转让申请信息表)】的数据库操作Mapper
@@ -10,13 +12,16 @@ import cn.jasonone.bean.TransferApplication;
 */
 public interface TransferApplicationMapper {
 
-    int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(Integer id);
 
-    int insert(TransferApplication record);
+    int insert(TransferApplication application);
+
+    List<TransferApplication> findAll();
+
 
     int insertSelective(TransferApplication record);
 
-    TransferApplication selectByPrimaryKey(Long id);
+    TransferApplication selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(TransferApplication record);
 
