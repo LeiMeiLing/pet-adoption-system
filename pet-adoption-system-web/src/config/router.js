@@ -35,7 +35,7 @@ const routes = [
         //个人中心主界面
         path: '/personalCenter',
         name: 'personalCenter',
-        redirect:'/center',
+        redirect:'/personalCenter/center',
         component: () => import('../views/user/personalCenter/Index.vue'),
         meta: {
             // 标记该路由不需要登录
@@ -43,29 +43,29 @@ const routes = [
         },
         //个人中心
         children: [{
-            path: '/center',
+            path: 'center',
             name: 'center',
-            component: () => import('../views/user/personalCenter/Center.vue')
+            component: () => import('../views/user/personalCenter/center/Center.vue')
         },{//个人信息
-            path: '/information',
+            path: 'information',
             name: 'information',
-            component: () => import('../views/user/personalCenter/Information.vue')
+            component: () => import('../views/user/personalCenter/information/Information.vue')
         },{//收货地址
-            path: '/address',
+            path: 'address',
             name: 'address',
-            component: () => import('../views/user/personalCenter/Address.vue')
-        },{//我的帖子
-            path: '/invitation',
-            name: 'invitation',
-            component: () => import('../views/user/personalCenter/Invitation.vue')
+            component: () => import('../views/user/personalCenter/address/Address.vue')
+        },{//修改密码
+            path: 'password',
+            name: 'password',
+            component: () => import('../views/user/personalCenter/password/Password.vue')
         },{//领养申请
-            path: '/application',
+            path: 'application',
             name: 'application',
-            component: () => import('../views/user/personalCenter/Application.vue')
+            component: () => import('../views/user/personalCenter/application/Application.vue')
         },{//转送宠物
-            path: '/transfer',
+            path: 'transfer',
             name: 'transfer',
-            component: () => import('../views/user/personalCenter/Transfer.vue')
+            component: () => import('../views/user/personalCenter/transfer/Transfer.vue')
         },]
     },
     {

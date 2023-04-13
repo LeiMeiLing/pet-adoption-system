@@ -28,7 +28,7 @@
 import {useRouter} from "vue-router";
 import { layer } from  "@layui/layui-vue"
 import {ref} from "vue";
-import Invitation from "./Invitation.vue";
+import Invitation from "../invitation/Invitation.vue";
 import Album from "./Album.vue";
 const current2 = ref("1")
 
