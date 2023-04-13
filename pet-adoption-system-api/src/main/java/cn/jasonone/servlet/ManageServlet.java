@@ -21,10 +21,10 @@ import java.util.HashMap;
 import java.util.Map;
 @WebServlet("/manager/*")
 public class ManageServlet extends HttpServlet {
-    private ManagerService managerService = new ManagerServiceImpl();
+    ManagerService managerService = new ManagerServiceImpl();
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+            ManagerService managerService = new ManagerServiceImpl();
             String requestURI = req.getRequestURI();
             // 去除contextPath
             requestURI = requestURI.substring(req.getContextPath().length());
@@ -57,7 +57,6 @@ public class ManageServlet extends HttpServlet {
     private void login(HttpServletRequest req, HttpServletResponse resp) throws IOException  {
         Gson gson = new Gson();
         ManagerInfo managerInfo = gson.fromJson(req.getReader(), ManagerInfo.class);
-        System.out.println(managerInfo);
         managerInfo=managerService.login(managerInfo);
         Map<String,Object> result = new HashMap<>();
         try {
@@ -88,6 +87,7 @@ public class ManageServlet extends HttpServlet {
     private void register(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 //        String username = req.getParameter("username");
 //        String password = req.getParameter("password");
+        ManagerService managerService = new ManagerServiceImpl();
         Gson gson = new Gson();
         ManagerInfo managerInfo= gson.fromJson(req.getReader(), ManagerInfo.class);
 
@@ -97,6 +97,4 @@ public class ManageServlet extends HttpServlet {
         result.put("msg", "注册成功");
         resp.getWriter().write(gson.toJson(result));
     }
-
-
 }

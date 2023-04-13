@@ -3,7 +3,6 @@ package cn.jasonone.service;
 import cn.jasonone.bean.GoodsInfo;
 import cn.jasonone.bean.PetInfo;
 import cn.jasonone.mapper.GoodsInfoMapper;
-import cn.jasonone.util.MyBatisUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.Setter;

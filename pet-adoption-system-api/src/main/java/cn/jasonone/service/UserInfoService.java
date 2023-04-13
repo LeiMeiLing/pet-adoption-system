@@ -31,7 +31,7 @@ public interface UserInfoService {
      * 获取用户列表显示在页面上
      * @return
      */
-    List<UserInfo> userFindAll();
+    PageInfo<UserInfo> userFindAll(int pageNum, int pageSize);
 
     /*
     管理员删除用户信息

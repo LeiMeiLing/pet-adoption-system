@@ -2,18 +2,14 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.jasonone.mapper.TransferInfoMapper">
+<mapper namespace="cn.jasonone.mapper.TransferApplicationMapper">
 
-    <resultMap id="BaseResultMap" type="cn.jasonone.bean.TransferInfo">
+    <resultMap id="BaseResultMap" type="cn.jasonone.bean.TransferApplication">
             <id property="id" column="id" jdbcType="INTEGER"/>
             <result property="title" column="title" jdbcType="VARCHAR"/>
             <result property="petname" column="petName" jdbcType="VARCHAR"/>
             <result property="transferName" column="transfer_name" jdbcType="VARCHAR"/>
             <result property="transferCause" column="transfer_cause" jdbcType="VARCHAR"/>
-            <result property="picture" column="picture" jdbcType="VARCHAR"/>
-            <result property="variety" column="variety" jdbcType="CHAR"/>
-            <result property="petSex" column="pet_sex" jdbcType="CHAR"/>
-            <result property="city" column="city" jdbcType="VARCHAR"/>
             <result property="petStatus" column="pet_status" jdbcType="VARCHAR"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
@@ -21,47 +17,41 @@
 
     <sql id="Base_Column_List">
         id,title,petName,
-        transfer_name,transfer_cause,picture,
-        variety,pet_sex,city,
-        pet_status,create_time,update_time
+        transfer_name,transfer_cause,pet_status,
+        create_time,update_time
     </sql>
 
-    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <select id="selectByPrimaryKey"  resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from transfer_info
+        from transfer_application
         where  id = #{id,jdbcType=INTEGER} 
+    </select>
+    <select id="findAll" resultType="cn.jasonone.bean.TransferApplication">
+        select   <include refid="Base_Column_List" /> from transfer_application
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        delete from transfer_info
+        delete from transfer_application
         where  id = #{id,jdbcType=INTEGER} 
     </delete>
-    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.jasonone.bean.TransferInfo" useGeneratedKeys="true">
-        insert into transfer_info
-        ( id,title,petName
-        ,transfer_name,transfer_cause,picture
-        ,variety,pet_sex,city
-        ,pet_status,create_time,update_time
-        )
-        values (#{id,jdbcType=INTEGER},#{title,jdbcType=VARCHAR},#{petname,jdbcType=VARCHAR}
-        ,#{transferName,jdbcType=VARCHAR},#{transferCause,jdbcType=VARCHAR},#{picture,jdbcType=VARCHAR}
-        ,#{variety,jdbcType=CHAR},#{petSex,jdbcType=CHAR},#{city,jdbcType=VARCHAR}
-        ,#{petStatus,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP}
-        )
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.jasonone.bean.TransferApplication" useGeneratedKeys="true">
+        insert into transfer_application
+        ( title,petName
+        ,transfer_name,transfer_cause,pet_status
+        ,create_time,update_time)
+        values (#{title,jdbcType=VARCHAR},#{petname,jdbcType=VARCHAR}
+        ,#{transferName,jdbcType=VARCHAR},#{transferCause,jdbcType=VARCHAR},#{petStatus,jdbcType=VARCHAR}
+        ,#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cn.jasonone.bean.TransferInfo" useGeneratedKeys="true">
-        insert into transfer_info
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cn.jasonone.bean.TransferApplication" useGeneratedKeys="true">
+        insert into transfer_application
         <trim prefix="(" suffix=")" suffixOverrides=",">
                 <if test="id != null">id,</if>
                 <if test="title != null">title,</if>
                 <if test="petname != null">petName,</if>
                 <if test="transferName != null">transfer_name,</if>
                 <if test="transferCause != null">transfer_cause,</if>
-                <if test="picture != null">picture,</if>
-                <if test="variety != null">variety,</if>
-                <if test="petSex != null">pet_sex,</if>
-                <if test="city != null">city,</if>
                 <if test="petStatus != null">pet_status,</if>
                 <if test="createTime != null">create_time,</if>
                 <if test="updateTime != null">update_time,</if>
@@ -72,17 +62,13 @@
                 <if test="petname != null">#{petname,jdbcType=VARCHAR},</if>
                 <if test="transferName != null">#{transferName,jdbcType=VARCHAR},</if>
                 <if test="transferCause != null">#{transferCause,jdbcType=VARCHAR},</if>
-                <if test="picture != null">#{picture,jdbcType=VARCHAR},</if>
-                <if test="variety != null">#{variety,jdbcType=CHAR},</if>
-                <if test="petSex != null">#{petSex,jdbcType=CHAR},</if>
-                <if test="city != null">#{city,jdbcType=VARCHAR},</if>
                 <if test="petStatus != null">#{petStatus,jdbcType=VARCHAR},</if>
                 <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
                 <if test="updateTime != null">#{updateTime,jdbcType=TIMESTAMP},</if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="cn.jasonone.bean.TransferInfo">
-        update transfer_info
+    <update id="updateByPrimaryKeySelective" parameterType="cn.jasonone.bean.TransferApplication">
+        update transfer_application
         <set>
                 <if test="title != null">
                     title = #{title,jdbcType=VARCHAR},
@@ -96,18 +82,6 @@
                 <if test="transferCause != null">
                     transfer_cause = #{transferCause,jdbcType=VARCHAR},
                 </if>
-                <if test="picture != null">
-                    picture = #{picture,jdbcType=VARCHAR},
-                </if>
-                <if test="variety != null">
-                    variety = #{variety,jdbcType=CHAR},
-                </if>
-                <if test="petSex != null">
-                    pet_sex = #{petSex,jdbcType=CHAR},
-                </if>
-                <if test="city != null">
-                    city = #{city,jdbcType=VARCHAR},
-                </if>
                 <if test="petStatus != null">
                     pet_status = #{petStatus,jdbcType=VARCHAR},
                 </if>
@@ -120,17 +94,13 @@
         </set>
         where   id = #{id,jdbcType=INTEGER} 
     </update>
-    <update id="updateByPrimaryKey" parameterType="cn.jasonone.bean.TransferInfo">
-        update transfer_info
+    <update id="updateByPrimaryKey" parameterType="cn.jasonone.bean.TransferApplication">
+        update transfer_application
         set 
             title =  #{title,jdbcType=VARCHAR},
             petName =  #{petname,jdbcType=VARCHAR},
             transfer_name =  #{transferName,jdbcType=VARCHAR},
             transfer_cause =  #{transferCause,jdbcType=VARCHAR},
-            picture =  #{picture,jdbcType=VARCHAR},
-            variety =  #{variety,jdbcType=CHAR},
-            pet_sex =  #{petSex,jdbcType=CHAR},
-            city =  #{city,jdbcType=VARCHAR},
             pet_status =  #{petStatus,jdbcType=VARCHAR},
             create_time =  #{createTime,jdbcType=TIMESTAMP},
             update_time =  #{updateTime,jdbcType=TIMESTAMP}

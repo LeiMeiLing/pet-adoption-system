@@ -8,7 +8,6 @@ import cn.jasonone.mapper.ManagerInfoMapper;
 import cn.jasonone.mapper.UserInfoMapper;
 import cn.jasonone.service.UserInfoService;
 import cn.hutool.core.util.RandomUtil;
-import cn.jasonone.util.MyBatisUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.Setter;
@@ -58,16 +57,18 @@ public class UserInfoServiceImpl implements UserInfoService {
     查找所有用户信息
      */
     @Override
-    public List<UserInfo> userFindAll() {
-        UserInfoMapper userInfoMapper = MyBatisUtil.getSession().getMapper(UserInfoMapper.class);
-        return userInfoMapper.userFindAll();
+    public PageInfo<UserInfo> userFindAll(int pageNum, int pageSize) {
+        UserInfoMapper userInfoMapper = sqlSession.getMapper(UserInfoMapper.class);
+        PageHelper.startPage(pageNum, pageSize);
+        List<UserInfo> userInfos = userInfoMapper.userFindAll();
+        return new PageInfo<>(userInfos);
     }
     /*
     在管理员界面根据用户id删除用户信息
      */
     @Override
     public void delete(Long id) {
-        UserInfoMapper userInfoMapper =MyBatisUtil.getSession().getMapper(UserInfoMapper.class);
+        UserInfoMapper userInfoMapper =sqlSession.getMapper(UserInfoMapper.class);
         userInfoMapper.deleteByPrimaryKey(id);
     }
 
@@ -76,13 +77,13 @@ public class UserInfoServiceImpl implements UserInfoService {
      */
     @Override
     public void update(UserInfo userInfo) {
-        UserInfoMapper userInfoMapper =MyBatisUtil.getSession().getMapper(UserInfoMapper.class);
+        UserInfoMapper userInfoMapper =sqlSession.getMapper(UserInfoMapper.class);
         userInfoMapper.updateByPrimaryKeySelective(userInfo);
     }
 
     @Override
     public PageInfo<UserInfo> selectNameOrType(int pageNum, int pageSize, UserInfo userInfo) {
-        UserInfoMapper userInfoMapper = MyBatisUtil.getSession().getMapper(UserInfoMapper.class);
+        UserInfoMapper userInfoMapper = sqlSession.getMapper(UserInfoMapper.class);
         PageHelper.startPage(pageNum, pageSize);
         List<UserInfo> userInfos = userInfoMapper.fuzzyQueries(userInfo);
         return new PageInfo<>(userInfos);

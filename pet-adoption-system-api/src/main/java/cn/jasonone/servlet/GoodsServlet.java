@@ -53,17 +53,18 @@ public class GoodsServlet extends HttpServlet {
                 result1.put("msg", "获取成功");
                 result1.put("data",some);
                 resp.getWriter().write(gson.toJson(result1));
-
                 break;
-
+            case "/petstore/findById":
+                GoodsInfo goodsInfo = findId(req, resp, gs);
+                Map<String,Object> rs = new HashMap<>();
+                rs.put("code", 200);
+                rs.put("msg", "获取成功");
+                rs.put("data",goodsInfo);
+                resp.getWriter().write(gson.toJson(rs));
+                break;
             default:
                 super.doPut(req, resp);
         }
-
-
-
-
-
     }
 
     /**
@@ -75,6 +76,8 @@ public class GoodsServlet extends HttpServlet {
      */
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
+        gs.setSqlSession(sqlSession);
         String requestURI = req.getRequestURI();
         requestURI = requestURI.substring(req.getContextPath().length());
         switch (requestURI) {
@@ -99,7 +102,10 @@ public class GoodsServlet extends HttpServlet {
      */
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
+        gs.setSqlSession(sqlSession);
         Gson gson = new Gson();
+
         GoodsInfo goods = gson.fromJson(req.getReader(), GoodsInfo.class);
         gs.delete((long)goods.getId());
         Map<String,Object> result = new HashMap<>();
@@ -136,6 +142,11 @@ public class GoodsServlet extends HttpServlet {
         goods.setGoodsname(goodsname);
         goods.setGoodsType(goodsType);
         return gs.selectNameOrType(pageNum,pageSize,goods);
-
+    }
+    private GoodsInfo findId(HttpServletRequest req, HttpServletResponse resp, GoodsInfoService gs){
+        Gson gson = new Gson();
+        String str = req.getParameter("goodsId");
+        int id = Integer.parseInt(str);
+        return gs.selectById(id);
     }
 }
