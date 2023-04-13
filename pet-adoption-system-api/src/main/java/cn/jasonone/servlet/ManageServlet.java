@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 @WebServlet("/manager/*")
 public class ManageServlet extends HttpServlet {
+    ManagerService managerService = new ManagerServiceImpl();
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             ManagerService managerService = new ManagerServiceImpl();
@@ -38,7 +39,6 @@ public class ManageServlet extends HttpServlet {
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ManagerService managerService = new ManagerServiceImpl();
         SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
         managerService.setSqlSession(sqlSession);
             String requestURI = req.getRequestURI();
@@ -55,10 +55,8 @@ public class ManageServlet extends HttpServlet {
     }
 
     private void login(HttpServletRequest req, HttpServletResponse resp) throws IOException  {
-        ManagerService managerService = new ManagerServiceImpl();
         Gson gson = new Gson();
         ManagerInfo managerInfo = gson.fromJson(req.getReader(), ManagerInfo.class);
-        System.out.println(managerInfo);
         managerInfo=managerService.login(managerInfo);
         Map<String,Object> result = new HashMap<>();
         try {

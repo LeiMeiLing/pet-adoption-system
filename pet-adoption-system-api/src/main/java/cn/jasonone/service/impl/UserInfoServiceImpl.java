@@ -8,7 +8,6 @@ import cn.jasonone.mapper.ManagerInfoMapper;
 import cn.jasonone.mapper.UserInfoMapper;
 import cn.jasonone.service.UserInfoService;
 import cn.hutool.core.util.RandomUtil;
-import cn.jasonone.util.MyBatisUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.Setter;
@@ -59,7 +58,7 @@ public class UserInfoServiceImpl implements UserInfoService {
      */
     @Override
     public PageInfo<UserInfo> userFindAll(int pageNum, int pageSize) {
-        UserInfoMapper userInfoMapper = MyBatisUtil.getSession().getMapper(UserInfoMapper.class);
+        UserInfoMapper userInfoMapper = sqlSession.getMapper(UserInfoMapper.class);
         PageHelper.startPage(pageNum, pageSize);
         List<UserInfo> userInfos = userInfoMapper.userFindAll();
         return new PageInfo<>(userInfos);
@@ -69,7 +68,7 @@ public class UserInfoServiceImpl implements UserInfoService {
      */
     @Override
     public void delete(Long id) {
-        UserInfoMapper userInfoMapper =MyBatisUtil.getSession().getMapper(UserInfoMapper.class);
+        UserInfoMapper userInfoMapper =sqlSession.getMapper(UserInfoMapper.class);
         userInfoMapper.deleteByPrimaryKey(id);
     }
 
@@ -78,7 +77,7 @@ public class UserInfoServiceImpl implements UserInfoService {
      */
     @Override
     public void update(UserInfo userInfo) {
-        UserInfoMapper userInfoMapper =MyBatisUtil.getSession().getMapper(UserInfoMapper.class);
+        UserInfoMapper userInfoMapper =sqlSession.getMapper(UserInfoMapper.class);
         userInfoMapper.updateByPrimaryKeySelective(userInfo);
     }
 

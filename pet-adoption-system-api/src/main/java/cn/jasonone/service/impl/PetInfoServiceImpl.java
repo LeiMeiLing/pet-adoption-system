@@ -5,7 +5,7 @@ import cn.jasonone.bean.PetInfo;
 import cn.jasonone.mapper.GoodsInfoMapper;
 import cn.jasonone.mapper.PetInfoMapper;
 import cn.jasonone.service.PetInfoService;
-import cn.jasonone.util.MyBatisUtil;
+
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.Setter;
@@ -19,19 +19,19 @@ public class PetInfoServiceImpl implements PetInfoService {
 
     @Override
     public void add(PetInfo petInfo) {
-        PetInfoMapper petInfoMapper = MyBatisUtil.getSession().getMapper(PetInfoMapper.class);
+        PetInfoMapper petInfoMapper = sqlSession.getMapper(PetInfoMapper.class);
         petInfoMapper.insert(petInfo);
     }
 
     @Override
     public void update(PetInfo petInfo) {
-        PetInfoMapper petInfoMapper = MyBatisUtil.getSession().getMapper(PetInfoMapper.class);
+        PetInfoMapper petInfoMapper = sqlSession.getMapper(PetInfoMapper.class);
         petInfoMapper.updateByPrimaryKey(petInfo);
     }
 
     @Override
     public PageInfo<PetInfo> selectNameOrType(int pageNum, int pageSize, PetInfo petInfo) {
-        PetInfoMapper petInfoMapper = MyBatisUtil.getSession().getMapper(PetInfoMapper.class);
+        PetInfoMapper petInfoMapper = sqlSession.getMapper(PetInfoMapper.class);
         PageHelper.startPage(pageNum, pageSize);
         List<PetInfo> some = petInfoMapper.findSome(petInfo);
         return new PageInfo<>(some);
@@ -39,7 +39,7 @@ public class PetInfoServiceImpl implements PetInfoService {
 
     @Override
     public PageInfo<PetInfo> findAllPet(int PageNum, int PageSize) {
-        PetInfoMapper PetInfo = MyBatisUtil.getSession().getMapper(PetInfoMapper.class);
+        PetInfoMapper PetInfo = sqlSession.getMapper(PetInfoMapper.class);
         PageHelper.startPage(PageNum, PageSize);
         List<PetInfo> pets = PetInfo.findAllPet();
         return new PageInfo<>(pets);

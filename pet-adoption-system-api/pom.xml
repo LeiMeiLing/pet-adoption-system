@@ -31,9 +31,9 @@
             <version>1.18.26</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-servlet-api</artifactId>
-            <version>8.0.52</version>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -55,6 +55,16 @@
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper</artifactId>
             <version>5.3.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.milyn</groupId>
+            <artifactId>jackson</artifactId>
+            <version>0.9.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.62</version>
         </dependency>
     </dependencies>
 
