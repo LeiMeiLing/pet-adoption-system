@@ -53,6 +53,7 @@ export function add(petStoreAdd){
         goodsPrice: petStoreAdd.goodsPrice,
         goodsDesc: petStoreAdd.goodsDesc,
         goodsStatus: petStoreAdd.goodsStatus,
+        goodsPicture:petStoreAdd.goodsPicture
     }).then(res=>{
         return res
 })

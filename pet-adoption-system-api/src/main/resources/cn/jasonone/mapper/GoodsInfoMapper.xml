@@ -45,11 +45,11 @@
         insert into goods_info
         ( goods_type,goodsname
         ,goods_price,goods_desc
-        ,goods_status
+        ,goods_status,goods_picture
         )
         values (#{goodsType,jdbcType=VARCHAR},#{goodsname,jdbcType=VARCHAR}
                ,#{goodsPrice,jdbcType=DECIMAL},#{goodsDesc,jdbcType=VARCHAR}
-               ,#{goodsStatus,jdbcType=INTEGER}
+               ,#{goodsStatus,jdbcType=INTEGER},#{goodsPicture}
                )
     </insert>
     <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cn.jasonone.bean.GoodsInfo" useGeneratedKeys="true">

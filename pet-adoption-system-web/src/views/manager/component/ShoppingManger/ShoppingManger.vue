@@ -1,21 +1,21 @@
 <template>
   <div class="user">
-<!--    <div class="up">-->
-<!--      <lay-input :allow-clear="true" v-model="user.username" placeholder="输入用户名">-->
-<!--        <template #prefix>用户名:</template>-->
-<!--      </lay-input>-->
+<!--    <div class="up">
+      <lay-input :allow-clear="true" v-model="user.username" placeholder="输入用户名">
+        <template #prefix>用户名:</template>
+      </lay-input>
 
-<!--      <lay-input :allow-clear="true" v-model="user.email" placeholder="输入邮箱">-->
-<!--        <template #prefix>邮箱:</template>-->
-<!--      </lay-input>-->
+      <lay-input :allow-clear="true" v-model="user.email" placeholder="输入邮箱">
+        <template #prefix>邮箱:</template>
+      </lay-input>
 
-<!--      <lay-input :allow-clear="true" v-model="user.phone" placeholder="输入手机号">-->
-<!--        <template #prefix>手机号:</template>-->
-<!--      </lay-input>-->
+      <lay-input :allow-clear="true" v-model="user.phone" placeholder="输入手机号">
+        <template #prefix>手机号:</template>
+      </lay-input>
 
-<!--      <lay-button type="normal" @click="find">-->
-<!--        <lay-icon type="layui-icon-search" size="30" @click="showUser(row)"></lay-icon></lay-button>-->
-<!--    </div>-->
+      <lay-button type="normal" @click="find">
+        <lay-icon type="layui-icon-search" size="30" @click="showUser(row)"></lay-icon></lay-button>
+    </div>-->
 
 
     <div class="table">
@@ -25,7 +25,10 @@
                  @change="onPageChange"
                  :default-toolbar="true"
                  even>
+
+
         <template #action="{row}">
+
 
           <lay-button type="danger" radius size="sm" style="width: 40px" @click="deleteUser(row)">
             <lay-icon type="layui-icon-delete" size="18"></lay-icon>
@@ -35,6 +38,10 @@
             <lay-icon type="layui-icon-edit" size="18" @click="showUser(row)"></lay-icon>
           </lay-button>
         </template>
+
+
+
+
         <template #toolbar>
           <lay-tooltip content="新增套餐">
             <lay-button type="primary" @click="addStoreVisibel=true">
@@ -53,6 +60,9 @@
         <lay-form-item label="名字">
           <lay-input v-model="petStoreAdd.goodsname" placeholder="请输入名字"></lay-input>
         </lay-form-item>
+
+        <input type="file" id="file" @change="handleFileChange">
+        <img :src="imgbase64" style="width: 150px"/>
 
         <lay-form-item label="价格">
           <lay-input v-model="petStoreAdd.goodsPrice" placeholder="请输入价格"></lay-input>
@@ -97,6 +107,39 @@
 
 </template>
 
+<script>
+var _fileObj;
+var abc;
+
+
+export default {
+  data(){
+    return{
+      imgbase64:""
+    }
+  },
+  methods:{
+    handleFileChange(e){
+      let file = e.target.files[0];
+
+
+      //缩略图
+      let fr = new FileReader()
+      fr.readAsDataURL(file)
+      /*fr.readAsBinaryString(file)*/
+      let that = this
+      fr.onload = function () {
+        that.imgbase64 = fr.result
+        abc=that.imgbase64
+      }
+    }
+  },
+  submit() {
+  }
+}
+</script>
+
+
 <script setup>
 import {onMounted, onUpdated, reactive, ref} from "vue";
 import {list} from "./api"
@@ -110,11 +153,14 @@ const username = ref("")
 const email = ref("")
 const phone = ref("")
 
+
+
 const columns = reactive([
   {title: "ID", key: "id", align: "center"},
   {title: "商品类型", key: "goodsType", align: "center"},
   {title: "商品名称", key: "goodsname", align: "center"},
   {title: "商品价格", key: "goodsPrice", align: "center"},
+  {title: "商品图片", key:"goodsPicture",align: "center"},
   {title: "商品描述", key: "goodsDesc", align: "center"},
   {title: "商品状态", key: "goodsStatus", align: "center"},
   {title: "创建时间", key: "createTime", align: "center"},
@@ -139,7 +185,8 @@ const petStoreAdd = reactive({
   goodsname: "",
   goodsPrice: "",
   goodsDesc: "",
-  goodsStatus: ""
+  goodsStatus: "",
+  goodsPicture:""
 })
 const userAdd = reactive({
   username: "",
@@ -195,6 +242,7 @@ function reload() {
 
 //新增用户
 function onAdd() {
+  petStoreAdd.goodsPicture = abc
   add(petStoreAdd)
   layer.msg("新增成功")
   addStoreVisibel.value = false;
