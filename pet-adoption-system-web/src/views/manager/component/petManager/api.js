@@ -9,8 +9,17 @@ export function list(){
 
 export function findSome(petName,petStatus){
     return http.get("/pet/findSome?petName="+petName+"&petStatus="+petStatus,{
-
     }).then(res=>{
+
+
+    })
+}
+export function petDele(petInfo){
+    return http.delete("/pet?petId=",{
+        data:{
+            "id":petInfo.petId
+        }
+    },).then(res=>{
         return res;
     })
 }

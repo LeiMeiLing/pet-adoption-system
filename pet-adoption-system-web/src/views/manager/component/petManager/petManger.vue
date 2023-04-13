@@ -35,8 +35,8 @@
     <lay-row space="10">
       <lay-col>
         <lay-table :columns="columns" :data-source="data" :page="page" @change="change">
-          <template #action>
-            <lay-button type="danger" size="sm">
+          <template #action="{row}">
+            <lay-button type="danger" size="sm" @click="petDelete(row)">
               <lay-icon type="layui-icon-delete" size="20px">
               </lay-icon>
             </lay-button>
@@ -57,7 +57,7 @@
 <script setup>
 import {onMounted, onUpdated, reactive, ref} from 'vue';
 import { layer } from "@layui/layer-vue";
-import {findSome, list} from "./api.js";
+import {deleteCombo, findSome, list, petDele} from "./api.js";
 
 var list1 = list();
 console.log(list1)
@@ -67,10 +67,16 @@ const page = ref({
       current: 2,
       showRefresh: true,
     })
+    const petInfo=reactive({
+    petName:'',
+    petStatus:''
+
+    })
 
     const change = ({ current, limit }) => {
       layer.msg ("current:" + current + " limit:" + limit);
     }
+    const data=reactive([])
     const columns =reactive( [
       {
         title: "宠物ID",
@@ -111,20 +117,42 @@ const page = ref({
         align: "center"
       },
     ])
-    const data=reactive([])
+
+
     function reload(){
     list().then(res=>{
       data.length=0
       data.push(...res.data.list)
     })
     }
+    function petDelete(petInfo){
+      layer.confirm(`是否删除${petInfo.petName}?`, {
+        btn: [
+          {
+            text: "否",
+            callback(petId) {
+              layer.close(petId)
+            }
+          },
+
+          {
+            text: "是",
+            callback(petId) {
+              deleteCombo(petInfo.petId).then(res => {
+                  layer.msg("删除成功")
+                  layer.close(petId)
+                  reload()
+              })
+
+            }
+          }
+        ]
+      })
+
+    }
 
 
-    const petInfo=reactive({
-      petName:'',
-      petStatus:''
 
-    })
     function find(){
   findSome(petInfo.petName,petInfo.petStatus).then(res=>{
     data.length=0;
