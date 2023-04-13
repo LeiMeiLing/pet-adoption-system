@@ -101,6 +101,7 @@ public class GoodsServlet extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Gson gson = new Gson();
+
         GoodsInfo goods = gson.fromJson(req.getReader(), GoodsInfo.class);
         gs.delete((long)goods.getId());
         Map<String,Object> result = new HashMap<>();
