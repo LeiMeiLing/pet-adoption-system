@@ -7,29 +7,28 @@
         <lay-quote>狗狗</lay-quote>
         <div class="dog">
           <div class="dog-img">
-            <img src="public/宠物1.png">
-            <lay-line></lay-line>
+            <img src="public/宠物2.png">
+            <div class="content">
+              苏俄牧羊犬（附：苏俄牧羊犬简介）
+            </div>
+            <lay-breadcrumb>
+              <lay-breadcrumb-item >{{time}}</lay-breadcrumb-item>
+            </lay-breadcrumb>
+          </div>
+          <div class="dog-img">
+            <img src="public/宠物2.png">
             <div class="content">
               苏俄牧羊犬（附：苏俄牧羊犬简介）
             </div>
           </div>
           <div class="dog-img">
-            <img src="public/宠物1.png">
-            <lay-line></lay-line>
+            <img src="public/宠物2.png">
             <div class="content">
               苏俄牧羊犬（附：苏俄牧羊犬简介）
             </div>
           </div>
           <div class="dog-img">
-            <img src="public/宠物1.png">
-            <lay-line></lay-line>
-            <div class="content">
-              苏俄牧羊犬（附：苏俄牧羊犬简介）
-            </div>
-          </div>
-          <div class="dog-img">
-            <img src="public/宠物1.png">
-            <lay-line></lay-line>
+            <img src="public/宠物2.png">
             <div class="content">
               苏俄牧羊犬（附：苏俄牧羊犬简介）
             </div>
@@ -39,21 +38,18 @@
         <div class="cat">
           <div class="pet-img">
             <img src="public/宠物1.png">
-            <lay-line></lay-line>
             <div class="content">
               苏俄牧羊犬（附：苏俄牧羊犬简介）
             </div>
           </div>
           <div class="pet-img">
             <img src="public/宠物1.png">
-            <lay-line></lay-line>
             <div class="content">
               苏俄牧羊犬（附：苏俄牧羊犬简介）
             </div>
           </div>
           <div class="pet-img">
             <img src="public/宠物1.png">
-            <lay-line></lay-line>
             <div class="content">
               苏俄牧羊犬（附：苏俄牧羊犬简介）
             </div>
@@ -81,6 +77,8 @@
 
 <script setup>
 import Index from "../main/carousel/Index.vue";
+import {ref} from "vue";
+const time=ref('2023年4月12日')
 </script>
 
 <style scoped lang="scss">
@@ -93,23 +91,24 @@ import Index from "../main/carousel/Index.vue";
   display: flex;
 
   .dog-img,.pet-img{
+    margin-left: 60px;
     height: 300px;
     width: 280px;
     margin-right: 15px;
     border-radius: 5px;
     border:1px solid #ccc ;
+    transition: all 0.3s;/* 上浮这个过程需要的时间 */
   }
 }
 img{
   height: 200px;
   width: 280px;
-  border-radius: 10%;
+  border-radius: 5px;
+
 }
-.dog-img,.pet-img:hover{
-   transition-property: all;
-  transition-duration: 0.25s;
-  transition-timing-function: linear;
-  box-shadow: 3px 3px 3px 3px #d2cbcb;
+.dog-img:hover,.pet-img:hover{
+  box-shadow: 0 16px 32px 0 rgba(48, 55, 66, 0.15);/* 鼠标悬浮时盒子出现的阴影 */
+  transform: translate(0, -5px);/* 鼠标悬浮时盒子上移10px */
   cursor: pointer;
 }
 .layui-body{

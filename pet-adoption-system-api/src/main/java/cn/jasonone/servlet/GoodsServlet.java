@@ -53,17 +53,18 @@ public class GoodsServlet extends HttpServlet {
                 result1.put("msg", "获取成功");
                 result1.put("data",some);
                 resp.getWriter().write(gson.toJson(result1));
-
                 break;
-
+            case "/petstore/findById":
+                GoodsInfo goodsInfo = findId(req, resp, gs);
+                Map<String,Object> rs = new HashMap<>();
+                rs.put("code", 200);
+                rs.put("msg", "获取成功");
+                rs.put("data",goodsInfo);
+                resp.getWriter().write(gson.toJson(rs));
+                break;
             default:
                 super.doPut(req, resp);
         }
-
-
-
-
-
     }
 
     /**
@@ -137,6 +138,11 @@ public class GoodsServlet extends HttpServlet {
         goods.setGoodsname(goodsname);
         goods.setGoodsType(goodsType);
         return gs.selectNameOrType(pageNum,pageSize,goods);
-
+    }
+    private GoodsInfo findId(HttpServletRequest req, HttpServletResponse resp, GoodsInfoService gs){
+        Gson gson = new Gson();
+        String str = req.getParameter("goodsId");
+        int id = Integer.parseInt(str);
+        return gs.selectById(id);
     }
 }
