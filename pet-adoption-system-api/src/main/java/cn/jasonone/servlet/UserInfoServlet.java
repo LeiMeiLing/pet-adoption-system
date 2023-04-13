@@ -139,7 +139,7 @@ public class UserInfoServlet extends HttpServlet {
         Gson gson = new Gson();
         switch (requestURI) {
             case "/user/findAll":
-                List<UserInfo> userInfo = userInfoService.userFindAll();
+                PageInfo<UserInfo> userInfo = userInfoService.userFindAll(pageNum, pageSize);
                 Map<String, Object> result = new HashMap<>();
                 result.put("code", 200);
                 result.put("msg", "获取成功");

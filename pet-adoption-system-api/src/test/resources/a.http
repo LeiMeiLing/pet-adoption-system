@@ -14,11 +14,14 @@ GET localhost:8000/user/findAll
 
 
 ###
+GET localhost:8000/petstore/findAll
+
+###
 DELETE localhost:8000/user
 Content-Type: application/json; charset=UTF-8
 
 {
-"id": 3
+"id": 42
 }
 
 
@@ -35,5 +38,18 @@ Content-Type: application/json; charset=UTF-8
 }
 
 ###模糊查询
-GET localhost:8000/user/findSome?userName=1
+GET localhost:8000/user/findSome?userName=a
+
+
+###
+PUT localhost:8000/petstore/add
+Content-Type: application/json; charset=UTF-8
+
+{
+  "goodsType":  "1",
+  "goodsname": "1",
+  "goodsPrice": "1",
+  "goodsDesc":  "1",
+  "goodsStatus": "1"
+}
 
