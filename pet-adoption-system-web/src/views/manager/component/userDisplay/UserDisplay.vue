@@ -13,7 +13,8 @@
         <template #prefix>手机号:</template>
       </lay-input>
 
-      <lay-button type="primary" @click="find">查询</lay-button>
+      <lay-button type="normal" @click="find">
+        <lay-icon type="layui-icon-search" size="30" @click="showUser(row)"></lay-icon></lay-button>
     </div>
 
 
@@ -25,11 +26,12 @@
                  :default-toolbar="true"
                  even>
         <template #action="{row}">
-          <lay-button type="danger" size="sm" style="width: 40px" @click="deleteUser(row)">
+
+          <lay-button type="danger" radius size="sm" style="width: 40px" @click="deleteUser(row)">
             <lay-icon type="layui-icon-delete" size="18"></lay-icon>
           </lay-button>
 
-          <lay-button type="normal" size="sm" style="width: 40px">
+          <lay-button type="normal" radius size="sm" style="width: 40px">
             <lay-icon type="layui-icon-edit" size="18" @click="showUser(row)"></lay-icon>
           </lay-button>
         </template>
@@ -102,7 +104,7 @@ const userInfoUpdate = reactive({
 
 
 const page = reactive({
-  total: 8,
+  total: 10,
   limit: 8,
   current: 1,
   showRefresh: true,
@@ -121,10 +123,12 @@ function updateUserInfo() {
 }
 
 function reload() {
-  list(user.username, user.email, user.phone).then(res => {
+  list(user.username, user.email, user.phone, page.limit, page.current).then(res => {
     data.length = 0
+    console.log(res);
     data.push(...res.data.list)
-
+    page.current = res.data.current
+    page.total = res.data.total
   })
 }
 
@@ -155,7 +159,6 @@ function deleteUser(row) {
         text: "是",
         callback(id) {
           deleteUserInfo(row)
-          find()
           layer.msg("删除成功")
           layer.close(id)
           find()
@@ -177,8 +180,10 @@ function find() {
 
 function onPageChange({current, limit}) {
   page.current = current
+  console.log(page.current);
   page.limit = limit
-  find()
+  console.log(page.limit);
+  reload()
 }
 
 
