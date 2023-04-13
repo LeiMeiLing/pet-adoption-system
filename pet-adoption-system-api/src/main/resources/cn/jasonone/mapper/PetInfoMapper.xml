@@ -44,17 +44,15 @@
 
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        delete from pet_info
-        where  pet_id = #{petId,jdbcType=INTEGER} 
+        delete  from pet_info
+        where  pet_id = #{petId,jdbcType=INTEGER}
     </delete>
     <insert id="insert" keyColumn="pet_id" keyProperty="petId" parameterType="cn.jasonone.bean.PetInfo" useGeneratedKeys="true">
         insert into pet_info
         ( pet_id,pet_name,variety
-        ,pet_sex,pet_status,create_time
-        ,update_time,pet_picture)
+        ,pet_sex,pet_status,pet_picture)
         values (#{petId,jdbcType=INTEGER},#{petName,jdbcType=VARCHAR},#{variety,jdbcType=CHAR}
-        ,#{petSex,jdbcType=CHAR},#{petStatus,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP}
-        ,#{updateTime,jdbcType=TIMESTAMP},#{petPicture,jdbcType=BLOB})
+        ,#{petSex,jdbcType=CHAR},#{petStatus,jdbcType=VARCHAR},#{petPicture,jdbcType=BLOB})
     </insert>
     <insert id="insertSelective" keyColumn="pet_id" keyProperty="petId" parameterType="cn.jasonone.bean.PetInfo" useGeneratedKeys="true">
         insert into pet_info

@@ -64,17 +64,36 @@ public class PetInfoServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        Gson gson = new Gson();
+        PetInfo petInfo1 = gson.fromJson(req.getReader(), PetInfo.class);
+        petInfo.update(petInfo1);
+        HashMap<Object, Object> map = new HashMap<>();
+        map.put("code",200);
+        map.put("msg","修改成功");
+        resp.getWriter().write(gson.toJson(map));
+
     }
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPut(req, resp);
+        Gson gson = new Gson();
+        PetInfo petInfo1 = gson.fromJson(req.getReader(), PetInfo.class);
+        petInfo.add(petInfo1);
+        HashMap<Object, Object> map = new HashMap<>();
+        map.put("code",200);
+        map.put("msg","添加成功");
+        resp.getWriter().write(gson.toJson(map));
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doDelete(req, resp);
+        Gson gson = new Gson();
+        PetInfo petInfo1 = gson.fromJson(req.getReader(), PetInfo.class);
+        petInfo.deletePet((long)(petInfo1.getPetId()));
+        HashMap<Object, Object> map = new HashMap<>();
+        map.put("code",200);
+        map.put("msg","删除成功");
+        resp.getWriter().write(gson.toJson(map));
     }
     private PageInfo<PetInfo> findSome(HttpServletRequest req, HttpServletResponse resp, Integer pageNum, Integer pageSize, PetInfoService petInfos) throws IOException{
         Gson gson = new Gson();

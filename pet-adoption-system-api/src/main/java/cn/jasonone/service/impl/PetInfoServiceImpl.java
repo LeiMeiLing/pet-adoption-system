@@ -1,8 +1,6 @@
 package cn.jasonone.service.impl;
 
-import cn.jasonone.bean.GoodsInfo;
 import cn.jasonone.bean.PetInfo;
-import cn.jasonone.mapper.GoodsInfoMapper;
 import cn.jasonone.mapper.PetInfoMapper;
 import cn.jasonone.service.PetInfoService;
 import cn.jasonone.util.MyBatisUtil;
@@ -28,6 +26,14 @@ public class PetInfoServiceImpl implements PetInfoService {
         PetInfoMapper petInfoMapper = MyBatisUtil.getSession().getMapper(PetInfoMapper.class);
         petInfoMapper.updateByPrimaryKey(petInfo);
     }
+
+    @Override
+    public void deletePet(Long id) {
+        PetInfoMapper petInfoMapper = MyBatisUtil.getSession().getMapper(PetInfoMapper.class);
+        petInfoMapper.deleteByPrimaryKey(id);
+    }
+
+
 
     @Override
     public PageInfo<PetInfo> selectNameOrType(int pageNum, int pageSize, PetInfo petInfo) {

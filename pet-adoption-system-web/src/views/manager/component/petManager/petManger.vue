@@ -30,19 +30,23 @@
         </lay-button>
       </lay-col>
     </lay-row>
+
+
     <lay-row space="10">
       <lay-col>
-        <lay-table :columns="columns" :data-source="data" :page="page" @change="change"></lay-table>
-      <template #action>
-        <lay-button type="danger" size="xs">
-          <lay-icon type="layui-icon-delete" size="18px">
-          </lay-icon>
-        </lay-button>
-        <lay-button type="normal" size="xs">
-          <lay-icon type="layui-icon-edit" size="18px">
-          </lay-icon>
-        </lay-button>
-      </template>
+        <lay-table :columns="columns" :data-source="data" :page="page" @change="change">
+          <template #action>
+            <lay-button type="danger" size="sm">
+              <lay-icon type="layui-icon-delete" size="20px">
+              </lay-icon>
+            </lay-button>
+            <lay-button type="normal" size="sm">
+              <lay-icon type="layui-icon-edit" size="20px">
+              </lay-icon>
+            </lay-button>
+          </template>
+        </lay-table>
+
 
       </lay-col>
     </lay-row>
