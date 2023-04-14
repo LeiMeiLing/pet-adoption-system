@@ -15,7 +15,7 @@
       </lay-input>
 
       <lay-button type="normal" @click="find">
-        <lay-icon type="layui-icon-search" size="30" @click="showUser(row)"></lay-icon></lay-button>
+        <lay-icon type="layui-icon-search" size="30" ></lay-icon></lay-button>
     </div>
 
 
@@ -171,7 +171,6 @@ function deleteUser(row) {
 //查找用户信息
 function find() {
   findSome(user.username, user.email, user.phone).then(res => {
-    console.log(res);
     data.length = 0
     data.push(...res.data.list)
   })

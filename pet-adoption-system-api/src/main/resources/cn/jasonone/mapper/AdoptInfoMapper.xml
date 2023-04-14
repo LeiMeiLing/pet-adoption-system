@@ -19,27 +19,30 @@
     <sql id="Base_Column_List">
         id,username,petName,
         variety,pet_sex,pet_status,
-        create_time,update_time,describe
+        create_time,update_time,`describe`
     </sql>
 
-    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
         from adopt_info
         where  id = #{id,jdbcType=INTEGER} 
     </select>
 
+    <select id="findAll" resultType="cn.jasonone.bean.AdoptInfo">
+        select   <include refid="Base_Column_List" /> from adopt_info
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from adopt_info
         where  id = #{id,jdbcType=INTEGER} 
     </delete>
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.jasonone.bean.AdoptInfo" useGeneratedKeys="true">
         insert into adopt_info
-        ( id,username,petName
+        (username,petName
         ,variety,pet_sex,pet_status
-        ,create_time,update_time,describe
+        ,create_time,update_time,`describe`
         )
-        values (#{id,jdbcType=INTEGER},#{username,jdbcType=VARCHAR},#{petname,jdbcType=VARCHAR}
+        values (#{username,jdbcType=VARCHAR},#{petname,jdbcType=VARCHAR}
         ,#{variety,jdbcType=CHAR},#{petSex,jdbcType=CHAR},#{petStatus,jdbcType=VARCHAR}
         ,#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},#{describe,jdbcType=VARCHAR}
         )
@@ -55,7 +58,7 @@
                 <if test="petStatus != null">pet_status,</if>
                 <if test="createTime != null">create_time,</if>
                 <if test="updateTime != null">update_time,</if>
-                <if test="describe != null">describe,</if>
+                <if test="describe != null">`describe`,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
                 <if test="id != null">#{id,jdbcType=INTEGER},</if>
@@ -94,7 +97,7 @@
                     update_time = #{updateTime,jdbcType=TIMESTAMP},
                 </if>
                 <if test="describe != null">
-                    describe = #{describe,jdbcType=VARCHAR},
+                    `describe` = #{describe,jdbcType=VARCHAR},
                 </if>
         </set>
         where   id = #{id,jdbcType=INTEGER} 
@@ -109,7 +112,7 @@
             pet_status =  #{petStatus,jdbcType=VARCHAR},
             create_time =  #{createTime,jdbcType=TIMESTAMP},
             update_time =  #{updateTime,jdbcType=TIMESTAMP},
-            describe =  #{describe,jdbcType=VARCHAR}
+            `describe` =  #{describe,jdbcType=VARCHAR}
         where   id = #{id,jdbcType=INTEGER} 
     </update>
 </mapper>

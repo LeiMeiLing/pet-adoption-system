@@ -3,42 +3,42 @@
   <lay-header>
     <h1>领养中心</h1>
     <lay-body>
-      <div>
-        <div>
-          <img @click="onAdoption" src="../../../../public/宠物1.png">
+        <div v-for="(item,key,index) in dataSource">
+          <div>
+            <img @click="onAdoption(item)" :src="item.petPicture">
+          </div>
+          <lay-field>
+            <h2>{{item.petName}}</h2>
+            {{item.description}}
+          </lay-field>
         </div>
-        <lay-field title="Kitty">描述
-        </lay-field>
-      </div>
-      <div>
+
+<!--      <div>
         <div>
         <img src="../../../../public/宠物1.png">
           <lay-field title="Kitty">描述
           </lay-field>
       </div>
-      </div>
-      <div>
-        <div>
-        <img src="../../../../public/宠物1.png">
-          <lay-field title="Kitty">描述
-          </lay-field>
-      </div>
-      </div>
+      </div>-->
     </lay-body>
   </lay-header>
-  <lay-page v-model="currentPage" :limit="limit" :total="total" :show-page="true"></lay-page>
 </template>
 
 <script setup>
-import {ref} from "vue";
+import {reactive} from "vue";
 import router from "../../../config/router.js";
+import {list} from "./api.js";
 
-const limit = ref(3)
-const total = ref(10)
-const currentPage = ref(1);
-
-function onAdoption(){
-  router.push('/info')
+let dataSource = reactive([])
+list().then(res=>{
+  dataSource.length=0
+  dataSource.push(...res.data);
+})
+function onAdoption(item){
+  router.push({
+    path:'/info',
+    query: item
+  })
 }
 </script>
 
@@ -62,6 +62,7 @@ function onAdoption(){
     height: 300px;
     width: 300px;
     border-radius: 50%;
+    margin-left: 20px;
     margin-right: 50px;
     cursor: pointer;
   }
@@ -74,6 +75,9 @@ function onAdoption(){
 h1{
   font-size: 60px;
 }
+  h2{
+    margin-bottom: 10px;
+  }
 .layui-field{
   margin-top: 30px;
    width: 350px;

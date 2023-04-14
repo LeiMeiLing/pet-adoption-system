@@ -1,6 +1,9 @@
 package cn.jasonone.mapper;
 
 import cn.jasonone.bean.AdoptInfo;
+import cn.jasonone.bean.TransferApplication;
+
+import java.util.List;
 
 /**
 * @author DELL
@@ -16,7 +19,8 @@ public interface AdoptInfoMapper {
 
     int insertSelective(AdoptInfo record);
 
-    AdoptInfo selectByPrimaryKey(Long id);
+    AdoptInfo selectByPrimaryKey(Integer id);
+    List<AdoptInfo> findAll();
 
     int updateByPrimaryKeySelective(AdoptInfo record);
 

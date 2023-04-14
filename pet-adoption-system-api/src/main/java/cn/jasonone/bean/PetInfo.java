@@ -36,6 +36,10 @@ public class PetInfo implements Serializable {
     private String petStatus;
 
     /**
+     * 宠物简介
+     */
+    private String description;
+    /**
      * 创建时间
      */
     private Date createTime;
@@ -48,7 +52,7 @@ public class PetInfo implements Serializable {
     /**
      * 图片
      */
-    private byte[] petPicture;
+    private String petPicture;
 
     private static final long serialVersionUID = 1L;
 }

@@ -53,3 +53,33 @@ Content-Type: application/json; charset=UTF-8
   "goodsStatus": "1"
 }
 
+###添加宠物知识信息
+PUT localhost:8000/petKnowledge/insert
+Content-Type: application/json; charset=UTF-8
+
+{
+  "title": "fff",
+  "author": "eee",
+  "description": "ddfv",
+  "content": "content",
+  "essayType": "宠物养生"
+
+}
+
+###查询所有宠物知识信息
+GET localhost:8000/petKnowledge/findAll
+Content-Type: application/json; charset=UTF-8
+
+###根据文章的种类查找宠物知识
+GET localhost:8000/petKnowledge/selectByType
+Content-Type: application/json; charset=UTF-8
+
+{
+  "essayType": "宠物养生"
+}
+
+###根据时间查找宠物知识
+GET localhost:8000/petKnowledge/selectByTime
+Content-Type: application/json; charset=UTF-8
+
+

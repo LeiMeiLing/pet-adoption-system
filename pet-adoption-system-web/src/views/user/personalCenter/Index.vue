@@ -7,7 +7,7 @@
           <lay-menu-item id="2"  @click="visible1=true">个人信息</lay-menu-item>
           <lay-menu-item id="3"  @click="visible2=true">收货地址</lay-menu-item>
           <lay-menu-item id="4"  @click="visible3=true">修改密码</lay-menu-item>
-          <lay-menu-item id="5" to="application">领养申请</lay-menu-item>
+          <lay-menu-item id="5" >领养申请</lay-menu-item>
           <lay-menu-item id="6" >转送宠物</lay-menu-item>
           <lay-menu-item id="7"  @click="visible1=true">退出登录</lay-menu-item>
       </lay-menu></lay-side>

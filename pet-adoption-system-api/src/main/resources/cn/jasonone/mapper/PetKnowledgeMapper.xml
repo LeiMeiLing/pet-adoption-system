@@ -11,11 +11,13 @@
             <result property="description" column="description" jdbcType="VARCHAR"/>
             <result property="content" column="content" jdbcType="VARCHAR"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="essayType" column="essayType" jdbcType="VARCHAR"/>
+            <result property="picture" column="picture"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,title,author,
-        description,content,create_time
+        description,content,create_time,essay_type,picture
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -24,7 +26,21 @@
         from pet_knowledge
         where  id = #{id,jdbcType=INTEGER} 
     </select>
-
+    <select id="findAll" resultType="cn.jasonone.bean.PetKnowledge">
+        select
+        <include refid="Base_Column_List" />
+        from pet_knowledge
+    </select>
+    <select id="selectByType" resultType="cn.jasonone.bean.PetKnowledge">
+        select
+        <include refid="Base_Column_List" />
+        from pet_knowledge where essay_type=#{essayType}
+    </select>
+    <select id="selectByTime" resultType="cn.jasonone.bean.PetKnowledge">
+        select
+        <include refid="Base_Column_List" />
+        from pet_knowledge order by create_time desc limit 4
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from pet_knowledge
         where  id = #{id,jdbcType=INTEGER} 
@@ -32,10 +48,11 @@
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.jasonone.bean.PetKnowledge" useGeneratedKeys="true">
         insert into pet_knowledge
         ( id,title,author
-        ,description,content,create_time
+        ,description,content,create_time,essay_type,picture
         )
         values (#{id,jdbcType=INTEGER},#{title,jdbcType=VARCHAR},#{author,jdbcType=VARCHAR}
         ,#{description,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP}
+        ,#{essayType,jdbcType=VARCHAR},#{picture}
         )
     </insert>
     <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cn.jasonone.bean.PetKnowledge" useGeneratedKeys="true">
@@ -47,6 +64,8 @@
                 <if test="description != null">description,</if>
                 <if test="content != null">content,</if>
                 <if test="createTime != null">create_time,</if>
+                <if test="essayType != null">essay_type,</if>
+                <if test="picture != null">picture,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
                 <if test="id != null">#{id,jdbcType=INTEGER},</if>
@@ -55,6 +74,8 @@
                 <if test="description != null">#{description,jdbcType=VARCHAR},</if>
                 <if test="content != null">#{content,jdbcType=VARCHAR},</if>
                 <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
+                <if test="essayType != null">#{essayType,jdbcType=VARCHAR}</if>
+                <if test="picture != null">#{picture}</if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="cn.jasonone.bean.PetKnowledge">
@@ -75,6 +96,12 @@
                 <if test="createTime != null">
                     create_time = #{createTime,jdbcType=TIMESTAMP},
                 </if>
+                <if test="essayType != null">
+                    essay_Type =#{essayType,jdbcType=VARCHAR},
+                </if>
+                <if test="picture != null">
+                    picture = #{picture},
+                </if>
         </set>
         where   id = #{id,jdbcType=INTEGER} 
     </update>
@@ -85,7 +112,9 @@
             author =  #{author,jdbcType=VARCHAR},
             description =  #{description,jdbcType=VARCHAR},
             content =  #{content,jdbcType=VARCHAR},
-            create_time =  #{createTime,jdbcType=TIMESTAMP}
+            create_time =  #{createTime,jdbcType=TIMESTAMP},
+            essay_Type =#{essayType,jdbcType=VARCHAR},
+            picture = #{picture},
         where   id = #{id,jdbcType=INTEGER} 
     </update>
 </mapper>

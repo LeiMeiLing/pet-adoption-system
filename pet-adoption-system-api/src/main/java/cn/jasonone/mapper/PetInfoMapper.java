@@ -18,7 +18,7 @@ public interface PetInfoMapper {
 
     int insertSelective(PetInfo record);
 
-    PetInfo selectByPrimaryKey(Long id);
+    PetInfo selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(PetInfo record);
 
