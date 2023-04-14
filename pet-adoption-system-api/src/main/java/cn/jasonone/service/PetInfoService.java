@@ -16,9 +16,10 @@ import java.util.List;
 public interface PetInfoService {
     void setSqlSession(SqlSession session);
     void add(PetInfo petInfo);
+    void deletePet(Long id);
     void update(PetInfo petInfo);
-    PageInfo<PetInfo> selectNameOrType(int pageNum, int pageSize, PetInfo petInfo);
+    List<PetInfo> selectNameOrType(PetInfo petInfo);
 
-    PageInfo<PetInfo> findAllPet(int PageNum, int PageSize);
+    List<PetInfo> findAllPet();
 }
 

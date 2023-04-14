@@ -21,6 +21,8 @@ public class PetInfoServiceImpl implements PetInfoService {
         petInfoMapper.insert(petInfo);
     }
 
+
+
     @Override
     public void update(PetInfo petInfo) {
         PetInfoMapper petInfoMapper = sqlSession.getMapper(PetInfoMapper.class);
@@ -29,26 +31,24 @@ public class PetInfoServiceImpl implements PetInfoService {
 
     @Override
     public void deletePet(Long id) {
-        PetInfoMapper petInfoMapper = MyBatisUtil.getSession().getMapper(PetInfoMapper.class);
+        PetInfoMapper petInfoMapper = sqlSession.getMapper(PetInfoMapper.class);
         petInfoMapper.deleteByPrimaryKey(id);
     }
 
 
 
     @Override
-    public PageInfo<PetInfo> selectNameOrType(int pageNum, int pageSize, PetInfo petInfo) {
+    public List<PetInfo> selectNameOrType( PetInfo petInfo) {
         PetInfoMapper petInfoMapper = sqlSession.getMapper(PetInfoMapper.class);
-        PageHelper.startPage(pageNum, pageSize);
-        List<PetInfo> some = petInfoMapper.findSome(petInfo);
-        return new PageInfo<>(some);
+
+        return petInfoMapper.findSome(petInfo);
     }
 
     @Override
-    public PageInfo<PetInfo> findAllPet(int PageNum, int PageSize) {
-        PetInfoMapper PetInfo = sqlSession.getMapper(PetInfoMapper.class);
-        PageHelper.startPage(PageNum, PageSize);
-        List<PetInfo> pets = PetInfo.findAllPet();
-        return new PageInfo<>(pets);
-
+    public List<PetInfo> findAllPet() {
+        PetInfoMapper petInfoMapper = sqlSession.getMapper(PetInfoMapper.class);
+        return petInfoMapper.findAllPet();
     }
+
 }
+

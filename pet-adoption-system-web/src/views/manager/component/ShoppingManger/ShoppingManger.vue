@@ -43,7 +43,7 @@
 
 
         <template #toolbar>
-          <lay-tooltip content="新增套餐">
+          <lay-tooltip content="新增商品">
             <lay-button type="primary" @click="addStoreVisibel=true">
               <lay-icon type="layui-icon-add-one"></lay-icon>
             </lay-button>

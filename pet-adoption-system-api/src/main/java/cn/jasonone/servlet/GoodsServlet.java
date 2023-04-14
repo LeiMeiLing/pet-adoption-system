@@ -115,6 +115,8 @@ public class GoodsServlet extends HttpServlet {
     }
 
     private void add(HttpServletRequest req,HttpServletResponse resp) throws IOException {
+        SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
+        gs.setSqlSession(sqlSession);
         Gson gson = new Gson();
         GoodsInfo goods = gson.fromJson(req.getReader(), GoodsInfo.class);
         gs.add(goods);

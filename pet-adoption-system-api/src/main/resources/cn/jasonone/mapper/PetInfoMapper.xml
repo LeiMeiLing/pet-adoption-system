@@ -30,13 +30,13 @@
         select * from pet_info
     </select>
     <select id="findSome" resultType="cn.jasonone.bean.PetInfo">
-        select
-        <include refid="Base_Column_List" />
-        from pet_info
+        select * from pet_info
         <where>
-            <if test="petName != null">pet_name like concat('%',#{petName},'%') </if>
+            <if test="petId != null">and pet_id like concat('%',#{petId},'%') </if>
+            <if test="petName != null">and pet_name like concat('%',#{petName},'%') </if>
+            <if test="variety != null">and variety like concat('%',#{variety},'%')</if>
+            <if test="petSex != null">and pet_sex like concat('%',#{petSex},'%')</if>
             <if test="petStatus != null">and pet_status like concat('%',#{petStatus},'%')</if>
-
         </where>
 
 
@@ -47,12 +47,12 @@
         delete  from pet_info
         where  pet_id = #{petId,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" keyColumn="pet_id" keyProperty="petId" parameterType="cn.jasonone.bean.PetInfo" useGeneratedKeys="true">
+    <insert id="insert"  parameterType="cn.jasonone.bean.PetInfo">
         insert into pet_info
-        ( pet_id,pet_name,variety
+        ( pet_name,variety
         ,pet_sex,pet_status,pet_picture)
-        values (#{petId,jdbcType=INTEGER},#{petName,jdbcType=VARCHAR},#{variety,jdbcType=CHAR}
-        ,#{petSex,jdbcType=CHAR},#{petStatus,jdbcType=VARCHAR},#{petPicture,jdbcType=BLOB})
+        values (#{petName,jdbcType=VARCHAR},#{variety,jdbcType=CHAR}
+        ,#{petSex,jdbcType=CHAR},#{petStatus,jdbcType=VARCHAR},#{petPicture})
     </insert>
     <insert id="insertSelective" keyColumn="pet_id" keyProperty="petId" parameterType="cn.jasonone.bean.PetInfo" useGeneratedKeys="true">
         insert into pet_info
@@ -108,12 +108,8 @@
         update pet_info
         set 
             pet_name =  #{petName,jdbcType=VARCHAR},
-            variety =  #{variety,jdbcType=CHAR},
-            pet_sex =  #{petSex,jdbcType=CHAR},
             pet_status =  #{petStatus,jdbcType=VARCHAR},
-            create_time =  #{createTime,jdbcType=TIMESTAMP},
-            update_time =  #{updateTime,jdbcType=TIMESTAMP},
-            pet_picture =  #{petPicture,jdbcType=BLOB}
+            pet_picture =  #{petPicture}
         where   pet_id = #{petId,jdbcType=INTEGER} 
     </update>
 </mapper>

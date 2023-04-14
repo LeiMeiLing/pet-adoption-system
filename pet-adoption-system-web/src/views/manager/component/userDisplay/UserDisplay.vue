@@ -171,7 +171,6 @@ function deleteUser(row) {
 //查找用户信息
 function find() {
   findSome(user.username, user.email, user.phone).then(res => {
-    console.log(res);
     data.length = 0
     data.push(...res.data.list)
 
