@@ -124,6 +124,11 @@ const routes = [
             path: '/petShow',
             name: 'petShow',
             component: () => import('../views/user/petShow/Index.vue')
+        },{
+            //评论界面
+            path: '/commentA',
+            name: 'commentA',
+            component: () => import('../views/user/petShow/comment.vue')
         }]
     }, {
         //管理员界面
