@@ -24,27 +24,27 @@ export function list(){
         return res;
     })
 }
-// /*
-// 模糊查询
-//  */
-// export function findSome(username,email,phone){
-//     return http.get("/user/findSome?userName="+username+"&email="+email+"&phone="+phone,{
-//     }).then(res=>{
-//         return res;
-//     })
-// }
-// /*
-// 删除用户方法
-//  */
-// export function deleteUserInfo(row){
-//     return http.delete("/user", {
-//         data:{
-//             "id":row.id
-//         }
-//     },).then(res=>{
-//         return res;
-//     })
-// }
+/*
+模糊查询
+ */
+export function findSome(username,email,phone){
+    return http.get("/user/findSome?userName="+username+"&email="+email+"&phone="+phone,{
+    }).then(res=>{
+        return res;
+    })
+}
+/*
+删除用户方法
+ */
+export function deleteUserInfo(row){
+    return http.delete("/user", {
+        data:{
+            "id":row.id
+        }
+    },).then(res=>{
+        return res;
+    })
+}
 
 export function add(petStoreAdd){
     return http.put("/petstore/add",{
