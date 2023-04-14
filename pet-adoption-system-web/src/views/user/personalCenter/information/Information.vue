@@ -1,0 +1,62 @@
+<template>
+    <div class="information">
+      <lay-form>
+        <lay-avatar :src="src" radius ></lay-avatar>
+        <lay-form-item label="年龄："><lay-input></lay-input></lay-form-item>
+        <lay-form-item label="性别："><lay-input></lay-input></lay-form-item>
+        <lay-form-item label="手机号："><lay-input></lay-input></lay-form-item>
+        <lay-form-item label="邮箱地址："><lay-input></lay-input></lay-form-item>
+        <lay-form-item label="个性签名："></lay-form-item>
+        <lay-textarea placeholder="请输入描述"  ></lay-textarea>
+        <br>
+        <lay-button type="primary" fluid >保存个人信息</lay-button>
+      </lay-form>
+    </div>
+
+</template>
+
+<script setup>
+import {ref} from 'vue'
+import {useRouter} from "vue-router";
+
+const src = "/public/宠物1.png";
+
+</script>
+
+<style scoped lang="scss">
+.information{
+  font-size: 18px;
+  height: 620px;
+  width: 400px;
+  color: #ffffff;
+  line-height: 38px;
+  background-color: #638863;
+  border:3px solid #3a5e3a;
+  border-radius: 5px;
+}
+.layui-icon{
+  float: right;
+}
+h1{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  border-bottom: 5px solid #3a5e3a;
+}
+.layui-avatar{
+  height: 100px;
+  width: 100px;
+  left: 35%;
+  margin-bottom: 5px;
+}
+.layui-form-item{
+  border-bottom: 2px solid #426c42;
+}
+.layui-input{
+  margin-bottom: 5px;
+}
+.layui-textarea{
+  background-color: #638863;
+}
+
+</style>

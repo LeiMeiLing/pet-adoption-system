@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <h1 class="title">宠物领养系统</h1>
+    <h1 class="title">欢迎您！管理员</h1>
     <lay-dropdown>
       <lay-button border="green">
         <lay-avatar :src="src" radius></lay-avatar>

@@ -21,11 +21,14 @@
         create_time,update_time
     </sql>
 
-    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <select id="selectByPrimaryKey"  resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
         from transfer_application
         where  id = #{id,jdbcType=INTEGER} 
+    </select>
+    <select id="findAll" resultType="cn.jasonone.bean.TransferApplication">
+        select   <include refid="Base_Column_List" /> from transfer_application
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
@@ -34,10 +37,10 @@
     </delete>
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.jasonone.bean.TransferApplication" useGeneratedKeys="true">
         insert into transfer_application
-        ( id,title,petName
+        ( title,petName
         ,transfer_name,transfer_cause,pet_status
         ,create_time,update_time)
-        values (#{id,jdbcType=INTEGER},#{title,jdbcType=VARCHAR},#{petname,jdbcType=VARCHAR}
+        values (#{title,jdbcType=VARCHAR},#{petname,jdbcType=VARCHAR}
         ,#{transferName,jdbcType=VARCHAR},#{transferCause,jdbcType=VARCHAR},#{petStatus,jdbcType=VARCHAR}
         ,#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP})
     </insert>

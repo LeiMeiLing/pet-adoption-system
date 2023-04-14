@@ -121,6 +121,8 @@ public class GoodsServlet extends HttpServlet {
     }
 
     private void add(HttpServletRequest req,HttpServletResponse resp) throws IOException {
+        SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
+        gs.setSqlSession(sqlSession);
         Gson gson = new Gson();
         GoodsInfo goods = gson.fromJson(req.getReader(), GoodsInfo.class);
         gs.add(goods);
@@ -128,6 +130,7 @@ public class GoodsServlet extends HttpServlet {
         result.put("code", 200);
         result.put("msg", "添加成功");
         resp.getWriter().write(gson.toJson(result));
+        sqlSession.commit();
     }
 
     private void update(HttpServletRequest req,HttpServletResponse resp) throws IOException {
