@@ -1,26 +1,23 @@
 <template>
   <div>
-    <lay-row space="10">
+    <lay-row>
 
       <lay-col>
-        <lay-col md="6"><lay-input placeholder="请输入宠物id">
-          <template #prepend>宠物id</template>
-        </lay-input></lay-col>
-        <lay-col md="6"><lay-input placeholder="请输入宠物名" v-model="petInfo.petName">
+
+        <lay-col md="11"><lay-input placeholder="请输入宠物名" v-model="petInfo.petName">
           <template #prepend>宠物名</template>
         </lay-input></lay-col>
-        <lay-col md="6"><lay-input placeholder="请输入宠物品种" >
+        <lay-col md="11"><lay-input placeholder="请输入宠物品种" v-model="petInfo.variety">
           <template #prepend>品种</template>
         </lay-input></lay-col>
       </lay-col >
 
-
     </lay-row>
-    <lay-row space="10">
-      <lay-col md="10"><lay-input placeholder="请输入性别">
+    <lay-row>
+      <lay-col md="11"><lay-input placeholder="请输入性别" v-model="petInfo.petSex">
         <template #prepend>性别</template>
       </lay-input></lay-col>
-      <lay-col md="10"><lay-input placeholder="请输入领养状态" v-model="petInfo.petStatus">
+      <lay-col md="11"><lay-input placeholder="请输入领养状态" v-model="petInfo.petStatus">
         <template #prepend>领养状态</template>
       </lay-input></lay-col>
       <lay-col md="2">
@@ -31,198 +28,84 @@
       </lay-col>
     </lay-row>
 
+
+    <lay-layer v-model="addPetVisibel" :area="['400px','450px']">
+      <lay-form-item label="宠物类型">
+        <lay-input v-model="petAdd.variety" placeholder="请输入宠物类型"></lay-input>
+      </lay-form-item>
+
+      <lay-form-item label="宠物名字">
+        <lay-input v-model="petAdd.petName" placeholder="请输入宠物名字"></lay-input>
+      </lay-form-item>
+
+      <input type="file" id="file" @change="handleFileChange">
+      <img :src="imgbase64" style="width: 150px"/>
+
+      <lay-form-item label="宠物性别">
+        <lay-input v-model="petAdd.petSex" placeholder="请输入宠物的性别"></lay-input>
+      </lay-form-item>
+      <lay-form-item label="领养状态">
+        <lay-input v-model="petAdd.petStatus" placeholder="请输入状态"></lay-input>
+      </lay-form-item>
+
+      <lay-form-item>
+        <lay-button type="primary" @click="onAdd" style="width: 80px">新增</lay-button>
+      </lay-form-item>
+
+    </lay-layer>
+
+
     <lay-row space="10">
       <lay-col>
-        <lay-table :columns="columns" :data-source="data" :page="page" @change="change">
-
+        <lay-table :columns="columns"
+                   :data-source="data"
+                   :page="page"
+                   @change="change"
+                   :default-toolbar="true"
+                    >
+          <template #action="{row}">
+            <lay-button type="danger" size="sm" @click="petDelete(row)">
+              <lay-icon type="layui-icon-delete" size="20px">
+              </lay-icon>
+            </lay-button>
+            <lay-button type="normal" size="sm" @click="showPet(row)">
+              <lay-icon type="layui-icon-edit" size="20px" >
+              </lay-icon>
+            </lay-button>
+          </template>
           <template #toolbar>
             <lay-tooltip content="新增宠物">
-              <lay-button type="primary"  @click="addVisible=true">
+              <lay-button type="primary" @click="addPetVisibel=true">
                 <lay-icon type="layui-icon-add-one"></lay-icon>
               </lay-button>
-
-              <!--新增弹窗-->
-              <lay-layer title="新增宠物" v-model="addVisible" :area="['450px','550px']">
-                <lay-form :model="petAddInfo" class="register-form">
-                  <lay-form-item label="宠物昵称:">
-                    <lay-input placeholder="请输入宠物昵称" v-model="petAddInfo.petName"></lay-input>
-                  </lay-form-item>
-                  <lay-form-item label="宠物性别:">
-                    <lay-select v-model="petAddInfo.petSex" placeholder="请选择">
-                      <lay-select-option :value="'雌性'" label="雌性"></lay-select-option>
-                      <lay-select-option :value="'雄性'" label="雄性"></lay-select-option>
-                      <lay-select-option :value="'无'" label="无"></lay-select-option>
-                    </lay-select>
-                  </lay-form-item>
-                  <lay-form-item label="宠物类型:">
-                    <lay-input placeholder="请输入宠物类型" v-model="petAddInfo.variety" ></lay-input>
-                  </lay-form-item>
-                  <lay-form-item label="宠物图片:">
-                    <input type="file" id="file" @change="handleFileChange">
-                  </lay-form-item>
-                  <img :src="imgbase64" style="width: 100px"/>
-                  <lay-form-item label="宠物简介:">
-                    <lay-textarea placeholder="请输入描述" v-model="petAddInfo.description">
-                    </lay-textarea>
-                  </lay-form-item>
-                  <lay-form-item class="btn">
-                    <lay-button class="btn1" @click="onAdd" >新增</lay-button>
-                    <lay-button class="btn2" @click="addVisible=false" >取消</lay-button>
-                  </lay-form-item>
-                </lay-form>
-              </lay-layer>
             </lay-tooltip>
           </template>
-
         </lay-table>
-      <template #action>
-        <lay-button type="danger" size="xs">
-          <lay-icon type="layui-icon-delete" size="18px">
-          </lay-icon>
-        </lay-button>
-        <lay-button type="normal" size="xs">
-          <lay-icon type="layui-icon-edit" size="18px">
-          </lay-icon>
-        </lay-button>
-      </template>
+
 
       </lay-col>
     </lay-row>
+
+
+    <lay-layer v-model="updatePetDisplay" :area="['400px','450px']">
+      <lay-form-item label="宠物名称">
+        <lay-input v-model="petInfoUpdate.petName" placeholder="请输入宠物名称"></lay-input>
+      </lay-form-item>
+      <input type="file" id="file" @change="handleFileChange">
+      <img :src="imgbase64" style="width: 150px"/>
+      <lay-form-item label="领养状态">
+        <lay-input v-model="petInfoUpdate.petStatus" placeholder="请输入领养状态"></lay-input>
+      </lay-form-item>
+
+      <lay-form-item>
+        <lay-button type="primary" @click="updatePetInfo" style="width: 80px">修改</lay-button>
+      </lay-form-item>
+
+    </lay-layer>
   </div>
 
 </template>
 
-<script setup>
-import {onMounted, onUpdated, reactive, ref} from 'vue';
-import { layer } from "@layui/layer-vue";
-import {findSome, list,insert} from "./api.js";
-import router from "../../../../config/router.js";
-
-//窗口可视化参数
-const addVisible = ref(false)
-//新增的宠物信息
-const petAddInfo = reactive({
-  petName: "",
-  petSex:"",
-  petPicture:"",
-  variety: "",
-  description:"",
-});
-
-function onAdd(){
-  petAddInfo.petPicture=abc
-   insert(petAddInfo).then(res=>{
-    layer.msg(res.msg)
-     addVisible.value=false
-  }).catch(err=>{
-    layer.msg(err.msg)
-  })
-}
-
-var list1 = list();
-console.log(list1)
-const page = ref({
-      total: 100,
-      limit: 10,
-      current: 2,
-      showRefresh: true,
-    })
-
-    const change = ({ current, limit }) => {
-      layer.msg ("current:" + current + " limit:" + limit);
-    }
-    const columns =reactive( [
-      {
-        title: "宠物ID",
-        key:"petId",
-        align:'center'
-      },{
-        title: "宠物名",
-        key:"petName",
-        align:'center'
-      },{
-        title: "品种",
-        key:"variety",
-        align:'center'
-      },{
-        title: "性别",
-        key:"petSex",
-        align:'center'
-      },{
-        title: "图片",
-        key:"petPicture",
-        align:'center'
-      },{
-        title: "领养状态",
-        key:"petStatus",
-        align:'center'
-      },{
-        title: "创建时间",
-        key:"creatTime",
-        align:'center'
-      },{
-        title: "修改时间",
-        key:"updateTime",
-        align:'center'
-      },
-      {
-        title: "操作",
-        customSlot:'action',
-        align: "center"
-      },
-    ])
-    const data=reactive([])
-    function reload(){
-    list().then(res=>{
-      data.length=0
-      data.push(...res.data.list)
-    })
-    }
-
-
-    const petInfo=reactive({
-      petName:'',
-      petStatus:''
-    })
-    function find(){
-  findSome(petInfo.petName,petInfo.petStatus).then(res=>{
-    data.length=0;
-    data.push(...res.data.list)
-  })
-    }
-    onMounted(reload)
-    onUpdated(reload)
-</script>
-
-<style lang="scss">
-.layui-col{
-  font-size: 16px;//字体大小
-  font-family: 微软雅黑;
-  margin-right: 10px;
-}
-.register-form{
-  margin-top: 10px;
-  font-size: 16px;
-  font-family: 微软雅黑;
-}
-.layui-input{
-  width: 300px;
-}
-img{
-  margin-left: 100px;
-  margin-bottom: 10px;
-}
-.btn{
-  width: 100%;
-  border: #638863;
-  color: white;
-  .btn1{
-    background: #638863;
-  }
-}
-</style>
-
-<!-- 处理图片-->
 <script>
 var _fileObj;
 var abc;
@@ -237,12 +120,10 @@ export default {
   methods:{
     handleFileChange(e){
       let file = e.target.files[0];
-
-
       //缩略图
       let fr = new FileReader()
       fr.readAsDataURL(file)
-      /*fr.readAsBinaryString(file)*/
+
       let that = this
       fr.onload = function () {
         that.imgbase64 = fr.result
@@ -254,3 +135,131 @@ export default {
   }
 }
 </script>
+
+
+
+
+<script setup>
+import {onMounted, reactive, ref} from 'vue';
+import { layer } from "@layui/layer-vue";
+import { findSome, list, petDele,add,updatePet} from "./api.js";
+
+
+
+const addPetVisibel = ref(false)
+const updatePetDisplay = ref(false)
+const petAdd = reactive({
+  variety: "",
+  petName: "",
+  petSex: "",
+  petStatus: "",
+  petPicture:""
+})
+const petInfoUpdate = reactive({
+  petId:"",
+  petName: "",
+  petStatus: "",
+  petPicture:""
+
+})
+function updatePetInfo() {
+  petInfoUpdate.petPicture = abc
+  updatePet(petInfoUpdate)
+  layer.msg("修改成功")
+  updatePetDisplay.value = false
+  reload()
+}
+function showPet(row) {
+  updatePetDisplay.value = true
+  petInfoUpdate.petId=row.petId
+  petInfoUpdate.petStatus = row.petStatus
+  petInfoUpdate.petName = row.petName
+  petInfoUpdate.petPicture=row.petPicture
+
+}
+function onAdd() {
+  petAdd.petPicture = abc
+  add(petAdd)
+  layer.msg("新增成功")
+  addPetVisibel.value = false;
+  reload()
+}
+
+var list1 = list();
+console.log(list1)
+const page = ref({
+      total: 100,
+      limit: 10,
+      current: 2,
+      showRefresh: true,
+    })
+    const petInfo=reactive({
+      petName:'',
+      variety:'',
+      petSex:'',
+      petStatus:'',
+
+
+
+    })
+
+    const change = ({ current, limit }) => {
+      layer.msg ("current:" + current + " limit:" + limit);
+    }
+    const data=reactive([])
+    const columns =reactive( [
+      {title: "宠物ID", key:"petId", align:'center'},
+      {title: "宠物名", key:"petName", align:'center'},
+      {title: "品种", key:"variety", align:'center'},
+      {title: "性别", key:"petSex", align:'center'},
+      {title: "图片", key:"petPicture", align:'center'},
+      {title: "领养状态", key:"petStatus", align:'center'},
+      {title: "创建时间", key:"creatTime", align:'center'},
+      {title: "修改时间", key:"updateTime", align:'center'},
+      {title: "操作", customSlot:'action', align: "center"},
+    ])
+
+
+    function reload(){
+    list().then(res=>{
+      data.length=0
+      data.push(...res.data)
+    })
+    }
+    function petDelete(petInfo){
+      layer.confirm(`是否删除${petInfo.petName}?`, {
+        btn: [
+          {
+            text: "否",
+            callback(petId) {
+              layer.close(petId)
+            }
+          },
+          {
+            text: "是",
+            callback(petId) {
+              console.log(petInfo.petId);
+              petDele(petInfo.petId)
+              layer.msg("删除成功")
+              layer.close(petId)
+              reload()
+            }
+          }
+        ]
+      })
+    }
+
+    function find(){
+      console.log(petInfo)
+    findSome(petInfo).then(res=>{
+      console.log(res);
+      data.length=0;
+      data.push(...res.data)
+  })
+    }
+    onMounted(reload)
+
+</script>
+<style>
+
+</style>

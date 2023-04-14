@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jasonone.mapper.PetIssueMapper">
+
+    <resultMap id="BaseResultMap" type="cn.jasonone.bean.PetIssue">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="commentId" column="comment_id" jdbcType="VARCHAR"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="petName" column="pet_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,comment_id,content,
+        create_time,pet_name,picture
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from pet_issue
+        where  id = #{id,jdbcType=INTEGER} 
+    </select>
+    <select id="findAll" resultType="cn.jasonone.bean.PetIssue">
+        select * from pet_issue
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from pet_issue
+        where  id = #{id,jdbcType=INTEGER} 
+    </delete>
+    <insert id="insert"  parameterType="cn.jasonone.bean.PetIssue" >
+        insert into pet_issue
+        (content,pet_name,picture)
+        values (#{content,jdbcType=VARCHAR},#{petName,jdbcType=VARCHAR},#{picture})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cn.jasonone.bean.PetIssue" useGeneratedKeys="true">
+        insert into pet_issue
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null">id,</if>
+                <if test="commentId != null">comment_id,</if>
+                <if test="content != null">content,</if>
+                <if test="createTime != null">create_time,</if>
+                <if test="petName != null">pet_name,</if>
+                <if test="picture != null">picture,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null">#{id,jdbcType=INTEGER},</if>
+                <if test="commentId != null">#{commentId,jdbcType=VARCHAR},</if>
+                <if test="content != null">#{content,jdbcType=VARCHAR},</if>
+                <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
+                <if test="petName != null">#{petName,jdbcType=VARCHAR},</if>
+                <if test="picture != null">#{picture,jdbcType=BLOB},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.jasonone.bean.PetIssue">
+        update pet_issue
+        <set>
+                <if test="commentId != null">
+                    comment_id = #{commentId,jdbcType=VARCHAR},
+                </if>
+                <if test="content != null">
+                    content = #{content,jdbcType=VARCHAR},
+                </if>
+                <if test="createTime != null">
+                    create_time = #{createTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="petName != null">
+                    pet_name = #{petName,jdbcType=VARCHAR},
+                </if>
+                <if test="picture != null">
+                    picture = #{picture,jdbcType=BLOB},
+                </if>
+        </set>
+        where   id = #{id,jdbcType=INTEGER} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.jasonone.bean.PetIssue">
+        update pet_issue
+        set 
+            comment_id =  #{commentId,jdbcType=VARCHAR},
+            content =  #{content,jdbcType=VARCHAR},
+            create_time =  #{createTime,jdbcType=TIMESTAMP},
+            pet_name =  #{petName,jdbcType=VARCHAR},
+            picture =  #{picture,jdbcType=BLOB}
+        where   id = #{id,jdbcType=INTEGER} 
+    </update>
+</mapper>

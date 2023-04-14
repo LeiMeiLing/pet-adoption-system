@@ -34,7 +34,7 @@
     <select id="userFindAll" resultType="cn.jasonone.bean.UserInfo">
         select * from user_info
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <delete id="deleteByPrimaryKey" parameterType="cn.jasonone.bean.PetInfo">
         delete from user_info
         where  id = #{id,jdbcType=INTEGER} 
     </delete>

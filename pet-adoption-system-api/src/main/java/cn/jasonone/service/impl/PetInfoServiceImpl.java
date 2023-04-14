@@ -1,8 +1,6 @@
 package cn.jasonone.service.impl;
 
-import cn.jasonone.bean.GoodsInfo;
 import cn.jasonone.bean.PetInfo;
-import cn.jasonone.mapper.GoodsInfoMapper;
 import cn.jasonone.mapper.PetInfoMapper;
 import cn.jasonone.service.PetInfoService;
 
@@ -32,6 +30,8 @@ public class PetInfoServiceImpl implements PetInfoService {
         petInfoMapper.insertSelective(petInfo);
     }
 
+
+
     @Override
     public void update(PetInfo petInfo) {
         PetInfoMapper petInfoMapper = sqlSession.getMapper(PetInfoMapper.class);
@@ -39,19 +39,25 @@ public class PetInfoServiceImpl implements PetInfoService {
     }
 
     @Override
-    public PageInfo<PetInfo> selectNameOrType(int pageNum, int pageSize, PetInfo petInfo) {
+    public void deletePet(Long id) {
         PetInfoMapper petInfoMapper = sqlSession.getMapper(PetInfoMapper.class);
-        PageHelper.startPage(pageNum, pageSize);
-        List<PetInfo> some = petInfoMapper.findSome(petInfo);
-        return new PageInfo<>(some);
+        petInfoMapper.deleteByPrimaryKey(id);
+    }
+
+
+
+    @Override
+    public List<PetInfo> selectNameOrType( PetInfo petInfo) {
+        PetInfoMapper petInfoMapper = sqlSession.getMapper(PetInfoMapper.class);
+
+        return petInfoMapper.findSome(petInfo);
     }
 
     @Override
-    public PageInfo<PetInfo> findAllPet(int PageNum, int PageSize) {
-        PetInfoMapper PetInfo = sqlSession.getMapper(PetInfoMapper.class);
-        PageHelper.startPage(PageNum, PageSize);
-        List<PetInfo> pets = PetInfo.findAllPet();
-        return new PageInfo<>(pets);
-
+    public List<PetInfo> findAllPet() {
+        PetInfoMapper petInfoMapper = sqlSession.getMapper(PetInfoMapper.class);
+        return petInfoMapper.findAllPet();
     }
+
 }
+

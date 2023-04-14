@@ -61,8 +61,8 @@
           <lay-input v-model="petStoreAdd.goodsname" placeholder="请输入名字"></lay-input>
         </lay-form-item>
 
-        <input type="file" id="file" @change="handleFileChange">
-        <img :src="imgbase64" style="width: 150px"/>
+        <input type="file" id="file" @change="handleFileChange" >
+        <img :src="imgbase64" style="width: 100px"/>
 
         <lay-form-item label="价格">
           <lay-input v-model="petStoreAdd.goodsPrice" placeholder="请输入价格"></lay-input>
@@ -160,7 +160,7 @@ const columns = reactive([
   {title: "商品类型", key: "goodsType", align: "center"},
   {title: "商品名称", key: "goodsname", align: "center"},
   {title: "商品价格", key: "goodsPrice", align: "center"},
-  {title: "商品图片", key:"goodsPicture",align: "center"},
+  /*{title: "商品图片", key:"goodsPicture",align: "center"},*/
   {title: "商品描述", key: "goodsDesc", align: "center"},
   {title: "商品状态", key: "goodsStatus", align: "center"},
   {title: "创建时间", key: "createTime", align: "center"},
