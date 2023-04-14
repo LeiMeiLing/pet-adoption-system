@@ -17,7 +17,7 @@ const route = useRoute();
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .out{
     margin: 10px;
     .img1{

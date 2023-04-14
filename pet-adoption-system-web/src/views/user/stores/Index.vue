@@ -38,8 +38,6 @@ function click(item){
         path:'/storesDetail',
         query:item
     })
-    // console.log(item)
-    // router.push({ name: 'storesDetail', params: { id }})
 }
 function getSome(){
   findSome(goodsInfo.goodsName,goodsInfo.goodsType).then(res=>{

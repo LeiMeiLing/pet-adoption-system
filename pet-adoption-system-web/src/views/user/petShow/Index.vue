@@ -11,7 +11,9 @@
       <li class="item">
         <div class="img_box" @click="click(item)"><img v-bind:src="item.picture" alt=""></div>
         <div style="color: blue">宝贝名</div>   <div v-html="item.petName"></div>
-        <div style="color: #e1251b">内容</div><span>{{item.content}}</span>
+        <lay-rate  :icons="['layui-icon-heart', 'layui-icon-heart-fill']" theme="#FE0000"></lay-rate>
+        <div style="color: #e1251b">内容</div><span>{{item.content}}</span><br>
+        <lay-button type="normal" radius @click="send">发表评论</lay-button>
       </li>
     </ul>
 
@@ -21,23 +23,34 @@
     <lay-form-item label="宠物名">
       <lay-input v-model="petIssueAdd.petName" placeholder="请输入宠物名"></lay-input>
     </lay-form-item>
-
-
     <input type="file" id="file" @change="handleFileChange">
     <img :src="imgbase64" style="width: 100px"/>
-
     <lay-form-item label="想说的话">
       <div style="float: top">
       <lay-input v-model="petIssueAdd.content" placeholder="请留下您可爱宠物的描述" style="height: 200px"></lay-input>
       </div>
     </lay-form-item>
-
-
     <lay-form-item>
       <lay-button type="primary" @click="onAdd" style="width: 80px">发布</lay-button>
     </lay-form-item>
-
   </lay-layer>
+
+
+
+
+    <lay-layer v-model="comment" :area="['400px','400px']" title="发布评论">
+      <lay-form-item label="想说的话">
+        <div style="float: top">
+          <lay-input v-model="petIssueAdd.content" placeholder="请留下您宝贵的评论" style="height: 200px"></lay-input>
+        </div>
+      </lay-form-item>
+      <lay-form-item>
+        <lay-button type="primary" @click="onAdd" style="width: 80px">发布</lay-button>
+      </lay-form-item>
+    </lay-layer>
+
+
+
   </div>
 </template>
 
@@ -67,6 +80,7 @@ export default {
       fr.onload = function () {
         if (fr.result.length > 64*1024){
           layer.msg("图片太大,请重新选择")
+          that.imgbase64=""
         }else {
           that.imgbase64 = fr.result
           abc=that.imgbase64}
@@ -86,6 +100,22 @@ import {add, findAll} from "./api.js";
 import {layer} from "@layui/layui-vue";
 
 const addStoreVisibel = ref(false)
+
+const comment = ref(false)
+
+function click(item){
+  router.push({
+    path:'/commentA',
+    query:{
+      id:item.id
+    }
+  })
+}
+
+function send(){
+  comment.value = true
+
+}
 
 function go(){
   petIssueAdd.petName=""
@@ -144,7 +174,9 @@ function find(){
 }
 
 
-let dataSource = reactive([])
+let dataSource = reactive([]
+
+)
 
 onMounted(find)
 onUpdated(find)
