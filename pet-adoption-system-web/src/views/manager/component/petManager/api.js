@@ -23,13 +23,7 @@ export function petDele(id){
 }
 export function add(petAdd) {
     return http.put("/pet/add", {
-        variety: petAdd.variety,
-        petName: petAdd.petName,
-        petSex: petAdd.petSex,
-        petPicture: petAdd.petPicture,
-        petStatus: petAdd.petStatus,
-        description:petAdd.description
-
+        ...petAdd
     }).then(res => {
         return res
     })

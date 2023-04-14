@@ -85,7 +85,7 @@ import {list} from "./api.js";
 let dataSource = reactive([])
 list().then(res=>{
   dataSource.length=0
-  dataSource.push(...res.data.list);
+  dataSource.push(...res.data);
 })
 </script>
 

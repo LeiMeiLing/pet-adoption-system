@@ -48,12 +48,7 @@ export function deleteUserInfo(row){
 
 export function add(petStoreAdd){
     return http.put("/petstore/add",{
-        goodsType: petStoreAdd.goodsType,
-        goodsname: petStoreAdd.goodsname,
-        goodsPrice: petStoreAdd.goodsPrice,
-        goodsDesc: petStoreAdd.goodsDesc,
-        goodsStatus: petStoreAdd.goodsStatus,
-        goodsPicture:petStoreAdd.goodsPicture
+        ...petStoreAdd
     }).then(res=>{
         return res
 })

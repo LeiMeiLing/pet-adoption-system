@@ -8,6 +8,8 @@
       </lay-input>
       <lay-button type="primary" @click="getSome">搜索</lay-button>
     </div>
+
+
     <div id="app">
         <ul v-for="(item,index) in dataSource">
             <li class="item">

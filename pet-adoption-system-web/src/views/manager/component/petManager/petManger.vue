@@ -226,7 +226,6 @@ const page = ref({
       {title: "宠物名", key:"petName", align:'center'},
       {title: "品种", key:"variety", align:'center'},
       {title: "性别", key:"petSex", align:'center'},
-      {title: "图片", key:"petPicture", align:'center'},
       {title: "领养状态", key:"petStatus", align:'center'},
       {title: "创建时间", key:"creatTime", align:'center'},
       {title: "修改时间", key:"updateTime", align:'center'},
