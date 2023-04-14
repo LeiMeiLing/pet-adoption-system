@@ -34,17 +34,23 @@
           <lay-layer title="提交领养申请" v-model="visible" :area="['500px','500px']">
             <!--领养申请信息界面--->
             <lay-form class="pet-info">
-              <lay-form-item label="姓名:" prop="username">
-                <lay-input placeholder="请输入用户名"></lay-input>
+              <lay-form-item label="姓名:" >
+                <lay-input v-model="adoptionInfo.username"></lay-input>
               </lay-form-item>
               <lay-form-item label="宠物昵称:">
-                <lay-input v-model="route.query.petName"></lay-input>
+                <lay-input v-model="adoptionInfo.petname"></lay-input>
               </lay-form-item>
-              <lay-form-item label="宠物性别:" prop="username">
-                <lay-input v-model="route.query.petSex"></lay-input>
+              <lay-form-item label="宠物性别:">
+                <lay-input v-model="adoptionInfo.petSex"></lay-input>
               </lay-form-item>
-              <lay-form-item label="联系方式:" prop="username">
-                <lay-input placeholder=""></lay-input>
+              <lay-form-item label="联系方式:">
+                <lay-input v-model="adoptionInfo.phone"></lay-input>
+              </lay-form-item>
+              <lay-form-item label="宠物种类:">
+                <lay-input v-model="adoptionInfo.variety"></lay-input>
+              </lay-form-item>
+              <lay-form-item label="申请说明:">
+                <lay-input v-model="adoptionInfo.describe"></lay-input>
               </lay-form-item>
               <lay-form-item class="btn">
                 <lay-space size="lg">
@@ -67,12 +73,28 @@ import {reactive, ref} from "vue";
 import router from "../../../../config/router.js";
 import {layer} from "@layui/layui-vue";
 import {useRoute} from "vue-router";
+import {insert} from "./api.js";
 const route=useRoute()
 
 
+const adoptionInfo=reactive({
+   username: "",
+   variety: "",
+   petname: "",
+   petSex: "",
+   describe: "",
+   phone:""
+})
+adoptionInfo.variety=route.query.variety
+adoptionInfo.petname=route.query.petName
+adoptionInfo.petSex=route.query.petSex
 
 const openSuccess = function() {
-  layer.msg("提交成功", { icon : 1, time: 1000})
+  insert(adoptionInfo).then(res=>{
+    layer.msg(res.msg, { icon : 1, time: 1000})
+    visible.value=false
+  })
+
 }
 const visible = ref(false)
 const changeVisible = function() {
@@ -85,9 +107,7 @@ function cancel(){
 function back(){
   router.push('/userAdoption')
 }
-const petInfo=ref({
 
-})
 </script>
 
 <style scoped lang="scss">
