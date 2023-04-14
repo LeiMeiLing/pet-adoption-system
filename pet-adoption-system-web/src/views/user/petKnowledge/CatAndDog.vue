@@ -1,23 +1,23 @@
 <template>
   <div class="cat&dog">
     <lay-tab type="brief" v-model="current1">
-      <lay-tab-item title="最新" id="1"></lay-tab-item>
-      <lay-tab-item title="养宠知识" id="2"></lay-tab-item>
-      <lay-tab-item title="宠物百科" id="3"></lay-tab-item>
-      <lay-tab-item title="宠物健康" id="4"></lay-tab-item>
+      <lay-tab-item title="最新" id="1" @click="last"></lay-tab-item>
+      <lay-tab-item title="养宠知识" id="2" @click=""></lay-tab-item>
+      <lay-tab-item title="宠物百科" id="3" @click=""></lay-tab-item>
+      <lay-tab-item title="宠物健康" id="4" @click=""></lay-tab-item>
     </lay-tab>
-    <div class="panel-container" shadow="hover" v-for="count in 4">
+    <div class="panel-container" shadow="hover" v-for="count in dataSource">
       <lay-panel>
-        <div class="picture"></div>
+        <img v-bind:src="count.picture">
         <div class="text">
              <h1 class="title" @click="onEssay" >
-               喵星人的日常
+               {{count.title}}
              </h1>
-              <div class="content">
-                猫咪们会获得“至尊成年猫”，“至尊猫崽”，甚至“至尊阉猫”的称号。
+              <div class="description">
+                {{count.description}}
               </div>
-              <div class="author">
-                Ayla Angelos ·11/21 08:57
+              <div class="authorAndCreateTime">
+                {{count.author}}&emsp;{{count.createTime}}
               </div>
         </div>
       </lay-panel>
@@ -27,10 +27,27 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import {reactive, ref} from 'vue'
 const current1 = ref("1")
+import {findAll, selectByTime, selectByType} from "./api.js";
 import {useRouter} from "vue-router";
 const router=useRouter();
+let dataSource=reactive([])
+function last(){
+  selectByTime().then(res=>{
+
+    dataSource.length=0
+    dataSource.push(...res.data)
+  })
+}
+function onClick(essayType){
+  selectByType(essayType).then(res=>{
+    console.log(res);
+    dataSource.length=0
+    dataSource.push(...res.data)
+  })
+}
+
 function onEssay(){
   router.push("/essay");
 }
@@ -42,11 +59,9 @@ function onEssay(){
   width: 100%;
   height: 150px;
 }
-.picture{
+img{
   height: 100%;
   width: 150px;
-  background: url("/public/注册.png");
-  background-size: cover;
 }
 .layui-panel{
   display: flex;
@@ -61,11 +76,11 @@ function onEssay(){
   cursor:pointer;
   font-size: 28px;
 }
-.content{
+.description{
   color: #5b5454;
   font-size: 20px;
 }
-.author{
+.authorAndCreateTime{
   font-size: 20px;
   color: #5b5454;
 }

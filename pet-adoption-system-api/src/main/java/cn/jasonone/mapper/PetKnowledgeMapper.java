@@ -2,6 +2,8 @@ package cn.jasonone.mapper;
 
 import cn.jasonone.bean.PetKnowledge;
 
+import java.util.List;
+
 /**
 * @author DELL
 * @description 针对表【pet_knowledge(宠物知识表)】的数据库操作Mapper
@@ -22,4 +24,9 @@ public interface PetKnowledgeMapper {
 
     int updateByPrimaryKey(PetKnowledge record);
 
+    List<PetKnowledge> findAll();
+
+    List<PetKnowledge> selectByType(String essayType);
+
+    List<PetKnowledge> selectByTime();
 }

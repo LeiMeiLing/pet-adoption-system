@@ -129,6 +129,7 @@ public class GoodsServlet extends HttpServlet {
         Map<String,Object> result = new HashMap<>();
         result.put("code", 200);
         result.put("msg", "添加成功");
+        result.put("data",goods);
         resp.getWriter().write(gson.toJson(result));
         sqlSession.commit();
     }

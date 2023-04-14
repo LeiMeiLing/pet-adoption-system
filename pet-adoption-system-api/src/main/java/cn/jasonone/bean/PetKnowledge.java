@@ -40,5 +40,15 @@ public class PetKnowledge implements Serializable {
      */
     private Date createTime;
 
+    /**
+     * 类型
+     */
+    private String essayType;
+
+    /**
+     * 图片
+     */
+    private String picture;
+
     private static final long serialVersionUID = 1L;
 }
