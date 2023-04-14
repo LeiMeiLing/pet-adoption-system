@@ -119,7 +119,12 @@ const routes = [
             path: '/detailed',
             name: 'detailed',
             component: () => import('../views/user/transfer/Info/Index.vue')
-        },]
+        },{
+            //宠物秀
+            path: '/petShow',
+            name: 'petShow',
+            component: () => import('../views/user/petShow/Index.vue')
+        }]
     }, {
         //管理员界面
         path: '/admin',
@@ -146,6 +151,10 @@ const routes = [
             path:'/comment',
             name:"comment",
             component:()=>import('../views/manager/component/CommentManger/CommentManger.vue')
+        },{
+            path: '/imgDisplay',
+            name: 'imgDisplay',
+            component:()=>import('../views/manager/component/CommentManger/ImgDisplay.vue')
         }
 
 

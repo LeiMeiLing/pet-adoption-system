@@ -48,7 +48,7 @@ public class PetInfo implements Serializable {
     /**
      * 图片
      */
-    private byte[] petPicture;
+    private String petPicture;
 
     private static final long serialVersionUID = 1L;
 }

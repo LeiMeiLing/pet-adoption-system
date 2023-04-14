@@ -45,6 +45,7 @@ public class GoodsServlet extends HttpServlet {
                 result.put("msg", "获取成功");
                 result.put("data",goods);
                 resp.getWriter().write(gson.toJson(result));
+                sqlSession.commit();
                 break;
             case "/petstore/findSome":
                 PageInfo<GoodsInfo> some = findSome(req, resp, pageNum, pageSize,gs);
@@ -53,6 +54,7 @@ public class GoodsServlet extends HttpServlet {
                 result1.put("msg", "获取成功");
                 result1.put("data",some);
                 resp.getWriter().write(gson.toJson(result1));
+                sqlSession.commit();
                 break;
             case "/petstore/findById":
                 GoodsInfo goodsInfo = findId(req, resp, gs);
@@ -61,6 +63,7 @@ public class GoodsServlet extends HttpServlet {
                 rs.put("msg", "获取成功");
                 rs.put("data",goodsInfo);
                 resp.getWriter().write(gson.toJson(rs));
+                sqlSession.commit();
                 break;
             default:
                 super.doPut(req, resp);
@@ -83,9 +86,11 @@ public class GoodsServlet extends HttpServlet {
         switch (requestURI) {
             case "/petstore/add":
                 add(req, resp);
+                sqlSession.commit();
                 break;
             case "/petstore/update":
                 update(req, resp);
+                sqlSession.commit();
                 break;
 
             default:
@@ -112,6 +117,7 @@ public class GoodsServlet extends HttpServlet {
         result.put("code", 200);
         result.put("msg", "删除成功");
         resp.getWriter().write(gson.toJson(result));
+        sqlSession.commit();
     }
 
     private void add(HttpServletRequest req,HttpServletResponse resp) throws IOException {
@@ -123,6 +129,7 @@ public class GoodsServlet extends HttpServlet {
         Map<String,Object> result = new HashMap<>();
         result.put("code", 200);
         result.put("msg", "添加成功");
+        result.put("data",goods);
         resp.getWriter().write(gson.toJson(result));
         sqlSession.commit();
     }
