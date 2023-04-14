@@ -25,7 +25,6 @@ public class PetInfoServiceImpl implements PetInfoService {
 
     @Override
     public void add(PetInfo petInfo) {
-        petInfo.setPetStatus("未领养");
         PetInfoMapper petInfoMapper = sqlSession.getMapper(PetInfoMapper.class);
         petInfoMapper.insertSelective(petInfo);
     }

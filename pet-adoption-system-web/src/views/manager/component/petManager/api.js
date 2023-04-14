@@ -27,7 +27,8 @@ export function add(petAdd) {
         petName: petAdd.petName,
         petSex: petAdd.petSex,
         petPicture: petAdd.petPicture,
-        petStatus: petAdd.petStatus
+        petStatus: petAdd.petStatus,
+        description:petAdd.description
 
     }).then(res => {
         return res

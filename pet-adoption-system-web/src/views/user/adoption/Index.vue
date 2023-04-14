@@ -3,13 +3,13 @@
   <lay-header>
     <h1>领养中心</h1>
     <lay-body>
-        <div v-for="item in dataSource.length">
+        <div v-for="(item,key,index) in dataSource">
           <div>
-            <img @click="onAdoption(dataSource[item-1].petId)" :src="dataSource[item-1].petPicture">
+            <img @click="onAdoption(item)" :src="item.petPicture">
           </div>
           <lay-field>
-            <h2>{{dataSource[item-1].petName}}</h2>
-            {{dataSource[item-1].description}}
+            <h2>{{item.petName}}</h2>
+            {{item.description}}
           </lay-field>
         </div>
 
@@ -25,19 +25,19 @@
 </template>
 
 <script setup>
-import {reactive, ref} from "vue";
+import {reactive} from "vue";
 import router from "../../../config/router.js";
 import {list} from "./api.js";
 
 let dataSource = reactive([])
 list().then(res=>{
   dataSource.length=0
-  dataSource.push(...res.data.list);
+  dataSource.push(...res.data);
 })
 function onAdoption(item){
   router.push({
     path:'/info',
-    query: {item}
+    query: item
   })
 }
 </script>

@@ -12,12 +12,14 @@
             <result property="petStatus" column="pet_status" jdbcType="VARCHAR"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="petPicture" column="pet_picture"/>
+            <result property="description" column="description"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         pet_id,pet_name,variety,
         pet_sex,pet_status,create_time,
-        update_time,pet_picture
+        update_time,pet_picture,description
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -27,7 +29,9 @@
         where  pet_id = #{petId,jdbcType=INTEGER} 
     </select>
     <select id="findAllPet" resultType="cn.jasonone.bean.PetInfo">
-        select * from pet_info
+        select
+        <include refid="Base_Column_List" />
+            from pet_info
     </select>
     <select id="findSome" resultType="cn.jasonone.bean.PetInfo">
         select * from pet_info
@@ -50,9 +54,9 @@
     <insert id="insert"  parameterType="cn.jasonone.bean.PetInfo">
         insert into pet_info
         ( pet_name,variety
-        ,pet_sex,pet_status,pet_picture)
+        ,pet_sex,pet_status,pet_picture,description)
         values (#{petName,jdbcType=VARCHAR},#{variety,jdbcType=CHAR}
-        ,#{petSex,jdbcType=CHAR},#{petStatus,jdbcType=VARCHAR},#{petPicture})
+        ,#{petSex,jdbcType=CHAR},#{petStatus,jdbcType=VARCHAR},#{petPicture},#{description})
     </insert>
     <insert id="insertSelective" keyColumn="pet_id" keyProperty="petId" parameterType="cn.jasonone.bean.PetInfo" useGeneratedKeys="true">
         insert into pet_info
@@ -65,6 +69,7 @@
                 <if test="createTime != null">create_time,</if>
                 <if test="updateTime != null">update_time,</if>
                 <if test="petPicture != null">pet_picture,</if>
+                <if test="description != null">description,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
                 <if test="petId != null">#{petId,jdbcType=INTEGER},</if>
@@ -75,6 +80,7 @@
                 <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
                 <if test="updateTime != null">#{updateTime,jdbcType=TIMESTAMP},</if>
                 <if test="petPicture != null">#{petPicture,jdbcType=BLOB},</if>
+                <if test="description != null">#{description},</if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="cn.jasonone.bean.PetInfo">

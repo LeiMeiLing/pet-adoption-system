@@ -5,27 +5,27 @@
   </lay-header>
   <lay-body>
 
-    <img src="public/宠物1.png">
+    <img :src="route.query.petPicture">
     <div>
       <lay-form class="pet-info">
 
-        <lay-form-item label="宠物编号:" prop="username">
-          <lay-input placeholder=""></lay-input>
+        <lay-form-item label="宠物编号:" >
+          <lay-input v-model="route.query.petId"></lay-input>
         </lay-form-item>
-        <lay-form-item label="宠物名:" prop="username">
-          <lay-input placeholder=""></lay-input>
+        <lay-form-item label="宠物昵称:">
+          <lay-input v-model="route.query.petName"></lay-input>
         </lay-form-item>
-        <lay-form-item label="性别:" prop="username">
-          <lay-input placeholder=""></lay-input>
+        <lay-form-item label="性别:">
+          <lay-input v-model="route.query.petSex"></lay-input>
         </lay-form-item>
-        <lay-form-item label="宠物名:" prop="username">
-          <lay-input placeholder=""></lay-input>
+        <lay-form-item label="宠物种类:">
+          <lay-input v-model="route.query.variety"></lay-input>
         </lay-form-item>
-        <lay-form-item label="发布时间:" prop="username">
-          <lay-input placeholder=""></lay-input>
+        <lay-form-item label="发布时间:">
+          <lay-input v-model="route.query.createTime"></lay-input>
         </lay-form-item>
-        <lay-form-item label="宠物性格特征:" prop="username">
-          <lay-textarea placeholder="" v-model="data1">
+        <lay-form-item label="宠物性格特征:">
+          <lay-textarea v-model="route.query.description">
           </lay-textarea>
         </lay-form-item>
       <lay-form-item class="btn">
@@ -37,11 +37,11 @@
               <lay-form-item label="姓名:" prop="username">
                 <lay-input placeholder="请输入用户名"></lay-input>
               </lay-form-item>
-              <lay-form-item label="宠物名:" prop="username">
-                <lay-input placeholder=""></lay-input>
+              <lay-form-item label="宠物昵称:">
+                <lay-input v-model="route.query.petName"></lay-input>
               </lay-form-item>
               <lay-form-item label="宠物性别:" prop="username">
-                <lay-input placeholder=""></lay-input>
+                <lay-input v-model="route.query.petSex"></lay-input>
               </lay-form-item>
               <lay-form-item label="联系方式:" prop="username">
                 <lay-input placeholder=""></lay-input>
@@ -68,7 +68,6 @@ import router from "../../../../config/router.js";
 import {layer} from "@layui/layui-vue";
 import {useRoute} from "vue-router";
 const route=useRoute()
-const id=reactive(route.query.item)
 
 
 
@@ -99,8 +98,10 @@ const petInfo=ref({
 }
 
 img{
-  margin-left: 200px;
+  margin-left: 300px;
   margin-right: 50px;
+  height: 450px;
+  width: 440px;
 }
 h1{
   margin-top: 50px;

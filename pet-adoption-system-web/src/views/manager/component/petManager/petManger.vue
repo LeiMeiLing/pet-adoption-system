@@ -1,6 +1,6 @@
 <template>
   <div>
-    <lay-row>
+    <lay-row space="10">
 
       <lay-col>
 
@@ -13,7 +13,7 @@
       </lay-col >
 
     </lay-row>
-    <lay-row>
+    <lay-row space="10">
       <lay-col md="11"><lay-input placeholder="请输入性别" v-model="petInfo.petSex">
         <template #prepend>性别</template>
       </lay-input></lay-col>
@@ -29,28 +29,41 @@
     </lay-row>
 
 
-    <lay-layer v-model="addPetVisibel" :area="['400px','450px']">
-      <lay-form-item label="宠物类型">
-        <lay-input v-model="petAdd.variety" placeholder="请输入宠物类型"></lay-input>
-      </lay-form-item>
+    <lay-layer title="新增宠物" v-model="addPetVisibel" :area="['400px','600px']">
 
-      <lay-form-item label="宠物名字">
-        <lay-input v-model="petAdd.petName" placeholder="请输入宠物名字"></lay-input>
-      </lay-form-item>
+     <lay-form class="add-form">
+       <lay-form-item label="宠物昵称:">
+         <lay-input v-model="petAdd.petName" placeholder="请输入宠物昵称"></lay-input>
+       </lay-form-item>
 
-      <input type="file" id="file" @change="handleFileChange">
-      <img :src="imgbase64" style="width: 150px"/>
+       <lay-form-item label="宠物类型:">
+         <lay-input v-model="petAdd.variety" placeholder="请输入宠物类型"></lay-input>
+       </lay-form-item>
 
-      <lay-form-item label="宠物性别">
-        <lay-input v-model="petAdd.petSex" placeholder="请输入宠物的性别"></lay-input>
-      </lay-form-item>
-      <lay-form-item label="领养状态">
-        <lay-input v-model="petAdd.petStatus" placeholder="请输入状态"></lay-input>
-      </lay-form-item>
+       <lay-form-item label="宠物图片:">
+         <input type="file" id="file" @change="handleFileChange">
+         <img :src="imgbase64" style="width: 100px"/>
+       </lay-form-item>
 
-      <lay-form-item>
-        <lay-button type="primary" @click="onAdd" style="width: 80px">新增</lay-button>
-      </lay-form-item>
+       <lay-form-item label="宠物性别:">
+         <lay-select v-model="petAdd.petSex" placeholder="请选择">
+           <lay-select-option :value="'雌性'" label="雌性"></lay-select-option>
+           <lay-select-option :value="'雄性'" label="雄性"></lay-select-option>
+           <lay-select-option :value="'无'" label="无"></lay-select-option>
+         </lay-select>
+       </lay-form-item>
+       <lay-form-item label="领养状态:">
+         <lay-input v-model="petAdd.petStatus" placeholder="请输入状态"></lay-input>
+       </lay-form-item>
+       <lay-form-item label="宠物简介:">
+         <lay-textarea placeholder="请输入描述" v-model="petAdd.description">
+         </lay-textarea>
+       </lay-form-item>
+
+       <lay-form-item>
+         <lay-button type="primary" @click="onAdd" style="width: 80px">新增</lay-button>
+       </lay-form-item>
+     </lay-form>
 
     </lay-layer>
 
@@ -88,7 +101,7 @@
 
 
     <lay-layer v-model="updatePetDisplay" :area="['400px','450px']">
-      <lay-form-item label="宠物名称">
+      <lay-form-item label="宠物名称" >
         <lay-input v-model="petInfoUpdate.petName" placeholder="请输入宠物名称"></lay-input>
       </lay-form-item>
       <input type="file" id="file" @change="handleFileChange">
@@ -153,7 +166,8 @@ const petAdd = reactive({
   petName: "",
   petSex: "",
   petStatus: "",
-  petPicture:""
+  petPicture:"",
+  description:""
 })
 const petInfoUpdate = reactive({
   petId:"",
@@ -260,6 +274,13 @@ const page = ref({
     onMounted(reload)
 
 </script>
-<style>
+<style scoped lang="scss">
+.add-form{
+  margin-top: 10px;
+  .layui-input{
+    width: 220px;
+  }
+}
+
 
 </style>
