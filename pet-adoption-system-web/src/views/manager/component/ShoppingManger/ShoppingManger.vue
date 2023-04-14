@@ -43,8 +43,8 @@
 
 
         <template #toolbar>
-          <lay-tooltip content="新增商品">
-            <lay-button type="primary" @click="addStoreVisibel=true">
+          <lay-tooltip content="添加商品">
+            <lay-button type="primary" radius @click="addStoreVisibel=true">
               <lay-icon type="layui-icon-add-one"></lay-icon>
             </lay-button>
           </lay-tooltip>
@@ -61,8 +61,8 @@
           <lay-input v-model="petStoreAdd.goodsname" placeholder="请输入名字"></lay-input>
         </lay-form-item>
 
-        <input type="file" id="file" @change="handleFileChange">
-        <img :src="imgbase64" style="width: 150px"/>
+        <input type="file" id="file" @change="handleFileChange" >
+        <img :src="imgbase64" style="width: 100px"/>
 
         <lay-form-item label="价格">
           <lay-input v-model="petStoreAdd.goodsPrice" placeholder="请输入价格"></lay-input>
@@ -81,24 +81,24 @@
 
       </lay-layer>
 
-      <lay-layer v-model="updateUserDisplay" :area="['400px','450px']">
-        <lay-form-item label="用户名称">
-          <lay-input v-model="userInfoUpdate.username" placeholder="请输入用户名"></lay-input>
-        </lay-form-item>
+<!--      <lay-layer v-model="updateUserDisplay" :area="['400px','450px']">-->
+<!--        <lay-form-item label="用户名称">-->
+<!--          <lay-input v-model="userInfoUpdate.username" placeholder="请输入用户名"></lay-input>-->
+<!--        </lay-form-item>-->
 
-        <lay-form-item label="邮箱">
-          <lay-input v-model="userInfoUpdate.email" placeholder="请输入邮箱"></lay-input>
-        </lay-form-item>
+<!--        <lay-form-item label="邮箱">-->
+<!--          <lay-input v-model="userInfoUpdate.email" placeholder="请输入邮箱"></lay-input>-->
+<!--        </lay-form-item>-->
 
-        <lay-form-item label="手机号">
-          <lay-input v-model="userInfoUpdate.phone" placeholder="请输入手机号"></lay-input>
-        </lay-form-item>
+<!--        <lay-form-item label="手机号">-->
+<!--          <lay-input v-model="userInfoUpdate.phone" placeholder="请输入手机号"></lay-input>-->
+<!--        </lay-form-item>-->
 
-        <lay-form-item>
-          <lay-button type="primary" @click="updateUserInfo" style="width: 80px">修改</lay-button>
-        </lay-form-item>
+<!--        <lay-form-item>-->
+<!--          <lay-button type="primary" @click="updateUserInfo" style="width: 80px">修改</lay-button>-->
+<!--        </lay-form-item>-->
 
-      </lay-layer>
+<!--      </lay-layer>-->
     </div>
 
 
@@ -160,7 +160,7 @@ const columns = reactive([
   {title: "商品类型", key: "goodsType", align: "center"},
   {title: "商品名称", key: "goodsname", align: "center"},
   {title: "商品价格", key: "goodsPrice", align: "center"},
-  {title: "商品图片", key:"goodsPicture",align: "center"},
+  /*{title: "商品图片", key:"goodsPicture",align: "center"},*/
   {title: "商品描述", key: "goodsDesc", align: "center"},
   {title: "商品状态", key: "goodsStatus", align: "center"},
   {title: "创建时间", key: "createTime", align: "center"},
@@ -244,6 +244,7 @@ function reload() {
 function onAdd() {
   petStoreAdd.goodsPicture = abc
   add(petStoreAdd)
+  reload()
   layer.msg("新增成功")
   addStoreVisibel.value = false;
   reload()

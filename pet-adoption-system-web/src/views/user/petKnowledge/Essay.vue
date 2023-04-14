@@ -20,8 +20,9 @@
     </div>
     <br>
     <div class="icon">
-      <lay-icon v-model="praise"  color="#FFB800" size="40px" @click="onLike"></lay-icon>
-      <lay-icon v-model="tread" color="#1E9FFF" size="40px" @click="unLike"></lay-icon>
+      <lay-icon v-show="praise" type="layui-icon-praise" color="#FFB800" size="40px" @click="praise = !praise"></lay-icon>
+      <lay-icon v-show="!praise" type="layui-icon-tread" color="#FFB800" size="40px" @click="praise = !praise"></lay-icon>
+      <lay-icon color="#1E9FFF" size="40px" @click="unLike"></lay-icon>
     </div>
     <br>
         <a href="">
@@ -39,6 +40,7 @@ import { ref } from 'vue'
 import { layer } from  "@layui/layui-vue"
 const limit = ref(10)
 const total = ref(50)
+const praise = ref(true)
 const currentPage = ref();
 
 let status=false;

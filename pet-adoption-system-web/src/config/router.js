@@ -35,7 +35,7 @@ const routes = [
         //个人中心主界面
         path: '/personalCenter',
         name: 'personalCenter',
-        redirect: '/center',
+        redirect: 'center',
         component: () => import('../views/user/personalCenter/Index.vue'),
         meta: {
             // 标记该路由不需要登录
@@ -45,27 +45,27 @@ const routes = [
         children: [{
             path: '/center',
             name: 'center',
-            component: () => import('../views/user/personalCenter/Center.vue')
+            component: () => import('../views/user/personalCenter/center/Center.vue')
         }, {//个人信息
             path: '/information',
             name: 'information',
-            component: () => import('../views/user/personalCenter/Information.vue')
+            component: () => import('../views/user/personalCenter/information/Information.vue')
         }, {//收货地址
             path: '/address',
             name: 'address',
-            component: () => import('../views/user/personalCenter/Address.vue')
+            component: () => import('../views/user/personalCenter/address/Address.vue')
         }, {//我的帖子
             path: '/invitation',
             name: 'invitation',
-            component: () => import('../views/user/personalCenter/Invitation.vue')
+            component: () => import('../views/user/personalCenter/invitation/Invitation.vue')
         }, {//领养申请
             path: '/application',
             name: 'application',
-            component: () => import('../views/user/personalCenter/Application.vue')
+            component: () => import('../views/user/personalCenter/application/Application.vue')
         }, {//转送宠物
             path: '/transfer',
             name: 'transfer',
-            component: () => import('../views/user/personalCenter/Transfer.vue')
+            component: () => import('../views/user/personalCenter/transfer/Transfer.vue')
         },]
     },
     {
@@ -119,7 +119,12 @@ const routes = [
             path: '/detailed',
             name: 'detailed',
             component: () => import('../views/user/transfer/Info/Index.vue')
-        },]
+        },{
+            //宠物秀
+            path: '/petShow',
+            name: 'petShow',
+            component: () => import('../views/user/petShow/Index.vue')
+        }]
     }, {
         //管理员界面
         path: '/admin',

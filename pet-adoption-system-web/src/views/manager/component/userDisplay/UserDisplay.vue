@@ -1,5 +1,6 @@
 <template>
   <div class="user">
+    <div></div>
     <div class="up">
       <lay-input :allow-clear="true" v-model="user.username" placeholder="输入用户名">
         <template #prefix>用户名:</template>
@@ -21,8 +22,6 @@
     <div class="table">
       <lay-table :columns="columns"
                  :data-source="data"
-                 :page="page"
-                 @change="onPageChange"
                  :default-toolbar="true"
                  even>
         <template #action="{row}">
@@ -102,33 +101,31 @@ const userInfoUpdate = reactive({
   phone: "",
 })
 
-
-const page = reactive({
-  total: 10,
-  limit: 8,
-  current: 1,
-  showRefresh: true,
-  limits: [3, 4, 5, 6, 7, 8]
-})
+//
+// const page = reactive({
+//   total: 10,
+//   limit: 8,
+//   current: 1,
+//   showRefresh: true,
+//   limits: [3, 4, 5, 6, 7, 8]
+// })
 
 
 //绑定更新界面，更新用户信息
 function updateUserInfo() {
   console.log(userInfoUpdate)
   updateUser(userInfoUpdate)
-
   layer.msg("修改成功")
   updateUserDisplay.value = false
   reload()
 }
 
 function reload() {
-  list(user.username, user.email, user.phone, page.limit, page.current).then(res => {
+  list().then(res => {
     data.length = 0
     console.log(res.data);
     data.push(...res.data.list)
-    page.current = res.data.current
-    page.total = res.data.total
+
   })
 }
 
@@ -145,20 +142,23 @@ function deleteUser(row) {
   // confirm(""+row.username+"是否要删除吗？")
   // deleteUserInfo(row.id)
   // find()
+  let row1 = row
   layer.confirm(`是否删除${row.username}?`, {
     btn: [
       {
         text: "否",
         callback(id) {
           layer.close(id)
-          find()
+          reload()
         }
       },
 
       {
         text: "是",
         callback(id) {
-          deleteUserInfo(row)
+          deleteUserInfo(row1.id)
+          console.log(row1.id);
+          reload()
           layer.msg("删除成功")
           layer.close(id)
           reload()
@@ -173,21 +173,20 @@ function find() {
   findSome(user.username, user.email, user.phone).then(res => {
     data.length = 0
     data.push(...res.data.list)
-
   })
 }
 
-function onPageChange({current, limit}) {
-  page.current = current
-  console.log(page.current);
-  page.limit = limit
-  console.log(page.limit);
-  reload()
-}
+// function onPageChange({current, limit}) {
+//   page.current = current
+//   console.log(page.current);
+//   page.limit = limit
+//   console.log(page.limit);
+//   reload()
+// }
 
 
 onMounted(reload)
-/*onUpdated(reload)*/
+onUpdated(reload)
 </script>
 
 <style scoped lang="scss">
