@@ -121,7 +121,7 @@ if (a===1){
 const petIssueAdd = reactive({
   picture:"",
   content:"",
-  commentId:"",
+  commentId:"1",
   petName:""
 })
 
