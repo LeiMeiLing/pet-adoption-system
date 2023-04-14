@@ -1,10 +1,8 @@
 package cn.jasonone.servlet;
 
-import cn.jasonone.bean.GoodsInfo;
+
 import cn.jasonone.bean.PetInfo;
-import cn.jasonone.service.GoodsInfoService;
 import cn.jasonone.service.PetInfoService;
-import cn.jasonone.service.impl.GoodsInfoServiceImpl;
 import cn.jasonone.service.impl.PetInfoServiceImpl;
 import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
@@ -15,8 +13,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.HashMap;
+import java.io.IOException;
 import java.util.Map;
 
 @WebServlet("/pet/*")
@@ -48,6 +46,7 @@ public class PetInfoServlet extends HttpServlet {
                 result.put("msg", "获取成功");
                 result.put("data",pets);
                 resp.getWriter().write(gson.toJson(result));
+                sqlSession.commit();
                 break;
             case "/pet/findSome":
                 PageInfo<PetInfo> some = findSome(req, resp, pageNum, pageSize,petInfo);
@@ -56,6 +55,7 @@ public class PetInfoServlet extends HttpServlet {
                 result1.put("msg", "获取成功");
                 result1.put("data",some);
                 resp.getWriter().write(gson.toJson(result1));
+                sqlSession.commit();
                 break;
             default:
                 super.doPut(req, resp);
@@ -69,12 +69,33 @@ public class PetInfoServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPut(req, resp);
+        SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
+        petInfo.setSqlSession(sqlSession);
+        String requestURI = req.getRequestURI();
+        // 去除contextPath
+        requestURI = requestURI.substring(req.getContextPath().length());
+        switch (requestURI) {
+            case "/pet/add":
+                add(req, resp);
+                sqlSession.commit();
+                break;
+            default:
+                super.doPut(req, resp);
+        }
     }
-
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doDelete(req, resp);
+    }
+    private void add(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        Gson gson = new Gson();
+        PetInfo petInfo1 = gson.fromJson(req.getReader(), PetInfo.class);
+
+        petInfo.add(petInfo1);
+        Map<String, Object> result = new HashMap<>();
+        result.put("code", 200);
+        result.put("msg", "新增成功");
+        resp.getWriter().write(gson.toJson(result));
     }
     private PageInfo<PetInfo> findSome(HttpServletRequest req, HttpServletResponse resp, Integer pageNum, Integer pageSize, PetInfoService petInfos) throws IOException{
         Gson gson = new Gson();

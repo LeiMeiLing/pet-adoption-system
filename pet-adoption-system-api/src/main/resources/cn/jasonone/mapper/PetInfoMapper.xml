@@ -12,12 +12,14 @@
             <result property="petStatus" column="pet_status" jdbcType="VARCHAR"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="petPicture" column="pet_picture" jdbcType="VARCHAR"/>
+            <result property="description" column="description" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         pet_id,pet_name,variety,
         pet_sex,pet_status,create_time,
-        update_time,pet_picture
+        update_time,pet_picture,description
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -49,12 +51,12 @@
     </delete>
     <insert id="insert" keyColumn="pet_id" keyProperty="petId" parameterType="cn.jasonone.bean.PetInfo" useGeneratedKeys="true">
         insert into pet_info
-        ( pet_id,pet_name,variety
+        ( pet_name,variety
         ,pet_sex,pet_status,create_time
-        ,update_time,pet_picture)
-        values (#{petId,jdbcType=INTEGER},#{petName,jdbcType=VARCHAR},#{variety,jdbcType=CHAR}
+        ,update_time,pet_picture,description)
+        values (#{petName,jdbcType=VARCHAR},#{variety,jdbcType=CHAR}
         ,#{petSex,jdbcType=CHAR},#{petStatus,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP}
-        ,#{updateTime,jdbcType=TIMESTAMP},#{petPicture,jdbcType=BLOB})
+        ,#{updateTime,jdbcType=TIMESTAMP},#{petPicture},#{description})
     </insert>
     <insert id="insertSelective" keyColumn="pet_id" keyProperty="petId" parameterType="cn.jasonone.bean.PetInfo" useGeneratedKeys="true">
         insert into pet_info
@@ -67,6 +69,7 @@
                 <if test="createTime != null">create_time,</if>
                 <if test="updateTime != null">update_time,</if>
                 <if test="petPicture != null">pet_picture,</if>
+                <if test="description != null">description,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
                 <if test="petId != null">#{petId,jdbcType=INTEGER},</if>
@@ -76,7 +79,8 @@
                 <if test="petStatus != null">#{petStatus,jdbcType=VARCHAR},</if>
                 <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
                 <if test="updateTime != null">#{updateTime,jdbcType=TIMESTAMP},</if>
-                <if test="petPicture != null">#{petPicture,jdbcType=BLOB},</if>
+                <if test="petPicture != null">#{petPicture},</if>
+                <if test="description != null">#{description,jdbcType=VARCHAR},</if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="cn.jasonone.bean.PetInfo">
@@ -103,6 +107,9 @@
                 <if test="petPicture != null">
                     pet_picture = #{petPicture,jdbcType=BLOB},
                 </if>
+                <if test="description != null">
+                    description = #{description,jdbcType=BLOB},
+                </if>
         </set>
         where   pet_id = #{petId,jdbcType=INTEGER} 
     </update>
@@ -115,7 +122,8 @@
             pet_status =  #{petStatus,jdbcType=VARCHAR},
             create_time =  #{createTime,jdbcType=TIMESTAMP},
             update_time =  #{updateTime,jdbcType=TIMESTAMP},
-            pet_picture =  #{petPicture,jdbcType=BLOB}
-        where   pet_id = #{petId,jdbcType=INTEGER} 
+            pet_picture =  #{petPicture,jdbcType=VARCHAR}
+            description =  #{description,jdbcType=VARCHAR}
+        where   pet_id = #{petId,jdbcType=INTEGER}
     </update>
 </mapper>

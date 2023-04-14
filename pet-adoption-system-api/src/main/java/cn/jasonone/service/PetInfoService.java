@@ -14,6 +14,8 @@ import java.util.List;
  * 宠物信息
  */
 public interface PetInfoService {
+
+    PetInfo selectById(Integer id);
     void setSqlSession(SqlSession session);
     void add(PetInfo petInfo);
     void update(PetInfo petInfo);

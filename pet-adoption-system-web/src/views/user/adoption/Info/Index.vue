@@ -4,9 +4,11 @@
     <h1>待领养宠物信息</h1>
   </lay-header>
   <lay-body>
+
     <img src="public/宠物1.png">
     <div>
       <lay-form class="pet-info">
+
         <lay-form-item label="宠物编号:" prop="username">
           <lay-input placeholder=""></lay-input>
         </lay-form-item>
@@ -61,9 +63,14 @@
 </template>
 
 <script setup>
-import {ref} from "vue";
+import {reactive, ref} from "vue";
 import router from "../../../../config/router.js";
 import {layer} from "@layui/layui-vue";
+import {useRoute} from "vue-router";
+const route=useRoute()
+const id=reactive(route.query.item)
+
+
 
 const openSuccess = function() {
   layer.msg("提交成功", { icon : 1, time: 1000})

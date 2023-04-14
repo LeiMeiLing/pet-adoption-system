@@ -17,10 +17,19 @@ public class PetInfoServiceImpl implements PetInfoService {
     @Setter
     private SqlSession sqlSession;
 
+    //根据id查找
+    @Override
+    public PetInfo selectById(Integer id) {
+        PetInfoMapper petInfoMapper = sqlSession.getMapper(PetInfoMapper.class);
+        PetInfo petInfo = petInfoMapper.selectByPrimaryKey(id);
+        return petInfo;
+    }
+
     @Override
     public void add(PetInfo petInfo) {
+        petInfo.setPetStatus("未领养");
         PetInfoMapper petInfoMapper = sqlSession.getMapper(PetInfoMapper.class);
-        petInfoMapper.insert(petInfo);
+        petInfoMapper.insertSelective(petInfo);
     }
 
     @Override

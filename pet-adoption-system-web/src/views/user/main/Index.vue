@@ -77,8 +77,16 @@
 
 <script setup>
 import Index from "../main/carousel/Index.vue";
-import {ref} from "vue";
+import {reactive, ref} from "vue";
 const time=ref('2023年4月12日')
+
+import {list} from "./api.js";
+
+let dataSource = reactive([])
+list().then(res=>{
+  dataSource.length=0
+  dataSource.push(...res.data.list);
+})
 </script>
 
 <style scoped lang="scss">
