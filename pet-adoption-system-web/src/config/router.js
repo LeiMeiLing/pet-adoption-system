@@ -151,6 +151,10 @@ const routes = [
             path:'/comment',
             name:"comment",
             component:()=>import('../views/manager/component/CommentManger/CommentManger.vue')
+        },{
+            path: '/imgDisplay',
+            name: 'imgDisplay',
+            component:()=>import('../views/manager/component/CommentManger/ImgDisplay.vue')
         }
 
 
