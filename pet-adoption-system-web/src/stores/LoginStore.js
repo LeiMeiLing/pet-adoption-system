@@ -24,7 +24,6 @@ export default defineStore("loginInfo", {
             this.managerInfo = managerInfo;
         },
         managerOut(){
-            this.setManagerInfo=null;
         }
     },
     getters: {
