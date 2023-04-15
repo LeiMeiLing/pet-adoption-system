@@ -26,7 +26,7 @@ public interface UserInfoService {
      * @return
      */
     UserInfo login(UserInfo userInfo);
-
+    UserInfo find(Long id);
     /**
      * 获取用户列表显示在页面上
      * @return

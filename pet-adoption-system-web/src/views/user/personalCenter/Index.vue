@@ -35,7 +35,7 @@ import { ref} from "vue";
 import Information from "./information/Information.vue";
 import Address from "./address/Address.vue";
 import Password from "./password/Password.vue"
-import {layer} from "@layui/layui-vue";
+
 
 const visible1= ref(false)
 const visible2= ref(false)
@@ -49,6 +49,7 @@ const changeSelectedKey = (val) => {
 const changeOpenKeys = (val) => {
   openKeys2.value = val;
 }
+
 
 
 </script>
