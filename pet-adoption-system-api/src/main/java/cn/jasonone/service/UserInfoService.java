@@ -26,7 +26,7 @@ public interface UserInfoService {
      * @return
      */
     UserInfo login(UserInfo userInfo);
-
+    UserInfo find(Long id);
     /**
      * 找到名字
      */

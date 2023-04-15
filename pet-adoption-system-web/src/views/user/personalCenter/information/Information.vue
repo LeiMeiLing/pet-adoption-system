@@ -1,6 +1,6 @@
 <template>
     <div class="information">
-      <lay-form>
+      <lay-form v-model="visible">
         <lay-avatar :src="src" radius ></lay-avatar>
         <lay-form-item label="年龄：" ><lay-input ></lay-input ></lay-form-item>
         <lay-form-item label="性别："><lay-input></lay-input></lay-form-item>
@@ -20,6 +20,7 @@ import {reactive, ref} from 'vue'
 import {useRouter} from "vue-router";
 import userLogin from "../../../../stores/LoginStore"
 import {updateUser} from "./api.js";
+import {layer} from "@layui/layui-vue";
 
 const userInfo = userLogin().userInfo
 const updateUserInfo=reactive({
@@ -28,12 +29,14 @@ const updateUserInfo=reactive({
 
 
 
-
+const visible = ref(true)
 const src = "/public/宠物1.png";
 
 
 function onUpdate(){
   updateUser(updateUserInfo)
+  layer.confirm(`保存成功!`)
+  visible.value = false
 }
 </script>
 

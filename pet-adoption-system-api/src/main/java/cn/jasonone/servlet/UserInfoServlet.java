@@ -1,5 +1,6 @@
 package cn.jasonone.servlet;
 
+import cn.hutool.core.util.RandomUtil;
 import cn.hutool.json.ObjectMapper;
 import cn.hutool.jwt.JWTUtil;
 import cn.jasonone.bean.GoodsInfo;
@@ -24,6 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
+
+import static cn.hutool.crypto.SecureUtil.md5;
 
 @WebServlet("/user/*")
 public class UserInfoServlet extends HttpServlet {
@@ -61,10 +64,31 @@ public class UserInfoServlet extends HttpServlet {
             case "/user/login":
                 login(req, resp);
                 break;
+            case "/user/changePassword":
+                changePassword(req,resp);
+                sqlSession.commit();
+                break;
             default:
                 super.doPost(req, resp);
         }
 
+
+    }
+        //修改密码
+    private void changePassword(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
+        userInfoService.setSqlSession(sqlSession);
+        Gson gson = new Gson();
+        UserInfo userInfo = gson.fromJson(req.getReader(), UserInfo.class);
+        UserInfo userInfo1 = userInfoService.find(Long.valueOf(userInfo.getId()));
+        String salt = RandomUtil.randomString(6);
+        userInfo1.setSalt(salt);
+        userInfo1.setPassword(salt+userInfo.getPassword()+salt);
+        userInfoService.update(userInfo1);
+        Map<String, Object> result = new HashMap<>();
+        result.put("code", 200);
+        result.put("msg", "修改成功");
+        resp.getWriter().write(gson.toJson(result));
 
     }
 
@@ -80,6 +104,7 @@ public class UserInfoServlet extends HttpServlet {
         UserInfo userInfo = gson.fromJson(req.getReader(), UserInfo.class);
 
         userInfo = userInfoService.login(userInfo);
+        System.out.println(userInfo);
         Map<String, Object> result = new HashMap<>();
         if (userInfo == null) {
             result.put("code", 400);
@@ -107,7 +132,6 @@ public class UserInfoServlet extends HttpServlet {
 //        String password = req.getParameter("password");
         Gson gson = new Gson();
         UserInfo userInfo = gson.fromJson(req.getReader(), UserInfo.class);
-
         userInfoService.register(userInfo);
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("code", 200);
@@ -155,11 +179,37 @@ public class UserInfoServlet extends HttpServlet {
                 findName(req,resp);
                 sqlSession.commit();
                 break;
-
+            case "/user/find":
+                find(req,resp);
+                break;
             default:
                 super.doPut(req, resp);
         }
     }
+        public void find(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+            SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
+            userInfoService.setSqlSession(sqlSession);
+            String password = req.getParameter("password");
+            String id = req.getParameter("id");
+            Gson gson = new Gson();
+            UserInfo userInfo = userInfoService.find((long)(Integer.parseInt(id)));
+            System.out.println(userInfo);
+            String password1 = userInfo.getPassword();
+            String salt = userInfo.getSalt();
+            Map<String, Object> result1 = new HashMap<>();
+
+            if(password1.equals(md5(salt+password+salt))){
+                result1.put("code", 200);
+                result1.put("msg", "密码正确");
+                result1.put("data",userInfo);
+                resp.getWriter().write(gson.toJson(result1));
+            }else {
+                result1.put("msg", "密码错误");
+                resp.getWriter().write(gson.toJson(result1));
+            }
+
+
+        }
 
     /*
     管理员界面删除用户信息

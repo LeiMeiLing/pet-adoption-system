@@ -17,7 +17,7 @@
         <router-view></router-view>
       </lay-body>
       <lay-layer :title="'个人信息'" v-model="visible1">
-        <information/>
+        <information v-model="visible1"></information>
       </lay-layer>
       <lay-layer :title="'收货地址'" v-model="visible2">
         <Address/>
@@ -55,7 +55,7 @@ function exit() {
         text: "是",
         callback(id) {
           exitUserInfo.logout()
-          router.push({path: '/'})
+          router.push({path: '/login'})
           layer.close(id)
         }
       },
