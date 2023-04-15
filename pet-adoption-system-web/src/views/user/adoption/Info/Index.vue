@@ -10,23 +10,22 @@
       <lay-form class="pet-info">
 
         <lay-form-item label="宠物编号:" >
-          <lay-input v-model="route.query.petId"></lay-input>
+          <div class="content">{{ route.query.petId }}</div>
         </lay-form-item>
         <lay-form-item label="宠物昵称:">
-          <lay-input v-model="route.query.petName"></lay-input>
+          <div class="content">{{ route.query.petName}}</div>
         </lay-form-item>
         <lay-form-item label="性别:">
-          <lay-input v-model="route.query.petSex"></lay-input>
+          <div class="content">{{ route.query.petSex}}</div>
         </lay-form-item>
         <lay-form-item label="宠物种类:">
-          <lay-input v-model="route.query.variety"></lay-input>
+          <div class="content">{{ route.query.variety}}</div>
         </lay-form-item>
         <lay-form-item label="发布时间:">
-          <lay-input v-model="route.query.createTime"></lay-input>
+          <div class="content">{{ route.query.createTime}}</div>
         </lay-form-item>
-        <lay-form-item label="宠物性格特征:">
-          <lay-textarea v-model="route.query.description">
-          </lay-textarea>
+        <lay-form-item label="宠物简介:">
+          <div class="content">{{ route.query.description}}</div>
         </lay-form-item>
       <lay-form-item class="btn">
         <lay-space size="lg">
@@ -38,7 +37,7 @@
                 <lay-input v-model="adoptionInfo.username"></lay-input>
               </lay-form-item>
               <lay-form-item label="宠物昵称:">
-                <lay-input v-model="adoptionInfo.petname"></lay-input>
+                <lay-input  v-model="adoptionInfo.petname"></lay-input>
               </lay-form-item>
               <lay-form-item label="宠物性别:">
                 <lay-input v-model="adoptionInfo.petSex"></lay-input>
@@ -74,6 +73,10 @@ import router from "../../../../config/router.js";
 import {layer} from "@layui/layui-vue";
 import {useRoute} from "vue-router";
 import {insert} from "./api.js";
+import userLongin from "../../../../stores/LoginStore"
+
+const userInfo = userLongin().userInfo
+
 const route=useRoute()
 
 
@@ -85,6 +88,8 @@ const adoptionInfo=reactive({
    describe: "",
    phone:""
 })
+adoptionInfo.username=userInfo.username
+adoptionInfo.phone=userInfo.phone
 adoptionInfo.variety=route.query.variety
 adoptionInfo.petname=route.query.petName
 adoptionInfo.petSex=route.query.petSex
@@ -94,7 +99,6 @@ const openSuccess = function() {
     layer.msg(res.msg, { icon : 1, time: 1000})
     visible.value=false
   })
-
 }
 const visible = ref(false)
 const changeVisible = function() {
@@ -128,11 +132,15 @@ h1{
   text-align: center;
   margin-bottom: 30px;
 }
-.layui-textarea{
-  width: 200px;
-}
 .layui-body{
   height: 500px;
   display: flex;
+}
+.layui-form-item{
+  font-size: 20px;
+}
+.content{
+  padding:5px;
+  font-size: 20px;
 }
 </style>

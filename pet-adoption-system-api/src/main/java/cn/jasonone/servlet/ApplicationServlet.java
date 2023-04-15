@@ -1,7 +1,6 @@
 package cn.jasonone.servlet;
 
 import cn.jasonone.bean.TransferApplication;
-import cn.jasonone.bean.UserInfo;
 import cn.jasonone.service.TransferApplicationService;
 import cn.jasonone.service.impl.TransferApplicationServiceImpl;
 import com.google.gson.Gson;
@@ -43,7 +42,7 @@ public class ApplicationServlet extends HttpServlet {
         applicationService.setSqlSession(sqlSession);
         String requestURI = req.getRequestURI();
         requestURI = requestURI.substring(req.getContextPath().length());
-        Gson gson = new Gson();
+
         switch (requestURI) {
             case "/application/update":
                 updateStatus(req, resp);

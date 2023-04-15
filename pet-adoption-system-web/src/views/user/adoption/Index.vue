@@ -3,7 +3,8 @@
   <lay-header>
     <h1>领养中心</h1>
     <lay-body>
-        <div v-for="(item,key,index) in dataSource">
+      <div class="content">
+        <div v-for="(item,key,index) in dataSource" class="content-div">
           <div>
             <img @click="onAdoption(item)" :src="item.petPicture">
           </div>
@@ -12,6 +13,7 @@
             {{item.description}}
           </lay-field>
         </div>
+      </div>
 
 <!--      <div>
         <div>
@@ -43,13 +45,15 @@ function onAdoption(item){
 </script>
 
 <style scoped lang="scss">
-
+.content-div{
+ display: inline-block;
+}
 .layui-header{
-  margin-top: 80px;
+  margin-top: 30px;
   height: 600px;
   width: 1500px;
 .layui-body{
-  height: 500px;
+  height: 1000px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -74,6 +78,7 @@ function onAdoption(item){
   text-align: center;
 h1{
   font-size: 60px;
+  margin-bottom: 20px;
 }
   h2{
     margin-bottom: 10px;
@@ -84,5 +89,14 @@ h1{
    height: 100px;
    text-align: center;
 }
+}
+.content{
+  height: 1000px;
+  width: 1200px;
+  flex-wrap: wrap;
+  margin-left: 50px;
+  display: flex;
+  overflow: hidden;
+  word-wrap: break-word;
 }
 </style>

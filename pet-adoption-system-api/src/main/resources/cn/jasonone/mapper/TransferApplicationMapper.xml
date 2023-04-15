@@ -11,6 +11,7 @@
             <result property="transferName" column="transfer_name" jdbcType="VARCHAR"/>
             <result property="transferCause" column="transfer_cause" jdbcType="VARCHAR"/>
             <result property="petStatus" column="pet_status" jdbcType="VARCHAR"/>
+            <result property="username" column="username" jdbcType="VARCHAR"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
@@ -18,7 +19,7 @@
     <sql id="Base_Column_List">
         id,title,petName,
         transfer_name,transfer_cause,pet_status,
-        create_time,update_time
+        create_time,update_time,username
     </sql>
 
     <select id="selectByPrimaryKey"  resultMap="BaseResultMap">
@@ -39,10 +40,10 @@
         insert into transfer_application
         ( title,petName
         ,transfer_name,transfer_cause,pet_status
-        ,create_time,update_time)
+        ,create_time,update_time,username)
         values (#{title,jdbcType=VARCHAR},#{petname,jdbcType=VARCHAR}
         ,#{transferName,jdbcType=VARCHAR},#{transferCause,jdbcType=VARCHAR},#{petStatus,jdbcType=VARCHAR}
-        ,#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP})
+        ,#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},#{username,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cn.jasonone.bean.TransferApplication" useGeneratedKeys="true">
         insert into transfer_application
@@ -55,6 +56,7 @@
                 <if test="petStatus != null">pet_status,</if>
                 <if test="createTime != null">create_time,</if>
                 <if test="updateTime != null">update_time,</if>
+                <if test="username != null">username,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
                 <if test="id != null">#{id,jdbcType=INTEGER},</if>
@@ -63,6 +65,7 @@
                 <if test="transferName != null">#{transferName,jdbcType=VARCHAR},</if>
                 <if test="transferCause != null">#{transferCause,jdbcType=VARCHAR},</if>
                 <if test="petStatus != null">#{petStatus,jdbcType=VARCHAR},</if>
+                <if test="username != null">#{username,jdbcType=VARCHAR},</if>
                 <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
                 <if test="updateTime != null">#{updateTime,jdbcType=TIMESTAMP},</if>
         </trim>
@@ -85,6 +88,9 @@
                 <if test="petStatus != null">
                     pet_status = #{petStatus,jdbcType=VARCHAR},
                 </if>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
                 <if test="createTime != null">
                     create_time = #{createTime,jdbcType=TIMESTAMP},
                 </if>
@@ -102,6 +108,7 @@
             transfer_name =  #{transferName,jdbcType=VARCHAR},
             transfer_cause =  #{transferCause,jdbcType=VARCHAR},
             pet_status =  #{petStatus,jdbcType=VARCHAR},
+            username =  #{username,jdbcType=VARCHAR},
             create_time =  #{createTime,jdbcType=TIMESTAMP},
             update_time =  #{updateTime,jdbcType=TIMESTAMP}
         where   id = #{id,jdbcType=INTEGER} 
