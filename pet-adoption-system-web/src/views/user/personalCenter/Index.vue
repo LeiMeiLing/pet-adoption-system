@@ -1,18 +1,20 @@
 <template>
   <div class="personalCenter">
     <lay-layout>
-      <lay-side >
-        <lay-menu  class="menu" :selected-key="selectedKey" @change-selected-Key="changeSelectedKey" @change-open-keys="changeOpenKeys" v-model:openKeys="openKeys2" :tree="true">
+      <lay-side>
+        <lay-menu class="menu" :selected-key="selectedKey" @change-selected-Key="changeSelectedKey"
+                  @change-open-keys="changeOpenKeys" v-model:openKeys="openKeys2" :tree="true">
           <lay-menu-item id="1" to="center">个人中心</lay-menu-item>
-          <lay-menu-item id="2"  @click="visible1=true">个人信息</lay-menu-item>
-          <lay-menu-item id="3"  @click="visible2=true">收货地址</lay-menu-item>
-          <lay-menu-item id="4"  @click="visible3=true">修改密码</lay-menu-item>
-          <lay-menu-item id="5" >领养申请</lay-menu-item>
-          <lay-menu-item id="6" >转送宠物</lay-menu-item>
-          <lay-menu-item id="7"  @click="visible1=true">退出登录</lay-menu-item>
-      </lay-menu></lay-side>
+          <lay-menu-item id="2" @click="visible1=true">个人信息</lay-menu-item>
+          <lay-menu-item id="3" @click="visible2=true">收货地址</lay-menu-item>
+          <lay-menu-item id="4" @click="visible3=true">修改密码</lay-menu-item>
+          <lay-menu-item id="5">领养申请</lay-menu-item>
+          <lay-menu-item id="6">转送宠物</lay-menu-item>
+          <lay-menu-item id="7" @click="exit">退出登录</lay-menu-item>
+        </lay-menu>
+      </lay-side>
       <lay-body>
-       <router-view></router-view>
+        <router-view></router-view>
       </lay-body>
       <lay-layer :title="'个人信息'" v-model="visible1">
         <information/>
@@ -26,20 +28,53 @@
     </lay-layout>
 
 
-    </div>
+  </div>
 
 </template>
 
 <script setup>
-import { ref} from "vue";
+import {ref} from "vue";
 import Information from "./information/Information.vue";
 import Address from "./address/Address.vue";
 import Password from "./password/Password.vue"
+import {layer} from "@layui/layui-vue";
+import userLogin from "../../../stores/LoginStore"
+import router from "../../../config/router.js";
 
 
-const visible1= ref(false)
-const visible2= ref(false)
-const visible3= ref(false)
+const exitUserInfo = userLogin()
+
+/*
+退出登录，是的话userInfo设置为空，跳转路由，导航守卫自动跳转到
+登录界面
+ */
+function exit() {
+  layer.confirm(`是否退出登录？`, {
+    btn: [
+      {
+        text: "是",
+        callback(id) {
+          exitUserInfo.logout()
+          router.push({path: '/'})
+          layer.close(id)
+        }
+      },
+      {
+        text: "否",
+        callback(id) {
+          layer.close(id)
+        }
+      }
+
+    ],icon:7,
+    title: '退出'
+
+  })
+}
+
+const visible1 = ref(false)
+const visible2 = ref(false)
+const visible3 = ref(false)
 const openKeys2 = ref(["1"])
 const selectedKey = ref("1")
 const changeSelectedKey = (val) => {
@@ -51,27 +86,30 @@ const changeOpenKeys = (val) => {
 }
 
 
-
 </script>
 
 <style scoped lang="scss">
-.personalCenter{
+.personalCenter {
   height: 100%;
   width: 100%;
   font-size: 25px;
 }
-.layui-side{
+
+.layui-side {
   min-height: 1000px;
   background-color: #638863;
 
 }
-.layui-body{
+
+.layui-body {
   min-height: 1000px;
 }
-.menu{
+
+.menu {
   background-color: #638863;
 }
-:deep(.layui-nav) *{
+
+:deep(.layui-nav) * {
   font-size: 18px !important;
 }
 
