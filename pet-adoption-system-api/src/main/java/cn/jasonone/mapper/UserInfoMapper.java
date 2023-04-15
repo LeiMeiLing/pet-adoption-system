@@ -17,6 +17,13 @@ public interface UserInfoMapper {
         */
     int deleteByPrimaryKey(Long id);
 
+    /**
+     * 通过id找到名字
+     * @param id
+     * @return
+     */
+    String selectByIdUsername(Long id);
+
     int insert(UserInfo record);
 
     int insertSelective(UserInfo record);

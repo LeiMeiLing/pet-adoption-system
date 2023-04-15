@@ -10,7 +10,7 @@ const routes = [
         component: () => import('../views/user/login/Index.vue'),
         meta: {
             // 标记该路由不需要登录
-            noLogin: true
+            noLogin: true,
         }
     }, {
         //管理员登录界面
@@ -39,7 +39,7 @@ const routes = [
         component: () => import('../views/user/personalCenter/Index.vue'),
         meta: {
             // 标记该路由不需要登录
-            noLogin: true
+            userLogin: false
         },
         //个人中心
         children: [{
@@ -73,6 +73,10 @@ const routes = [
         name: 'main',
         component: () => import('../views/user/Index.vue'),
         redirect: '/home',
+        meta: {
+            // 标记该路由不需要登录
+            userLogin: false
+        },
         children: [{
             //商城界面
             path: '/stores',
@@ -119,47 +123,52 @@ const routes = [
             path: '/detailed',
             name: 'detailed',
             component: () => import('../views/user/transfer/Info/Index.vue')
-        },{
+        }, {
             //宠物秀
             path: '/petShow',
             name: 'petShow',
             component: () => import('../views/user/petShow/Index.vue')
-        },{
+        }, {
             //评论界面
             path: '/commentA',
             name: 'commentA',
-            component: () => import('../views/user/petShow/comment.vue')
+            component: () => import('../views/user/petShow/comment/Index.vue')
         }]
     }, {
         //管理员界面
         path: '/admin',
         name: 'admin',
         component: () => import('../views/manager/layout/Index.vue'),
+        meta: {
+            // 标记该路由不需要登录
+            managerLogin: false
+        },
+
         children: [{
             //用户信息界面
             path: '/userDisplay',
             name: 'userDisplay',
             component: () => import('../views/manager/component/userDisplay/UserDisplay.vue')
-        },{
-            path:'/petInfo',
-            name:"petInfo",
-            component:()=>import('../views/manager/component/petManager/petManger.vue')
-        },{
-            path:'/adoption',
-            name:"adoption",
-            component:()=>import('../views/manager/component/AdoptionManger/AdoptionManger.vue')
-        },{
-            path:'/shopping',
-            name:"shopping",
-            component:()=>import('../views/manager/component/ShoppingManger/ShoppingManger.vue')
-        },{
-            path:'/comment',
-            name:"comment",
-            component:()=>import('../views/manager/component/CommentManger/CommentManger.vue')
-        },{
+        }, {
+            path: '/petInfo',
+            name: "petInfo",
+            component: () => import('../views/manager/component/petManager/petManger.vue')
+        }, {
+            path: '/adoption',
+            name: "adoption",
+            component: () => import('../views/manager/component/AdoptionManger/AdoptionManger.vue')
+        }, {
+            path: '/shopping',
+            name: "shopping",
+            component: () => import('../views/manager/component/ShoppingManger/ShoppingManger.vue')
+        }, {
+            path: '/comment',
+            name: "comment",
+            component: () => import('../views/manager/component/CommentManger/CommentManger.vue')
+        }, {
             path: '/imgDisplay',
             name: 'imgDisplay',
-            component:()=>import('../views/manager/component/CommentManger/ImgDisplay.vue')
+            component: () => import('../views/manager/component/CommentManger/ImgDisplay.vue')
         }
 
 
@@ -180,10 +189,24 @@ router.beforeEach((to, from) => {
         return true;
     }
     const loginInfo = useLogin();
+    if (loginInfo.managerInfo) {
+        to.meta.managerLogin = true;
+    }
     if (loginInfo.userInfo) {
+        to.meta.userLogin = true
+    }
+    if (loginInfo.userInfo) {
+        if (to.meta.managerLogin === false) {
+            return false
+        }
+        return true;
+
+    } else if (loginInfo.managerInfo) {
+        if (to.meta.userLogin === false) {
+            return false
+        }
         return true;
     } else {
-        // 如果没有登录,则跳转到登录页面
         return {name: "login"};
     }
 })

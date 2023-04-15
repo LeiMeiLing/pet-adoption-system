@@ -16,6 +16,16 @@ public class Comment implements Serializable {
     private Integer id;
 
     /**
+     * 宠物秀id
+     */
+    private Integer issueId;
+
+    /**
+     * 评论者id
+     */
+    private Integer commentId;
+
+    /**
      * 评论内容
      */
     private String content;
@@ -29,6 +39,11 @@ public class Comment implements Serializable {
      * 评论者id
      */
     private Integer userId;
+
+    /**
+     * 评论者名字
+     */
+    private String commentName;
 
     private static final long serialVersionUID = 1L;
 }

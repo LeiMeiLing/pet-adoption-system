@@ -1,28 +1,34 @@
 import {defineStore} from "pinia"
 
-export default  defineStore("loginInfo",{
-    state:()=>({
+export default defineStore("loginInfo", {
+    state: () => ({
         token: "",
-        userInfo: null
+        userInfo: null,
+        managerInfo: null
     }),
-    persist:{
-      enabled:true
+    persist: {
+        enabled: true
     },
-    actions:{
-        setToken(token){
+    actions: {
+        setToken(token) {
             this.token = token;
         },
-        setUserInfo(userInfo){
+        setUserInfo(userInfo) {
             this.userInfo = userInfo;
         },
-        logout(){
+        logout() {
             this.token = "";
             this.userInfo = null;
+        },
+        setManagerInfo(managerInfo) {
+            this.managerInfo = managerInfo;
+        },
+        managerOut(){
         }
     },
-    getters:{
-        isLogin(){
-            return ()=> !!this.token;
+    getters: {
+        isLogin() {
+            return () => !!this.token;
         }
     }
 

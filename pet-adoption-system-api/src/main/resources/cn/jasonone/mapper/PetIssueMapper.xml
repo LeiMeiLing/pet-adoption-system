@@ -34,8 +34,8 @@
     </delete>
     <insert id="insert"  parameterType="cn.jasonone.bean.PetIssue" >
         insert into pet_issue
-        (content,pet_name,picture)
-        values (#{content,jdbcType=VARCHAR},#{petName,jdbcType=VARCHAR},#{picture})
+        (comment_id,content,pet_name,picture)
+        values (#{commentId},#{content,jdbcType=VARCHAR},#{petName,jdbcType=VARCHAR},#{picture})
     </insert>
     <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cn.jasonone.bean.PetIssue" useGeneratedKeys="true">
         insert into pet_issue

@@ -2,13 +2,8 @@ import http from "../../../config/http.js";
 
 export function add(row){
     return http.put("/petIssue", {
-
-            content:row.content,
-            picture:row.picture,
-            commentId:row.commentId,
-            petName:row.petName
-
-    }).then(res=>{
+            ...row
+                }).then(res=>{
         return res;
     })
 }
