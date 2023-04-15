@@ -1,10 +1,13 @@
-import {defineStore} from "pinia";
+import {defineStore} from "pinia"
 
-export default defineStore("loginInfo",{
+export default  defineStore("loginInfo",{
     state:()=>({
         token: "",
         userInfo: null
     }),
+    persist:{
+      enabled:true
+    },
     actions:{
         setToken(token){
             this.token = token;

@@ -8,10 +8,10 @@ import '@layui/layui-vue/lib/index.css'
 import 'nprogress/nprogress.css'
 
 const app = createApp(App);
-// 注册路由
-app.use(router);
 // 注册状态管理
 app.use(store);
+// 注册路由
+app.use(router);
 // 注册layui
 app.use(layui);
 app.mount('#app')

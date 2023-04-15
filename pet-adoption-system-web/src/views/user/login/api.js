@@ -10,7 +10,7 @@ export function login(userInfo){
                 // 保存token
                 loginInfo.setToken(res.token);
                 // 保存用户信息
-                loginInfo.setUserInfo(res.userInfo);
+                loginInfo.setUserInfo(res.data);
             }
             return res;
         })

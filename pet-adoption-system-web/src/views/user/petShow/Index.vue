@@ -98,6 +98,10 @@ import router from "../../../config/router.js";
 import {onMounted, onUpdated, reactive, ref} from "vue";
 import {add, findAll} from "./api.js";
 import {layer} from "@layui/layui-vue";
+import useLogin from "../../../stores/LoginStore.js"
+
+const loginInfo = useLogin();
+console.log(loginInfo.userInfo)
 
 const addStoreVisibel = ref(false)
 
