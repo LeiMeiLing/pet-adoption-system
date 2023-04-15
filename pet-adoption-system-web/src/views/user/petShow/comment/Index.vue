@@ -1,20 +1,22 @@
 <template>
   <div class="container">
 
+<!--发布评论区域-->
     <div class="comment-send">
-
-      <form id="commentForm" method="GET" action="http://127.0.0.1:8888/comment">
+      <form id="commentForm" method="post" action="/comment">
          <span class="comment-avatar">
-                     <img src="avatar1.jpg" alt="avatar">
+                     <img src="avatar1.jpg" alt="111" >
+                      <div>{{ loginInfo.username }}</div>
                  </span>
         <textarea class="comment-send-input" name="comment" form="commentForm" cols="80" rows="5"
                   placeholder="请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。"></textarea>
         <input class="comment-send-button" type="submit" value="发表评论">
-
       </form>
-
     </div>
 
+
+
+    <!--展示评论区域-->
     <div class="comment-list" id="commentList">
 
       <div class="comment">
@@ -61,6 +63,15 @@
 
   </div>
 </template>
+
+
+<script setup>
+import useLogin from "../../../../stores/LoginStore.js"
+
+const loginInfo = useLogin().userInfo
+
+
+</script>
 
 <script>
 /*

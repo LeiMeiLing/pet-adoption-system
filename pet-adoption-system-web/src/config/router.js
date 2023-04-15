@@ -128,7 +128,7 @@ const routes = [
             //评论界面
             path: '/commentA',
             name: 'commentA',
-            component: () => import('../views/user/petShow/comment.vue')
+            component: () => import('../views/user/petShow/comment/Index.vue')
         }]
     }, {
         //管理员界面

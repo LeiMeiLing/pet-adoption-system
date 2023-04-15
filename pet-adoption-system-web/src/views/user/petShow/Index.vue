@@ -38,16 +38,6 @@
 
 
 
-    <lay-layer v-model="comment" :area="['400px','400px']" title="发布评论">
-      <lay-form-item label="想说的话">
-        <div style="float: top">
-          <lay-input v-model="petIssueAdd.content" placeholder="请留下您宝贵的评论" style="height: 200px"></lay-input>
-        </div>
-      </lay-form-item>
-      <lay-form-item>
-        <lay-button type="primary" @click="onAdd" style="width: 80px">发布</lay-button>
-      </lay-form-item>
-    </lay-layer>
 
 
 
@@ -101,7 +91,8 @@ import {layer} from "@layui/layui-vue";
 import useLogin from "../../../stores/LoginStore.js"
 
 const loginInfo = useLogin();
-console.log(loginInfo.userInfo)
+
+
 
 const addStoreVisibel = ref(false)
 
@@ -109,7 +100,7 @@ const comment = ref(false)
 
 function click(item){
   router.push({
-    path:'/commentA',
+    name:'commentA',
     query:{
       id:item.id
     }
@@ -125,8 +116,6 @@ function go(){
   petIssueAdd.petName=""
   petIssueAdd.content=""
   petIssueAdd.picture=""
-  console.log(petIssueAdd)
-
   addStoreVisibel.value=true
 }
 
@@ -136,6 +125,7 @@ function onAdd(){
     for(var key in petIssueAdd) {
       if (!petIssueAdd[key]) {
         layer.msg('有空值',100)
+        return
       } else {
         a=1
       }
@@ -155,9 +145,10 @@ if (a===1){
 const petIssueAdd = reactive({
   picture:"",
   content:"",
-  commentId:"1",
+  commentId:loginInfo.userInfo.id,
   petName:""
 })
+
 
 const goodsInfo = reactive({
   id:0,
@@ -183,7 +174,7 @@ let dataSource = reactive([]
 )
 
 onMounted(find)
-onUpdated(find)
+/*onUpdated(find)*/
 
 
 </script>
