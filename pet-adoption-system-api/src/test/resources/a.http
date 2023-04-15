@@ -31,8 +31,8 @@ Content-Type: application/json; charset=UTF-8
 
 
 {
-  "id": 33,
-  "username": "admin",
+  "id": 74,
+  "username": "1",
   "email": "123@qq.com",
   "phone": "08123856789"
 }
