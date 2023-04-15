@@ -41,6 +41,7 @@
             <if test="variety != null">and variety like concat('%',#{variety},'%')</if>
             <if test="petSex != null">and pet_sex like concat('%',#{petSex},'%')</if>
             <if test="petStatus != null">and pet_status like concat('%',#{petStatus},'%')</if>
+            <if test="description != null">and description like concat('%',#{description},'%')</if>
         </where>
 
 
