@@ -1,19 +1,25 @@
 <template>
   <div class="container">
 
-    <div>{{ route.query }}</div>
+    宠物名<b style="color: #1aa2d4">{{ route.query.petName }}</b><br>
+    <img :src="route.query.picture" style="Display: inline-block"><b>{{ route.query.content }}</b>
 
 <!--发布评论区域-->
     <div class="comment-send">
-      <form id="commentForm" method="post" action="/comment">
+      <form id="commentForm" method="post" action="api/comment" target="iframe">
          <span class="comment-avatar">
-                     <img src="avatar1.jpg" alt="111" >
-                      <div>{{ loginInfo.username }}</div>
+<!--                     <img src="avatar1.jpg" alt="头像" >-->
+           <br><br>
+                      <div>{{ loginInfo.username }}:</div>
                  </span>
-        <textarea class="comment-send-input" name="comment" form="commentForm" cols="80" rows="5"
+        <textarea class="comment-send-input" name="content" form="commentForm" cols="80" rows="5"
                   placeholder="请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。"></textarea>
-        <input class="comment-send-button" type="submit" value="发表评论">
+        <input  name="issueId"  v-model="route.query.id" type="hidden"/>
+        <input  name="commentId" v-model="loginInfo.id" type="hidden"/>
+        <input  name="commentName" v-model="loginInfo.username" type="hidden"/>
+        <input class="comment-send-button" type="submit" value="发表评论" @click="sub">
       </form>
+      <iframe id="iframe" name="iframe" style="display:none;"></iframe>
     </div>
 
 
@@ -21,38 +27,19 @@
     <!--展示评论区域-->
     <div class="comment-list" id="commentList">
 
-      <div class="comment">
-        <span class="comment-avatar">
+      <div class="comment" v-for="(comment, index) in dataSource">
+<!--        <span class="comment-avatar">
                      <img src="avatar1.jpg" alt="avatar">
-                 </span>
+                 </span>-->
 
         <div class="comment-content">
-          <p class="comment-content-name">EdmundDZhang</p>
-          <p class="comment-content-article">惊了</p>
-          <p class="comment-content-footer">
-            <span class="comment-content-footer-id">#2</span>
-            <span class="comment-content-footer-device">来自安卓客户端</span>
-            <span class="comment-content-footer-timestamp">2018-01-20 14:05</span>
-          </p>
-
-        </div>
-
-        <div class="cls"></div>
-
-      </div>
-
-      <div class="comment comment-bottom">
-         <span class="comment-avatar">
-           <img src="avatar2.jpg" alt="avatar">
-         </span>
-
-        <div class="comment-content">
-          <p class="comment-content-name">bilibili英雄联盟赛事</p>
-          <p class="comment-content-article">Hello World!</p>
-          <p class="comment-content-footer">
-            <span class="comment-content-footer-id">#1</span>
-            <span class="comment-content-footer-device">来自安卓客户端</span>
-            <span class="comment-content-footer-timestamp">2018-01-20 13:10</span>
+          <br>
+          <p class="comment-content-name">{{ comment.commentName }}</p>
+          <p class="comment-content-article">{{ comment.content }}</p>
+          <p class="comment-content-footer" >
+<!--            <span class="comment-content-footer-id">#2</span>-->
+            <span class="comment-content-footer-device">#{{ index+1 }}</span>
+            <span class="comment-content-footer-timestamp">{{ comment.createTime }}</span>
           </p>
 
         </div>
@@ -70,85 +57,43 @@
 <script setup>
 import useLogin from "../../../../stores/LoginStore.js"
 import {useRoute} from "vue-router";
+import {layer} from "@layui/layui-vue";
+import {findAll, findName} from "./api.js";
+import {onMounted, reactive} from "vue";
+
 
 
 const route = useRoute();
-console.log(route.query)
 
 const loginInfo = useLogin().userInfo
 
+let dataSource = reactive([])
 
-</script>
-
-<script>
-/*
-const express = require('express');
-const app = express();
-const fs = require('fs');
-const sd = require('silly-datetime');
-const readline = require('readline');
-
-app.use(express.static('./public'));
-
-let oldHtmlContent = fs.readFileSync('./index.html').toString(); //读取index.html文档
-
-app.get('/', function (req, res) {
-  res.send(oldHtmlContent);
-  fs.writeFileSync('records.txt', ''); //初始化txt为空白
-});
-
-app.get('/comment', function (req, res) {
-
-  writeRecord(req.query.comment, sd.format(new Date(), 'YYYY-MM-DD HH:mm')); //记录评论与时间
-
-  //加载评论
-  let newHtmlContent = '';
-  let r = /\d{4}-\d{2}-\d{2} \d{2}:\d{2}/ //匹配日期
-  let floorNumber = 2;
-  let comment = '';
-  //使用readline逐行读取文件
-  const r1 = readline.createInterface({
-    input: fs.createReadStream('./records.txt')
-  })
-  r1.on('line', (line) => {
-    if (r.test(line)) {
-      //新评论的HTML代码
-      newHtmlContent =
-          `<div class="comment">
-              <span class="comment-avatar">
-              <img src="avatar1.jpg" alt="avatar">
-              </span>
-              <div class="comment-content">
-                  <p class="comment-content-name">EdmundDZhang</p>
-                  <p class="comment-content-article">${comment}</p>
-                  <p class="comment-content-footer">
-                      <span class="comment-content-footer-id">#${++floorNumber}</span>
-                      <span class="comment-content-footer-device">来自安卓客户端</span>
-                      <span class="comment-content-footer-timestamp">${line}</span>
-                  </p>
-              </div>
-              <div class="cls"></div>
-           </div>` + newHtmlContent;
-      comment = '';
-    } else {
-      comment += line;
-    }
-  }).on('close', () => {
-    res.send(oldHtmlContent.replace('<div class="comment-list" id="commentList">', '<div class="comment-list" id="commentList">\n' + newHtmlContent));
-  })
-
-})
-
-
-function writeRecord(comment, datetime) {
-
-  fs.writeFileSync('./records.txt', `${comment}\n${datetime}\n`, {flag: 'a'});
-
+function sub(){
+  layer.msg("发表成功",500)
 }
-*/
 
+function reload(){
+  findAll(route.query.id).then(res=>{
+    dataSource.length = 0
+    dataSource.push(...res.data)
+    console.log(dataSource)
+  })
+}
+
+function getName(id) {
+   return findName(id).then(res=>{
+     return res
+  })
+}
+
+
+onMounted(reload)
+/*onUpdated(reload)*/
 
 </script>
+
+
 
 <style scoped>
 * {

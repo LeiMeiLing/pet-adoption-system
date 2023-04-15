@@ -151,6 +151,9 @@ public class UserInfoServlet extends HttpServlet {
                 result1.put("data", some);
                 gson.toJson(result1, resp.getWriter());
                 sqlSession.commit();
+            case "/user/findName":
+                findName(req,resp);
+                sqlSession.commit();
                 break;
 
             default:
@@ -199,5 +202,17 @@ public class UserInfoServlet extends HttpServlet {
         userInfo.setEmail(email);
         userInfo.setPhone(phone);
         return userInfoService.selectNameOrType(pageNum, pageSize, userInfo);
+    }
+
+    private void findName(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String id = req.getParameter("id");
+        String name = userInfoService.findName(Long.valueOf(id));
+        Gson gson = new Gson();
+        Map<String, Object> result = new HashMap<>();
+        result.put("code", 200);
+        result.put("msg", "查询成功");
+        result.put("name",name);
+        gson.toJson(result,resp.getWriter());
+
     }
 }

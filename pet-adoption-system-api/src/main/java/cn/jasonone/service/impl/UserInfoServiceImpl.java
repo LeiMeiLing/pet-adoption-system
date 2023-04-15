@@ -53,6 +53,12 @@ public class UserInfoServiceImpl implements UserInfoService {
         return null;
     }
 
+    @Override
+    public String findName(Long id) {
+        UserInfoMapper userInfoMapper = sqlSession.getMapper(UserInfoMapper.class);
+        return userInfoMapper.selectByIdUsername(id);
+    }
+
     /*
     查找所有用户信息
      */
