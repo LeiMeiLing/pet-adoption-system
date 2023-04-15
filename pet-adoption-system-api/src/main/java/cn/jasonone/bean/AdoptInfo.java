@@ -54,6 +54,7 @@ public class AdoptInfo implements Serializable {
      * 申请说明
      */
     private String describe;
+    private String phone;
 
     private static final long serialVersionUID = 1L;
 }
