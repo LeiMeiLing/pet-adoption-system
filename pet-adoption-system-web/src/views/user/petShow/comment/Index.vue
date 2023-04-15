@@ -1,6 +1,8 @@
 <template>
   <div class="container">
 
+    <div>{{ route.query }}</div>
+
 <!--发布评论区域-->
     <div class="comment-send">
       <form id="commentForm" method="post" action="/comment">
@@ -67,6 +69,11 @@
 
 <script setup>
 import useLogin from "../../../../stores/LoginStore.js"
+import {useRoute} from "vue-router";
+
+
+const route = useRoute();
+console.log(route.query)
 
 const loginInfo = useLogin().userInfo
 

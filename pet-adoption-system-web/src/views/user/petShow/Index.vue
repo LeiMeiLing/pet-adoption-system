@@ -102,7 +102,7 @@ function click(item){
   router.push({
     name:'commentA',
     query:{
-      id:item.id
+      ...item
     }
   })
 }
