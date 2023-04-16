@@ -63,8 +63,8 @@ const routes = [
             name: 'application',
             component: () => import('../views/user/personalCenter/application/Application.vue'),
         }, {//转送宠物
-            path: '/transfer',
-            name: 'transfer',
+            path: '/transfer2',
+            name: 'transfer2',
             component: () => import('../views/user/personalCenter/transfer/Transfer.vue')
         },]
     },
@@ -181,7 +181,7 @@ const router = createRouter({
     routes
 })
 
-//导航守卫
+// 导航守卫
 router.beforeEach((to, from) => {
     // 如果是目标路由不需要登录,则直接跳转
     NProgress.start()

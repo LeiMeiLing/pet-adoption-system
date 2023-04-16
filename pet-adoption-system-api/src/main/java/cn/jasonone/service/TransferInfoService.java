@@ -16,4 +16,6 @@ public interface TransferInfoService {
     void update(TransferInfo transferInfo);
     List<TransferInfo> findAll();
     List<TransferInfo> selectStatus();
+
+    List<TransferInfo> findAll(String transferName);
 }

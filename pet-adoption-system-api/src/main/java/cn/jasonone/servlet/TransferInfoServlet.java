@@ -53,6 +53,16 @@ public class TransferInfoServlet extends HttpServlet {
                 resp.getWriter().write(gson.toJson(result1));
                 sqlSession.commit();
                 break;
+            case"/transferInfo/findName":
+                String transferName = req.getParameter("transferName");
+                List<TransferInfo> all = transferInfoService.findAll(transferName);
+                Map<String,Object> result2 = new HashMap<>();
+                result2.put("code", 200);
+                result2.put("msg", "获取成功");
+                result2.put("data",all);
+                resp.getWriter().write(gson.toJson(result2));
+                sqlSession.commit();
+                break;
             default:
                 super.doPut(req, resp);
         }
@@ -69,13 +79,26 @@ public class TransferInfoServlet extends HttpServlet {
                 sqlSession.commit();
                 break;
             case "/transferInfo/update":
-
+                updateStatus(req,resp);
                 sqlSession.commit();
                 break;
             default:
                 super.doPut(req, resp);
         }
     }
+
+    private void updateStatus(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
+        transferInfoService.setSqlSession(sqlSession);
+        TransferInfo transferInfo = gson.fromJson(req.getReader(), TransferInfo.class);
+        transferInfoService.update(transferInfo);
+        Map<Object, Object> map = new HashMap<>();
+        map.put("code",200);
+        map.put("msg","修改成功");
+        resp.getWriter().write(gson.toJson(map));
+    }
+
+
     protected void add(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
         transferInfoService.setSqlSession(sqlSession);

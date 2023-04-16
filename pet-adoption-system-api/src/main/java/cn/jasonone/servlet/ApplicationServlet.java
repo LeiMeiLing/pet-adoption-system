@@ -95,9 +95,7 @@ public class ApplicationServlet extends HttpServlet {
     }
 
     private void add(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-
         TransferApplication application = gson.fromJson(req.getReader(), TransferApplication.class);
-
         applicationService.add(application);
         Map<String, Object> result = new HashMap<>();
         result.put("code", 200);
