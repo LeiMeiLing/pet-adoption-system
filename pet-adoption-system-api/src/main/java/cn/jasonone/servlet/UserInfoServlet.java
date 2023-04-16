@@ -31,7 +31,13 @@ import static cn.hutool.crypto.SecureUtil.md5;
 @WebServlet("/user/*")
 public class UserInfoServlet extends HttpServlet {
     private UserInfoService userInfoService = new UserInfoServiceImpl();
-
+    Gson gson = new GsonBuilder()
+            .setDateFormat("yyyy-MM-dd HH:mm:ss")
+            // 是否显示值为null的字段
+            .serializeNulls()
+            // 是否格式化json
+            .setPrettyPrinting()
+            .create();
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
@@ -78,7 +84,6 @@ public class UserInfoServlet extends HttpServlet {
     private void changePassword(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
         userInfoService.setSqlSession(sqlSession);
-        Gson gson = new Gson();
         UserInfo userInfo = gson.fromJson(req.getReader(), UserInfo.class);
         UserInfo userInfo1 = userInfoService.find(Long.valueOf(userInfo.getId()));
         String salt = RandomUtil.randomString(6);
@@ -93,13 +98,6 @@ public class UserInfoServlet extends HttpServlet {
     }
 
     private void login(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd HH:mm:ss")
-                // 是否显示值为null的字段
-                .serializeNulls()
-                // 是否格式化json
-                .setPrettyPrinting()
-                .create();
 
         UserInfo userInfo = gson.fromJson(req.getReader(), UserInfo.class);
         userInfo = userInfoService.login(userInfo);
@@ -126,8 +124,6 @@ public class UserInfoServlet extends HttpServlet {
     }
 
     private void register(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-//        String username = req.getParameter("username");
-//        String password = req.getParameter("password");
         Gson gson = new Gson();
         UserInfo userInfo = gson.fromJson(req.getReader(), UserInfo.class);
         userInfoService.register(userInfo);
@@ -154,7 +150,6 @@ public class UserInfoServlet extends HttpServlet {
 
         String requestURI = req.getRequestURI();
         requestURI = requestURI.substring(req.getContextPath().length());
-        Gson gson = new Gson();
         switch (requestURI) {
             case "/user/findAll":
                 PageInfo<UserInfo> userInfo = userInfoService.userFindAll(pageNum, pageSize);
@@ -189,9 +184,7 @@ public class UserInfoServlet extends HttpServlet {
             userInfoService.setSqlSession(sqlSession);
             String password = req.getParameter("password");
             String id = req.getParameter("id");
-            Gson gson = new Gson();
             UserInfo userInfo = userInfoService.find((long)(Integer.parseInt(id)));
-            System.out.println(userInfo);
             String password1 = userInfo.getPassword();
             String salt = userInfo.getSalt();
             Map<String, Object> result1 = new HashMap<>();
@@ -216,7 +209,6 @@ public class UserInfoServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
         userInfoService.setSqlSession(sqlSession);
-        Gson gson = new Gson();
         UserInfo userInfo = gson.fromJson(req.getReader(), UserInfo.class);
         userInfoService.delete((long) userInfo.getId());
         Map<String, Object> result = new HashMap<>();
@@ -232,7 +224,6 @@ public class UserInfoServlet extends HttpServlet {
     private void update(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
         userInfoService.setSqlSession(sqlSession);
-        Gson gson = new Gson();
         UserInfo userInfo = gson.fromJson(req.getReader(), UserInfo.class);
         userInfoService.update(userInfo);
         Map<String, Object> result = new HashMap<>();
@@ -255,7 +246,6 @@ public class UserInfoServlet extends HttpServlet {
     private void findName(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String id = req.getParameter("id");
         String name = userInfoService.findName(Long.valueOf(id));
-        Gson gson = new Gson();
         Map<String, Object> result = new HashMap<>();
         result.put("code", 200);
         result.put("msg", "查询成功");

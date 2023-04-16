@@ -8,6 +8,7 @@ import cn.jasonone.service.impl.GoodsInfoServiceImpl;
 import cn.jasonone.service.impl.PetInfoServiceImpl;
 import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.apache.ibatis.session.SqlSession;
 
 import javax.servlet.ServletException;
@@ -23,14 +24,20 @@ import java.util.Map;
 @WebServlet("/pet/*")
 public class PetInfoServlet extends HttpServlet {
    PetInfoService petInfo= new PetInfoServiceImpl();
-
+    Gson gson = new GsonBuilder()
+            .setDateFormat("yyyy-MM-dd HH:mm:ss")
+            // 是否显示值为null的字段
+            .serializeNulls()
+            // 是否格式化json
+            .setPrettyPrinting()
+            .create();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
         petInfo.setSqlSession(sqlSession);
         String requestURI = req.getRequestURI();
         requestURI = requestURI.substring(req.getContextPath().length());
-        Gson gson = new Gson();
+
         switch (requestURI) {
             case "/pet/findAll":
                 List<PetInfo> pets= petInfo.findAllPet();
@@ -59,7 +66,7 @@ public class PetInfoServlet extends HttpServlet {
     protected void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
         petInfo.setSqlSession(sqlSession);
-        Gson gson = new Gson();
+
         PetInfo petInfo1 = gson.fromJson(req.getReader(), PetInfo.class);
         petInfo.update(petInfo1);
         HashMap<Object, Object> map = new HashMap<>();
@@ -94,7 +101,7 @@ public class PetInfoServlet extends HttpServlet {
     protected void add(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
         petInfo.setSqlSession(sqlSession);
-        Gson gson = new Gson();
+
         PetInfo petInfo1 = gson.fromJson(req.getReader(), PetInfo.class);
         petInfo.add(petInfo1);
         HashMap<Object, Object> map = new HashMap<>();
@@ -108,7 +115,7 @@ public class PetInfoServlet extends HttpServlet {
 
         SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
         petInfo.setSqlSession(sqlSession);
-        Gson gson = new Gson();
+
         PetInfo petInfo1 = gson.fromJson(req.getReader(), PetInfo.class);
         petInfo.deletePet((long)(petInfo1.getPetId()));
         HashMap<Object, Object> map = new HashMap<>();

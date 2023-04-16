@@ -4,6 +4,7 @@ import cn.jasonone.bean.TransferApplication;
 import cn.jasonone.service.TransferApplicationService;
 import cn.jasonone.service.impl.TransferApplicationServiceImpl;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.apache.ibatis.session.SqlSession;
 
 import javax.servlet.ServletException;
@@ -18,6 +19,13 @@ import java.util.Map;
 
 @WebServlet("/application/*")
 public class ApplicationServlet extends HttpServlet {
+    Gson gson = new GsonBuilder()
+            .setDateFormat("yyyy-MM-dd HH:mm:ss")
+            // 是否显示值为null的字段
+            .serializeNulls()
+            // 是否格式化json
+            .setPrettyPrinting()
+            .create();
     private TransferApplicationService applicationService=new TransferApplicationServiceImpl();
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -60,7 +68,7 @@ public class ApplicationServlet extends HttpServlet {
 
         String requestURI = req.getRequestURI();
         requestURI = requestURI.substring(req.getContextPath().length());
-        Gson gson = new Gson();
+
         switch (requestURI) {
             case "/application/findAll":
                 List<TransferApplication> applications = applicationService.findAll();
@@ -87,7 +95,7 @@ public class ApplicationServlet extends HttpServlet {
     }
 
     private void add(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Gson gson = new Gson();
+
         TransferApplication application = gson.fromJson(req.getReader(), TransferApplication.class);
 
         applicationService.add(application);
@@ -97,7 +105,7 @@ public class ApplicationServlet extends HttpServlet {
         resp.getWriter().write(gson.toJson(result));
     }
     private void updateStatus(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Gson gson = new Gson();
+
         TransferApplication application = gson.fromJson(req.getReader(), TransferApplication.class);
         applicationService.updateStatus(application);
         Map<String, Object> result = new HashMap<>();

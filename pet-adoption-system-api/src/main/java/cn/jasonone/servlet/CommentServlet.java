@@ -4,6 +4,7 @@ import cn.jasonone.bean.Comment;
 import cn.jasonone.service.CommentService;
 import cn.jasonone.service.impl.CommentServiceImpl;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.apache.ibatis.session.SqlSession;
 
 import javax.servlet.ServletException;
@@ -45,7 +46,14 @@ public class CommentServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
         commentService.setSqlSession(sqlSession);
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd HH:mm:ss")
+                // 是否显示值为null的字段
+                .serializeNulls()
+                // 是否格式化json
+                .setPrettyPrinting()
+                .create();
+
         String issueId = req.getParameter("issueId");
         List<Comment> all = commentService.findAll(Long.valueOf(issueId));
         Map<String,Object> result = new HashMap<>();

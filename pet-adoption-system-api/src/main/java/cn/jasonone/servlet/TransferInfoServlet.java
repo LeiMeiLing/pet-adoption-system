@@ -5,6 +5,7 @@ import cn.jasonone.bean.TransferInfo;
 import cn.jasonone.service.TransferInfoService;
 import cn.jasonone.service.impl.TransferInfoServiceImpl;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.apache.ibatis.session.SqlSession;
 
 import javax.servlet.ServletException;
@@ -20,14 +21,19 @@ import java.util.Map;
 @WebServlet("/transferInfo/*")
 public class TransferInfoServlet extends HttpServlet {
     private TransferInfoService transferInfoService=new TransferInfoServiceImpl();
-
+    Gson gson = new GsonBuilder()
+            .setDateFormat("yyyy-MM-dd HH:mm:ss")
+            // 是否显示值为null的字段
+            .serializeNulls()
+            // 是否格式化json
+            .setPrettyPrinting()
+            .create();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
         transferInfoService.setSqlSession(sqlSession);
         String requestURI = req.getRequestURI();
         requestURI = requestURI.substring(req.getContextPath().length());
-        Gson gson = new Gson();
         switch (requestURI) {
             case "/transferInfo/findAll":
                 List<TransferInfo> transferInfos= transferInfoService.findAll();
@@ -63,7 +69,7 @@ public class TransferInfoServlet extends HttpServlet {
                 sqlSession.commit();
                 break;
             case "/transferInfo/update":
-                //update(req, resp);
+
                 sqlSession.commit();
                 break;
             default:
@@ -73,7 +79,6 @@ public class TransferInfoServlet extends HttpServlet {
     protected void add(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
         transferInfoService.setSqlSession(sqlSession);
-        Gson gson = new Gson();
         TransferInfo transferInfo = gson.fromJson(req.getReader(), TransferInfo.class);
         transferInfoService.add(transferInfo);
         Map<Object, Object> map = new HashMap<>();
