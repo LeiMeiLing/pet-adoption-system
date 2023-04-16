@@ -10,6 +10,17 @@ Content-Type:  application/json; charset=UTF-8
 
 
 ###
+PUT localhost:8000
+Content-Type:  application/json; charset=UTF-8
+
+{
+  "userId": "1",
+  "productId": "1",
+  "quantity": "1",
+  "price": "1"
+}
+
+###
 GET localhost:8000/user/findAll
 
 
