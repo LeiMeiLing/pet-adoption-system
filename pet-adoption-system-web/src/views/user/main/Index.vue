@@ -3,63 +3,83 @@
   <lay-layout class="main">
     <lay-header>
       <Index/>
-      <lay-field title="热门宠物种类展示">
+      <lay-field title="宠物种类展示">
         <lay-quote>狗狗</lay-quote>
         <div class="dog">
           <div class="dog-img">
             <img src="public/宠物2.png">
             <div class="content">
-              苏俄牧羊犬（附：苏俄牧羊犬简介）
+              苏俄牧羊犬(是一种绅士、安静、可爱的伴侣,别称：俄罗斯猎狼犬)
             </div>
             <lay-breadcrumb>
-              <lay-breadcrumb-item >{{time}}</lay-breadcrumb-item>
+              <lay-breadcrumb-item >2023年4月12日</lay-breadcrumb-item>
             </lay-breadcrumb>
           </div>
           <div class="dog-img">
-            <img src="public/宠物2.png">
+            <img src="public/宠物.png">
             <div class="content">
-              苏俄牧羊犬（附：苏俄牧羊犬简介）
+              博美犬（是一种紧凑、短背、活跃的玩具狗。俗称德国狐狸犬）
             </div>
+            <lay-breadcrumb>
+              <lay-breadcrumb-item >2023年4月12日</lay-breadcrumb-item>
+            </lay-breadcrumb>
           </div>
           <div class="dog-img">
-            <img src="public/宠物2.png">
+            <img src="public/宠物5.png">
             <div class="content">
-              苏俄牧羊犬（附：苏俄牧羊犬简介）
+              比熊犬（是一种娇小的，强健的白色粉扑型的狗）
             </div>
+            <lay-breadcrumb>
+              <lay-breadcrumb-item >2023年4月12日</lay-breadcrumb-item>
+            </lay-breadcrumb>
           </div>
           <div class="dog-img">
-            <img src="public/宠物2.png">
+            <img src="public/宠物6.png">
             <div class="content">
-              苏俄牧羊犬（附：苏俄牧羊犬简介）
+              美国斗牛犬（是一种非常优秀的护卫犬,性格充满了野性和粗鲁）
             </div>
+            <lay-breadcrumb>
+              <lay-breadcrumb-item >2023年4月12日</lay-breadcrumb-item>
+            </lay-breadcrumb>
           </div>
         </div>
         <lay-quote>猫咪</lay-quote>
         <div class="cat">
           <div class="pet-img">
-            <img src="public/宠物1.png">
+            <img src="public/猫咪.png">
             <div class="content">
-              苏俄牧羊犬（附：苏俄牧羊犬简介）
+              加菲猫（加菲猫性格好静，可爱，温纯及忠诚非常合适家养）
             </div>
+            <lay-breadcrumb>
+              <lay-breadcrumb-item >2023年4月12日</lay-breadcrumb-item>
+            </lay-breadcrumb>
           </div>
           <div class="pet-img">
-            <img src="public/宠物1.png">
+            <img src="public/猫咪5.png">
             <div class="content">
-              苏俄牧羊犬（附：苏俄牧羊犬简介）
+              高地折耳猫（高地折耳猫喜欢躺着睡觉陪伴在主人身边）
             </div>
+            <lay-breadcrumb>
+              <lay-breadcrumb-item >2023年4月12日</lay-breadcrumb-item>
+            </lay-breadcrumb>
           </div>
           <div class="pet-img">
-            <img src="public/宠物1.png">
+            <img src="public/猫咪6.png">
             <div class="content">
-              苏俄牧羊犬（附：苏俄牧羊犬简介）
+              安哥拉猫（是温顺的天使，爱干净）
             </div>
+            <lay-breadcrumb>
+              <lay-breadcrumb-item >2023年4月12日</lay-breadcrumb-item>
+            </lay-breadcrumb>
           </div>
           <div class="pet-img">
-            <img src="public/宠物1.png">
-            <lay-line></lay-line>
+            <img src="public/猫咪7.png">
             <div class="content">
-              苏俄牧羊犬（附：苏俄牧羊犬简介）
+              金吉拉猫（是一只猫贵族，起源于英国）
             </div>
+            <lay-breadcrumb>
+              <lay-breadcrumb-item >2023年4月12日</lay-breadcrumb-item>
+            </lay-breadcrumb>
           </div>
         </div>
       </lay-field>
@@ -91,8 +111,10 @@ list().then(res=>{
 
 <style scoped lang="scss">
 .content{
+  margin-top: 10px;
   font-size: 18px;
   font-family: 微软雅黑体;
+  margin-bottom: 10px;
 }
 .dog,.cat{
   margin-bottom: 10px;
