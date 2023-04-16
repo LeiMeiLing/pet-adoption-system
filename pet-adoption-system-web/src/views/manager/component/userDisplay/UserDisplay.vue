@@ -71,9 +71,11 @@ import {list, updateUser, findSome, deleteUserInfo,page} from "./api.js";
 import {layer} from "@layui/layui-vue"
 
 
+
 const change1 = ({ current, limit }) => {
   console.log(current)
-  page(current).then(res=>{
+  console.log(limit)
+  page(current,limit).then(res=>{
     data.length = 0
     data.push(...res.data.list)
     limit1.a = res.data.pageSize
@@ -139,18 +141,22 @@ let limit1 = reactive({
 let total1 = reactive({
   a:""
 })
+let limits1 = ref([10,20,30,40,50,60])
 
 
 function reload() {
-
   list().then(res => {
-
     data.length = 0
     data.push(...res.data.list)
-    limit1.a = res.data.pageSize
-    total1.a = res.data.total
   })
 }
+
+list().then(res => {
+  data.length = 0
+  data.push(...res.data.list)
+  limit1.a = res.data.pageSize
+  total1.a = res.data.total
+})
 
 function showUser(row) {
   updateUserDisplay.value = true
@@ -207,7 +213,7 @@ function find() {
 
 
 onMounted(reload)
-onUpdated(reload)
+/*onUpdated(reload)*/
 </script>
 
 <style scoped lang="scss">

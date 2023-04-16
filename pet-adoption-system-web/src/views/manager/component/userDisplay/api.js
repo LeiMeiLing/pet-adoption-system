@@ -24,8 +24,8 @@ export function list(){
     })
 }
 
-export function page(page){
-    return http.get("/user/findAll?page="+page,{
+export function page(page,limit){
+    return http.get("/user/findAll?page="+page+"&limit="+limit,{
     }).then(res=>{
         return res;
     })
