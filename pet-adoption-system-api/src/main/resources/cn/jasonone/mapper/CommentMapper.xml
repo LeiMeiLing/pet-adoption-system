@@ -6,6 +6,8 @@
 
     <resultMap id="BaseResultMap" type="cn.jasonone.bean.Comment">
             <id property="id" column="id" jdbcType="INTEGER"/>
+            <id property="issueId" column="issue_id" jdbcType="INTEGER"/>
+            <id property="commentId" column="comment_id" jdbcType="INTEGER"/>
             <result property="content" column="content" jdbcType="VARCHAR"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="userId" column="user_id" jdbcType="INTEGER"/>
@@ -16,6 +18,17 @@
         user_id
     </sql>
 
+    <insert id="insert" parameterType="cn.jasonone.bean.Comment">
+        insert into comment
+            ( issue_id,comment_id,content,comment_name)
+        values (#{issueId,jdbcType=INTEGER},#{commentId,jdbcType=INTEGER},#{content,jdbcType=VARCHAR},
+                #{commentName,jdbcType=VARCHAR})
+    </insert>
+
+    <select id="selectAllByIssueIdCommentList" resultType="cn.jasonone.bean.Comment">
+        select * from comment where issue_id = #{issueId,jdbcType=INTEGER}
+    </select>
+
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
@@ -23,17 +36,12 @@
         where  id = #{id,jdbcType=INTEGER} 
     </select>
 
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from comment
         where  id = #{id,jdbcType=INTEGER} 
     </delete>
-    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.jasonone.bean.Comment" useGeneratedKeys="true">
-        insert into comment
-        ( id,content,create_time
-        ,user_id)
-        values (#{id,jdbcType=INTEGER},#{content,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP}
-        ,#{userId,jdbcType=INTEGER})
-    </insert>
+
     <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cn.jasonone.bean.Comment" useGeneratedKeys="true">
         insert into comment
         <trim prefix="(" suffix=")" suffixOverrides=",">

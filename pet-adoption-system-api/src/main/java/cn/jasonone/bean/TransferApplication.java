@@ -29,6 +29,7 @@ public class TransferApplication implements Serializable {
      * 转让人用户名
      */
     private String transferName;
+    private String username;
 
     /**
      * 申请说明

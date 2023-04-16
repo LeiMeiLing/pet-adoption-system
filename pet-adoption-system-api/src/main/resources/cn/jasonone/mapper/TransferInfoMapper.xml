@@ -33,18 +33,31 @@
         where  id = #{id,jdbcType=INTEGER} 
     </select>
 
+    <select id="findAll" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from transfer_info
+    </select>
+
+
+    <select id="selectStatus" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from transfer_info where pet_status='未领养'
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from transfer_info
         where  id = #{id,jdbcType=INTEGER} 
     </delete>
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.jasonone.bean.TransferInfo" useGeneratedKeys="true">
         insert into transfer_info
-        ( id,title,petName
+        ( title,petName
         ,transfer_name,transfer_cause,picture
         ,variety,pet_sex,city
         ,pet_status,create_time,update_time
         )
-        values (#{id,jdbcType=INTEGER},#{title,jdbcType=VARCHAR},#{petname,jdbcType=VARCHAR}
+        values (#{title,jdbcType=VARCHAR},#{petname,jdbcType=VARCHAR}
         ,#{transferName,jdbcType=VARCHAR},#{transferCause,jdbcType=VARCHAR},#{picture,jdbcType=VARCHAR}
         ,#{variety,jdbcType=CHAR},#{petSex,jdbcType=CHAR},#{city,jdbcType=VARCHAR}
         ,#{petStatus,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP}

@@ -39,15 +39,25 @@ const userInfo = ref({
   phone: "",
 });
 
+const regEmail = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
+const regPhone = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
 const labelPosition = ref('right');
 
 function onRegister(){
-  register(userInfo.value).then(res=>{
-    layer.msg(res.msg)
-    router.push('/login')
-  }).catch(err=>{
-    layer.msg(err.msg)
-  })
+  if ( userInfo.value.password!== userInfo.value.checkPassword){
+    layer.confirm('两次输入的密码不一致哦，请重新输入')
+  }else if (!regEmail.test(userInfo.value.email)) {
+    layer.confirm('邮箱格式不正确，请检查')
+  }  else if (!regPhone.test(userInfo.value.phone)){
+    layer.confirm('电话格式不正确，请检查')
+  }else{
+    register(userInfo.value).then(res=>{
+      layer.msg(res.msg)
+      router.push('/login')
+    }).catch(err=>{
+      layer.msg(err.msg)
+    })
+  }
 }
 function login(){
    router.push('/login')

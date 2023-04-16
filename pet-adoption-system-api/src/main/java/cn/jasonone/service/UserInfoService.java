@@ -28,6 +28,11 @@ public interface UserInfoService {
     UserInfo login(UserInfo userInfo);
     UserInfo find(Long id);
     /**
+     * 找到名字
+     */
+    String findName(Long id);
+
+    /**
      * 获取用户列表显示在页面上
      * @return
      */
