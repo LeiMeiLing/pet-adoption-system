@@ -116,8 +116,9 @@ function back(){
 <style scoped lang="scss">
 .pet-info{
   margin-top: 20px;
-  height: 400px;
+  height: 600px;
   width: 400px;
+  overflow: hidden;
 }
 
 img{

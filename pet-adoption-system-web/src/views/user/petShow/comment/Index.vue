@@ -70,7 +70,9 @@ const loginInfo = useLogin().userInfo
 let dataSource = reactive([])
 
 function sub(){
+
   layer.msg("发表成功",500)
+  reload()
 }
 
 function reload(){

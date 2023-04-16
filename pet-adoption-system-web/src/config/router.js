@@ -168,7 +168,7 @@ const routes = [
         }, {
             path: '/imgDisplay',
             name: 'imgDisplay',
-            component: () => import('../views/manager/component/CommentManger/ImgDisplay.vue')
+            component: () => import('../views/manager/component/CommentManger/ImgDisplay/Index.vue')
         }
 
 

@@ -19,28 +19,6 @@
             </div>
           </div>
         </lay-panel>
-        <lay-panel shadow="hover">
-          <div class="content">
-            <img src="public/宠物2.png">
-            <div class="content-right">
-              <h1>{{title}}</h1>
-              <div class="content-right-data">
-                {{data}}
-              </div>
-            </div>
-          </div>
-        </lay-panel>
-        <lay-panel shadow="hover">
-          <div class="content">
-            <img src="public/宠物2.png">
-            <div class="content-right">
-              <h1>{{title}}</h1>
-              <div class="content-right-data">
-                {{data}}
-              </div>
-            </div>
-          </div>
-        </lay-panel>
       </div>
     </lay-body>
     <lay-side>

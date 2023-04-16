@@ -85,8 +85,8 @@ public class PetKnowledgeServlet  extends HttpServlet {
         resp.getWriter().write(gson.toJson(result));
     }
     private void selectByType(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        PetKnowledge petKnowledge = gson.fromJson(req.getReader(), PetKnowledge.class);
-        List<PetKnowledge> petKnowledges = petKnowledgeService.selectByType(petKnowledge.getEssayType());
+        String essayType = req.getParameter("essayType");
+        List<PetKnowledge> petKnowledges = petKnowledgeService.selectByType(essayType);
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("code", 200);
         result.put("msg", "查找成功");

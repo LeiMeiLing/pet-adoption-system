@@ -10,7 +10,7 @@
           </div>
           <lay-field>
             <h2>{{item.petName}}</h2>
-            {{item.description}}
+            <div>{{item.description}}</div>
           </lay-field>
         </div>
       </div>
@@ -62,11 +62,11 @@ function onAdoption(item){
   text-align: center;
 }
   img{
-    border: 5px solid #638863;
+   // border: 5px solid #638863;
     height: 300px;
     width: 300px;
     border-radius: 50%;
-    margin-left: 20px;
+    margin-left: 25px;
     margin-right: 50px;
     cursor: pointer;
   }
@@ -80,13 +80,14 @@ h1{
   font-size: 60px;
   margin-bottom: 20px;
 }
+
   h2{
     margin-bottom: 10px;
   }
 .layui-field{
   margin-top: 30px;
    width: 350px;
-   height: 100px;
+   height: 220px;
    text-align: center;
 }
 }
@@ -96,7 +97,6 @@ h1{
   flex-wrap: wrap;
   margin-left: 50px;
   display: flex;
-  overflow: hidden;
   word-wrap: break-word;
 }
 </style>
