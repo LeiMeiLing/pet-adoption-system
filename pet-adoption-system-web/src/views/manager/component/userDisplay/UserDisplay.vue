@@ -55,6 +55,8 @@
         </lay-form-item>
 
       </lay-layer>
+
+      <lay-page :limit="limit1.a" :total="total1.a" showCount showPage @change="change1"></lay-page>
     </div>
 
 
@@ -65,8 +67,20 @@
 
 <script setup>
 import {onMounted, onUpdated, reactive, ref} from "vue";
-import {list, updateUser, findSome, deleteUserInfo} from "./api.js";
+import {list, updateUser, findSome, deleteUserInfo,page} from "./api.js";
 import {layer} from "@layui/layui-vue"
+
+
+const change1 = ({ current, limit }) => {
+  console.log(current)
+  page(current).then(res=>{
+    data.length = 0
+    data.push(...res.data.list)
+    limit1.a = res.data.pageSize
+    total1.a = res.data.total
+  })
+}
+
 
 
 const username = ref("")
@@ -113,18 +127,28 @@ const userInfoUpdate = reactive({
 
 //绑定更新界面，更新用户信息
 function updateUserInfo() {
-  console.log(userInfoUpdate)
   updateUser(userInfoUpdate)
   layer.msg("修改成功")
   updateUserDisplay.value = false
   reload()
 }
 
+let limit1 = reactive({
+  a:""
+})
+let total1 = reactive({
+  a:""
+})
+
+
 function reload() {
+
   list().then(res => {
+
     data.length = 0
     data.push(...res.data.list)
-
+    limit1.a = res.data.pageSize
+    total1.a = res.data.total
   })
 }
 
@@ -148,7 +172,6 @@ function deleteUser(row) {
         text: "是",
         callback(id) {
           deleteUserInfo(row1.id)
-          console.log(row1.id);
           reload()
           layer.msg("删除成功")
           layer.close(id)
@@ -170,7 +193,6 @@ function deleteUser(row) {
 function find() {
   findSome(user.username, user.email, user.phone).then(res => {
     data.length = 0
-    console.log(res);
     data.push(...res.data.list)
   })
 }

@@ -23,6 +23,13 @@ export function list(){
         return res;
     })
 }
+
+export function page(page){
+    return http.get("/user/findAll?page="+page,{
+    }).then(res=>{
+        return res;
+    })
+}
     /*
     模糊查询
      */
