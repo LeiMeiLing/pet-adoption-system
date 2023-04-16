@@ -47,4 +47,6 @@ public interface UserInfoMapper {
      * @return
      */
     List<UserInfo> fuzzyQueries(UserInfo goods);
+
+
 }

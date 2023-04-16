@@ -65,6 +65,14 @@ public class UserInfoServiceImpl implements UserInfoService {
         return userInfoMapper.selectByIdUsername(id);
     }
 
+    @Override
+    public boolean findName(String name) {
+        UserInfoMapper userInfoMapper = sqlSession.getMapper(UserInfoMapper.class);
+        System.out.println(userInfoMapper.findByUsername(name));
+        return userInfoMapper.findByUsername(name)==null;
+
+    }
+
     /*
     查找所有用户信息
      */
