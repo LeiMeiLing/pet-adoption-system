@@ -53,16 +53,27 @@ public class UserInfoServiceImpl implements UserInfoService {
         return null;
     }
 
+
+
     @Override
     public UserInfo find(Long id) {
         UserInfoMapper userInfoMapper = sqlSession.getMapper(UserInfoMapper.class);
         return userInfoMapper.selectByPrimaryKey(id);
     }
 
+
     @Override
     public String findName(Long id) {
         UserInfoMapper userInfoMapper = sqlSession.getMapper(UserInfoMapper.class);
         return userInfoMapper.selectByIdUsername(id);
+    }
+
+    @Override
+    public boolean findName(String name) {
+        UserInfoMapper userInfoMapper = sqlSession.getMapper(UserInfoMapper.class);
+        System.out.println(userInfoMapper.findByUsername(name));
+        return userInfoMapper.findByUsername(name)==null;
+
     }
 
     /*

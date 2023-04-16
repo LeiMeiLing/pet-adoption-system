@@ -1,7 +1,7 @@
 <template>
 
 <div>
-    <div class="selectShopping">
+    <div class="selectShopping" v-if="goodsInfo.goodsStatus==1">
       <lay-input placeholder="请输入商品名进行查询" v-model="goodsInfo.goodsName" prefix-icon="layui-icon-search">
       </lay-input>
       <lay-input placeholder="请输入商品类型进行查询" v-model="goodsInfo.goodsType" prefix-icon="layui-icon-search">
