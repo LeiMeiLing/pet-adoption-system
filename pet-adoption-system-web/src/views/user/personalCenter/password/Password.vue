@@ -34,7 +34,6 @@ function save(){
           }else{
                   setNewPassword(userInfo.confirmPassword,userInfo1).then(res=>{
                     visible.value=false
-
                     layer.msg("修改成功")
                   })
           }
@@ -50,8 +49,7 @@ function save(){
 
 <style scoped lang="scss">
 .password{
-
-  height: 400px;
+  height: 500px;
   width: 400px;
   color: #ffffff;
   line-height: 38px;
