@@ -15,3 +15,10 @@ export function findSome(goodsName , goodsType){
         return res;
     })
 }
+export function joinCart(cartInfo){
+    return http.put("/shoppingCart/join", {
+        ...cartInfo
+    }).then(res=>{
+        return res;
+    })
+}
