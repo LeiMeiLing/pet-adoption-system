@@ -102,9 +102,7 @@ public class UserInfoServlet extends HttpServlet {
                 .create();
 
         UserInfo userInfo = gson.fromJson(req.getReader(), UserInfo.class);
-
         userInfo = userInfoService.login(userInfo);
-        System.out.println(userInfo);
         Map<String, Object> result = new HashMap<>();
         if (userInfo == null) {
             result.put("code", 400);

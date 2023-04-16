@@ -74,8 +74,10 @@ import router from "../../../../config/router.js";
 import {layer} from "@layui/layui-vue";
 import {useRoute} from "vue-router";
 import {insert} from "./api.js";
+import userLogin from "../../../../stores/LoginStore"
 const route=useRoute()
 
+const userInfo=userLogin().userInfo
 
 const adoptionInfo=reactive({
    username: "",
@@ -90,7 +92,7 @@ adoptionInfo.petname=route.query.petName
 adoptionInfo.petSex=route.query.petSex
 
 const openSuccess = function() {
-  insert(adoptionInfo).then(res=>{
+  insert(adoptionInfo,userInfo).then(res=>{
     layer.msg(res.msg, { icon : 1, time: 1000})
     visible.value=false
   })

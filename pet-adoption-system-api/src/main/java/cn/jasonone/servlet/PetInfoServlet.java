@@ -96,7 +96,6 @@ public class PetInfoServlet extends HttpServlet {
         petInfo.setSqlSession(sqlSession);
         Gson gson = new Gson();
         PetInfo petInfo1 = gson.fromJson(req.getReader(), PetInfo.class);
-        System.out.println(petInfo1);
         petInfo.add(petInfo1);
         HashMap<Object, Object> map = new HashMap<>();
         map.put("code",200);
