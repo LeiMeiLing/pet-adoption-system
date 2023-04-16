@@ -7,8 +7,9 @@
         <template #action="{row}">
           <lay-tooltip content="审核管理">
             <lay-select v-model="value.num" placeholder="请选择">
-              <lay-select-option :value.num="1" label="同意" @click="updateStatus(row)"></lay-select-option>
-              <lay-select-option :value.num="2" label="不同意" @click="updateStatus(row)"></lay-select-option>
+              <lay-select-option :value.num=3  label="默认" @click="updateStatus(row)"></lay-select-option>
+              <lay-select-option :value.num=1  label="同意" @click="updateStatus(row)"></lay-select-option>
+              <lay-select-option :value.num=2  label="不同意" @click="updateStatus(row)"></lay-select-option>
             </lay-select>
           </lay-tooltip>
         </template>
@@ -23,6 +24,7 @@ import {list, update} from "./api.js";
 import {layer} from "@layui/layui-vue";
 const data = reactive([])
 const value=reactive({
+
   num:""
 })
 const columns = reactive([
@@ -50,14 +52,19 @@ function updateStatus(row){
       const describe="恭喜您，申请成功，快开启你的宠物之旅吧"
       update(row,status,describe).then(res=>{
         layer.msg("修改成功")
+        value.num="3"
+        reload()
       })
     }else if(value.num==2){
       const petStatus="审核不通过"
       const describe="您的领养资质不合格"
       update(row,petStatus,describe).then(res=>{
         layer.msg("修改成功")
+        value.num='3'
+        reload()
       })
-    }else{
+    }
+    else{
       layer.msg("修改错误")
     }
 

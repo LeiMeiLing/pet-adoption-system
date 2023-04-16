@@ -61,7 +61,7 @@ const routes = [
         }, {//领养申请
             path: '/application',
             name: 'application',
-            component: () => import('../views/user/personalCenter/application/Application.vue')
+            component: () => import('../views/user/personalCenter/application/Application.vue'),
         }, {//转送宠物
             path: '/transfer',
             name: 'transfer',

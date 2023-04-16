@@ -81,6 +81,16 @@ public class AdoptionInfoServlet extends HttpServlet {
                 resp.getWriter().write(gson.toJson(result1));
                 sqlSession.commit();
                 break;
+            case "/adoption/findName":
+                String username = req.getParameter("username");
+                List<AdoptInfo> name = adoptInfoService.findName(username);
+                Map<String, Object> result2 = new HashMap<>();
+                result2.put("code", 200);
+                result2.put("msg", "查找成功");
+                result2.put("data", name);
+                resp.getWriter().write(gson.toJson(result2));
+                sqlSession.commit();
+                break;
             default:
                 super.doPut(req, resp);
         }

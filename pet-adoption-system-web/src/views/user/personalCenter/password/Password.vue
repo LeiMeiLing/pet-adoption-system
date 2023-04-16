@@ -1,5 +1,4 @@
 <template>
-  <lay-layer v-model="visible" :area="['420px','480px']">
   <div class="password" >
     <lay-icon type="layui-icon-close" ></lay-icon>
     <h1>修改密码</h1>
@@ -9,9 +8,7 @@
       <lay-form-item label="确认密码："><lay-input v-model="userInfo.confirmPassword"></lay-input></lay-form-item>
       <lay-button type="primary" fluid="" @click="save">保存</lay-button>
     </lay-form>
-
     </div>
-    </lay-layer>
 </template>
 
 <script setup>

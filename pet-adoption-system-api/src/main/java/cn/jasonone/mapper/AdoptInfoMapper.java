@@ -26,4 +26,6 @@ public interface AdoptInfoMapper {
 
     int updateByPrimaryKey(AdoptInfo record);
 
+    List<AdoptInfo> findName(String username);
+
 }

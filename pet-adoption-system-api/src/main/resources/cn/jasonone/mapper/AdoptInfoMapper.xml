@@ -33,6 +33,13 @@
     <select id="findAll" resultType="cn.jasonone.bean.AdoptInfo">
         select   <include refid="Base_Column_List" /> from adopt_info
     </select>
+    <select id="findName" resultType="cn.jasonone.bean.AdoptInfo">
+        select
+        <include refid="Base_Column_List" />
+        from adopt_info
+        where username = #{usernamejdbcType=VARCHAR}
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from adopt_info
         where  id = #{id,jdbcType=INTEGER} 
