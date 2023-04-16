@@ -58,11 +58,11 @@ PUT localhost:8000/petKnowledge/insert
 Content-Type: application/json; charset=UTF-8
 
 {
-  "title": "fff",
+  "title": "宠物健康",
   "author": "eee",
   "description": "ddfv",
   "content": "content",
-  "essayType": "宠物养生"
+  "essayType": "宠物知识"
 
 }
 

@@ -6,7 +6,7 @@ export function insert(){
     })
 }
 export function selectByType(essayType){
-    return http.get("/petKnowledge/selectByType",{
+    return http.get("/petKnowledge/selectByType?essayType="+essayType,{
     }).then(res=>{
         return res;
     })
