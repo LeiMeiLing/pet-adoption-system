@@ -9,7 +9,7 @@
           <lay-menu-item id="3" @click="visible2=true">收货地址</lay-menu-item>
           <lay-menu-item id="4" @click="visible3=true">修改密码</lay-menu-item>
           <lay-menu-item id="5" to="/application">领养申请</lay-menu-item>
-          <lay-menu-item id="6">转送宠物</lay-menu-item>
+          <lay-menu-item id="6" to="/transfer2">转送宠物</lay-menu-item>
           <lay-menu-item id="7" @click="exit">退出登录</lay-menu-item>
         </lay-menu>
       </lay-side>
@@ -41,9 +41,7 @@ import {layer} from "@layui/layui-vue";
 import userLogin from "../../../stores/LoginStore"
 import router from "../../../config/router.js";
 
-
 const exitUserInfo = userLogin()
-
 /*
 退出登录，是的话userInfo设置为空，跳转路由，导航守卫自动跳转到
 登录界面

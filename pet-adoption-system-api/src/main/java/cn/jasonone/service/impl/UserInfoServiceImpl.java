@@ -53,6 +53,8 @@ public class UserInfoServiceImpl implements UserInfoService {
         return null;
     }
 
+
+
     @Override
     public UserInfo find(Long id) {
         UserInfoMapper userInfoMapper = sqlSession.getMapper(UserInfoMapper.class);

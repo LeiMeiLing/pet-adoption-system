@@ -14,10 +14,7 @@ import {onMounted, reactive} from "vue";
 import userLogin from "../../../../stores/LoginStore"
 import {list} from "./api.js";
 const data = reactive([])
-const userInfo=userLogin().userInfo
-const value=reactive({
-  num:""
-})
+const userInfo = userLogin().userInfo;
 const columns = reactive([
   {title: "ID", key: "id", align: "center"},
   {title: "领养人", key: "username", align: "center"},
@@ -32,7 +29,7 @@ const columns = reactive([
 ])
 
 function reload(){
-  list(userLogin().userInfo).then(res=>{
+  list(userInfo).then(res=>{
     console.log(res);
     data.length=0
     data.push(...res.data)
