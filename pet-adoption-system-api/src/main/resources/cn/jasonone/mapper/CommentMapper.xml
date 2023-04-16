@@ -35,11 +35,18 @@
         from comment
         where  id = #{id,jdbcType=INTEGER} 
     </select>
+    <select id="findAllByCommentNameAndContent" resultType="cn.jasonone.bean.Comment">
+        select * from comment <where>
+        <if test="commentName != null">comment_name like concat('%',#{commentName},'%')</if>
+        <if test="content != null">and content like concat('%',#{content},'%')</if>
+        <if test="issueId != null">and issue_id like concat('%',#{issueId},'%')</if>
+    </where>
+    </select>
 
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from comment
-        where  id = #{id,jdbcType=INTEGER} 
+        where  id = #{id}
     </delete>
 
     <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cn.jasonone.bean.Comment" useGeneratedKeys="true">

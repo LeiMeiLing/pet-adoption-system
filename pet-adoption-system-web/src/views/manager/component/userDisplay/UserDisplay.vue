@@ -123,7 +123,6 @@ function updateUserInfo() {
 function reload() {
   list().then(res => {
     data.length = 0
-    console.log(res.data);
     data.push(...res.data.list)
 
   })

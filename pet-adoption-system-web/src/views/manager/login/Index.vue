@@ -3,10 +3,10 @@
     <lay-form :model="managerInfo" class="manager-form">
       <h1 class="title">宠物领养管理系统</h1>
       <lay-form-item label="用户名" :label-position="labelPosition" prop="username">
-        <lay-input placeholder="请输入用户名" v-model="managerInfo.username"></lay-input>
+        <lay-input placeholder="请输入用户名" v-model="managerInfo.username" @keyup.enter="onLogin"></lay-input>
       </lay-form-item>
       <lay-form-item label="密码" :label-position="labelPosition" prop="password">
-        <lay-input placeholder="请输入密码" v-model="managerInfo.password" type="password"></lay-input>
+        <lay-input placeholder="请输入密码" v-model="managerInfo.password" type="password" @keyup.enter="onLogin"></lay-input>
       </lay-form-item>
       <lay-form-item class="btn">
         <lay-button  @click="onLogin" >登录</lay-button>

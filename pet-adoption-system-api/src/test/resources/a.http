@@ -93,4 +93,21 @@ Content-Type: application/json; charset=UTF-8
 GET localhost:8000/petKnowledge/selectByTime
 Content-Type: application/json; charset=UTF-8
 
+###查找评论
+GET localhost:8000/comment/findAll?issueId=44
+
+###删除评论
+DELETE localhost:8000/comment?id=13
+
+###模糊查询评论
+GET localhost:8000/comment/findSome?content=1&issueId=44
+
+###删除宠物秀
+DELETE localhost:8000/petIssue
+Content-Type: application/json
+
+{
+  "id": 43
+}
+
 

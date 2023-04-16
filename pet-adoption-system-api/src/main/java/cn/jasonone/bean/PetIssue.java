@@ -14,7 +14,7 @@ public class PetIssue implements Serializable {
     /**
      * 发布者id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * 评论者id

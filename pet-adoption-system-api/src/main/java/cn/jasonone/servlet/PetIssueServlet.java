@@ -61,6 +61,19 @@ public class PetIssueServlet extends HttpServlet {
 
     }
 
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
+        petIssueService.setSqlSession(sqlSession);
+        PetIssue petIssue = gson.fromJson(req.getReader(), PetIssue.class);
+        petIssueService.del(petIssue.getId());
+        Map<String, Object> result = new HashMap<>();
+        result.put("code", 200);
+        result.put("msg", "删除成功");
+        gson.toJson(result,resp.getWriter());
+        sqlSession.commit();
+    }
+
     private void find(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         List<PetIssue> all = petIssueService.findAll();
         Map<String,Object> result = new HashMap<>();

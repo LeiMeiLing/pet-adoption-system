@@ -12,6 +12,11 @@ import java.util.List;
 */
 public interface PetIssueMapper {
 
+    /**
+     * 删除宠物秀
+     * @param id
+     * @return
+     */
     int deleteByPrimaryKey(Long id);
 
     /**

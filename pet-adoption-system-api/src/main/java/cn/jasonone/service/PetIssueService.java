@@ -10,4 +10,9 @@ public interface PetIssueService {
     void add(PetIssue petIssue);
 
     List<PetIssue> findAll();
+
+    /**
+     * 删除宠物秀
+     */
+    void del(Long id);
 }

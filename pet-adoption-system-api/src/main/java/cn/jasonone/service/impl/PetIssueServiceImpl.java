@@ -23,4 +23,10 @@ public class PetIssueServiceImpl implements PetIssueService {
         PetIssueMapper petIssueMapper = sqlSession.getMapper(PetIssueMapper.class);
         return petIssueMapper.findAll();
     }
+
+    @Override
+    public void del(Long id) {
+        PetIssueMapper petIssueMapper = sqlSession.getMapper(PetIssueMapper.class);
+        petIssueMapper.deleteByPrimaryKey(id);
+    }
 }

@@ -4,8 +4,7 @@
       <ul v-for="(item,index) in dataSource">
         <li class="item">
           <div class="img_box" @click="click(item)"><img v-bind:src="item.picture" alt=""></div>
-          <div style="color: blue">宝贝名</div>   <div v-html="item.petName"></div>
-          <div style="color: #e1251b">内容</div><span>{{item.content}}</span>
+          <div style="color: blue">宝贝名</div>   <div v-html="item.petName"></div> <ErrorIcon @click="del(item.id)"></ErrorIcon>
         </li>
       </ul>
 
@@ -17,8 +16,12 @@
 
 <script setup>
 import {onMounted, onUpdated, reactive, ref} from "vue";
-import {findAll, findSome} from "./api.js";
+import {findAll, findSome,delShow} from "./api.js";
 import router from "../../../../config/router";
+import {ErrorIcon} from '@layui/icons-vue';
+import {layer} from "@layui/layui-vue";
+import {deleteComment} from "./ImgDisplay/api.js";
+
 
 const petIssueDisplay = reactive({
   picture:"",
@@ -29,9 +32,35 @@ const petIssueDisplay = reactive({
 
 
 let dataSource = reactive([])
+
+function del(row){
+  layer.confirm(`是否确认删除？`, {
+    btn: [
+      {
+        text: "是",
+        callback(id) {
+          delShow(row)
+          layer.close(id)
+          layer.msg("删除成功")
+          reload()
+        }
+      },
+      {
+        text: "否",
+        callback(id) {
+          layer.close(id)
+        }
+      }
+
+    ],icon:7,
+    title: '退出'
+
+  })
+
+}
+
 function reload() {
   findAll().then(res => {
-    console.log(res.data);
     dataSource.length = 0
     dataSource.push(...res.data);
   })
@@ -40,17 +69,12 @@ function reload() {
 function click(item){
   router.push({
     path:'/imgDisplay',
-    query:item
+    query:{
+      ...item
+    }
   })
-  // console.log(item)
-  // router.push({ name: 'storesDetail', params: { id }})
 }
-// function getSome(){
-//   findSome(goodsInfo.goodsName,goodsInfo.goodsType).then(res=>{
-//     dataSource.length=0
-//     dataSource.push(...res.data.list);
-//   })
-// }
+
 onMounted(reload)
 </script>
 
