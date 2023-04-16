@@ -31,7 +31,7 @@ public interface UserInfoService {
      * 找到名字
      */
     String findName(Long id);
-
+    boolean findName(String name);
     /**
      * 获取用户列表显示在页面上
      * @return

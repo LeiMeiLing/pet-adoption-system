@@ -124,13 +124,20 @@ public class UserInfoServlet extends HttpServlet {
     }
 
     private void register(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Gson gson = new Gson();
         UserInfo userInfo = gson.fromJson(req.getReader(), UserInfo.class);
-        userInfoService.register(userInfo);
-        Map<String, Object> result = new HashMap<String, Object>();
-        result.put("code", 200);
-        result.put("msg", "注册成功");
-        resp.getWriter().write(gson.toJson(result));
+        if (userInfoService.findName(userInfo.getUsername())) {
+            userInfoService.register(userInfo);
+            Map<String, Object> result = new HashMap<String, Object>();
+            result.put("code", 200);
+            result.put("msg", "注册成功");
+            resp.getWriter().write(gson.toJson(result));
+        }else {
+            Map<String, Object> result = new HashMap<String, Object>();
+            result.put("code", 400);
+            result.put("msg", "用户名已经存在");
+            resp.getWriter().write(gson.toJson(result));
+        }
+
     }
 
     @Override
