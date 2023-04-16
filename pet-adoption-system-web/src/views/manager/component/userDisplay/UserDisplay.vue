@@ -145,14 +145,6 @@ function deleteUser(row) {
   layer.confirm(`是否删除${row.username}?`, {
     btn: [
       {
-        text: "否",
-        callback(id) {
-          layer.close(id)
-          reload()
-        }
-      },
-
-      {
         text: "是",
         callback(id) {
           deleteUserInfo(row1.id)
@@ -161,7 +153,14 @@ function deleteUser(row) {
           layer.msg("删除成功")
           layer.close(id)
           reload()
+        } },
+      {
+        text: "否",
+        callback(id) {
+          layer.close(id)
+          reload()
         }
+
       }
     ]
   })
@@ -171,6 +170,7 @@ function deleteUser(row) {
 function find() {
   findSome(user.username, user.email, user.phone).then(res => {
     data.length = 0
+    console.log(res);
     data.push(...res.data.list)
   })
 }
