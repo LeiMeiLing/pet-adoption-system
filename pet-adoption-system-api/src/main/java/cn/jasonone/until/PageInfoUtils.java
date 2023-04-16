@@ -12,7 +12,7 @@ public class PageInfoUtils {
         //实现list分页
         PageHelper.startPage(pageNum, pageSize);
         int pageStart = pageNum == 1 ? 0 : (pageNum - 1) * pageSize;
-        int pageEnd = arrayList.size() < pageSize * pageNum ? arrayList.size() : pageSize * pageNum;
+        int pageEnd = Math.min(arrayList.size(), pageSize * pageNum);
         List<T> pageResult = new LinkedList<T>();
         if (arrayList.size() > pageStart) {
             pageResult = arrayList.subList(pageStart, pageEnd);
@@ -20,14 +20,14 @@ public class PageInfoUtils {
         PageInfo<T> pageInfo = new PageInfo<T>(pageResult);
         //获取PageInfo其他参数
         pageInfo.setTotal(arrayList.size());
-        int endRow = pageInfo.getEndRow() == 0 ? 0 : (pageNum - 1) * pageSize + pageInfo.getEndRow() + 1;
+        int endRow = pageInfo.getEndRow() == 0 ? 0 : (int)((pageNum - 1) * pageSize + pageInfo.getEndRow() + 1);
         pageInfo.setEndRow(endRow);
-        boolean hasNextPage = arrayList.size() <= pageSize * pageNum ? false : true;
+        boolean hasNextPage = arrayList.size() > pageSize * pageNum;
         pageInfo.setHasNextPage(hasNextPage);
-        boolean hasPreviousPage = pageNum == 1 ? false : true;
+        boolean hasPreviousPage = pageNum != 1;
         pageInfo.setHasPreviousPage(hasPreviousPage);
         pageInfo.setIsFirstPage(!hasPreviousPage);
-        boolean isLastPage = (arrayList.size() > pageSize * (pageNum - 1) && arrayList.size() <= pageSize * pageNum) ? true : false;
+        boolean isLastPage = arrayList.size() > pageSize * (pageNum - 1) && arrayList.size() <= pageSize * pageNum;
         pageInfo.setIsLastPage(isLastPage);
         int pages = arrayList.size() % pageSize == 0 ? arrayList.size() / pageSize : (arrayList.size() / pageSize) + 1;
         pageInfo.setNavigateLastPage(pages);
