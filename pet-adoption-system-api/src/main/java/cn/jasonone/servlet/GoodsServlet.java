@@ -5,6 +5,7 @@ import cn.jasonone.service.GoodsInfoService;
 import cn.jasonone.service.impl.GoodsInfoServiceImpl;
 import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.apache.ibatis.session.SqlSession;
 
 import javax.servlet.ServletException;
@@ -19,6 +20,13 @@ import java.util.Map;
 @WebServlet("/petstore/*")
 public class GoodsServlet extends HttpServlet {
     GoodsInfoService gs = new GoodsInfoServiceImpl();
+    Gson gson = new GsonBuilder()
+            .setDateFormat("yyyy-MM-dd HH:mm:ss")
+            // 是否显示值为null的字段
+            .serializeNulls()
+            // 是否格式化json
+            .setPrettyPrinting()
+            .create();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
@@ -36,7 +44,7 @@ public class GoodsServlet extends HttpServlet {
 
         String requestURI = req.getRequestURI();
         requestURI = requestURI.substring(req.getContextPath().length());
-        Gson gson = new Gson();
+
         switch (requestURI) {
             case "/petstore/findAll":
                 PageInfo<GoodsInfo> goods= gs.findAll(pageNum,pageSize);
@@ -109,7 +117,7 @@ public class GoodsServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
         gs.setSqlSession(sqlSession);
-        Gson gson = new Gson();
+
 
         GoodsInfo goods = gson.fromJson(req.getReader(), GoodsInfo.class);
         gs.delete((long)goods.getId());
@@ -123,7 +131,7 @@ public class GoodsServlet extends HttpServlet {
     private void add(HttpServletRequest req,HttpServletResponse resp) throws IOException {
         SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
         gs.setSqlSession(sqlSession);
-        Gson gson = new Gson();
+
         GoodsInfo goods = gson.fromJson(req.getReader(), GoodsInfo.class);
         gs.add(goods);
         Map<String,Object> result = new HashMap<>();
@@ -135,7 +143,7 @@ public class GoodsServlet extends HttpServlet {
     }
 
     private void update(HttpServletRequest req,HttpServletResponse resp) throws IOException {
-        Gson gson = new Gson();
+
         GoodsInfo goods = gson.fromJson(req.getReader(), GoodsInfo.class);
         gs.update(goods);
         Map<String,Object> result = new HashMap<>();
@@ -145,7 +153,7 @@ public class GoodsServlet extends HttpServlet {
     }
 
     private PageInfo<GoodsInfo> findSome(HttpServletRequest req, HttpServletResponse resp, Integer pageNum, Integer pageSize, GoodsInfoService gs) throws IOException{
-        Gson gson = new Gson();
+
         String goodsname = req.getParameter("goodsname");
         String goodsType = req.getParameter("goodsType");
         GoodsInfo goods = new GoodsInfo();
@@ -154,7 +162,6 @@ public class GoodsServlet extends HttpServlet {
         return gs.selectNameOrType(pageNum,pageSize,goods);
     }
     private GoodsInfo findId(HttpServletRequest req, HttpServletResponse resp, GoodsInfoService gs){
-        Gson gson = new Gson();
         String str = req.getParameter("goodsId");
         int id = Integer.parseInt(str);
         return gs.selectById(id);

@@ -8,7 +8,6 @@
       </lay-button>
       <template #content>
         <lay-dropdown-menu>
-          <lay-dropdown-menu-item>个人中心</lay-dropdown-menu-item>
           <lay-dropdown-menu-item @click="exit">退出登录</lay-dropdown-menu-item>
         </lay-dropdown-menu>
       </template>

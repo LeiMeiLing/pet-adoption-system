@@ -4,6 +4,7 @@ import cn.jasonone.bean.AdoptInfo;
 import cn.jasonone.service.AdoptInfoService;
 import cn.jasonone.service.impl.AdoptInfoServiceImpl;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.apache.ibatis.session.SqlSession;
 
 import javax.servlet.ServletException;
@@ -18,6 +19,13 @@ import java.util.Map;
 
 @WebServlet("/adoption/*")
 public class AdoptionInfoServlet extends HttpServlet {
+    Gson gson = new GsonBuilder()
+            .setDateFormat("yyyy-MM-dd HH:mm:ss")
+            // 是否显示值为null的字段
+            .serializeNulls()
+            // 是否格式化json
+            .setPrettyPrinting()
+            .create();
     private AdoptInfoService adoptInfoService=new AdoptInfoServiceImpl();
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -60,7 +68,7 @@ public class AdoptionInfoServlet extends HttpServlet {
 
         String requestURI = req.getRequestURI();
         requestURI = requestURI.substring(req.getContextPath().length());
-        Gson gson = new Gson();
+
         switch (requestURI) {
             case "/adoption/findAll":
                 List<AdoptInfo> adoptInfos = adoptInfoService.findAll();
@@ -81,13 +89,23 @@ public class AdoptionInfoServlet extends HttpServlet {
                 resp.getWriter().write(gson.toJson(result1));
                 sqlSession.commit();
                 break;
+            case "/adoption/findName":
+                String username = req.getParameter("username");
+                List<AdoptInfo> name = adoptInfoService.findName(username);
+                Map<String, Object> result2 = new HashMap<>();
+                result2.put("code", 200);
+                result2.put("msg", "查找成功");
+                result2.put("data", name);
+                resp.getWriter().write(gson.toJson(result2));
+                sqlSession.commit();
+                break;
             default:
                 super.doPut(req, resp);
         }
     }
 
     private void add(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Gson gson = new Gson();
+
         AdoptInfo adoptInfo = gson.fromJson(req.getReader(), AdoptInfo.class);
 
         adoptInfoService.add(adoptInfo);
@@ -97,7 +115,7 @@ public class AdoptionInfoServlet extends HttpServlet {
         resp.getWriter().write(gson.toJson(result));
     }
     private void updateStatus(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Gson gson = new Gson();
+
         AdoptInfo adoptInfo = gson.fromJson(req.getReader(), AdoptInfo.class);
         adoptInfoService.updateStatus(adoptInfo);
         Map<String, Object> result = new HashMap<>();

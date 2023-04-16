@@ -39,4 +39,10 @@ public class AdoptInfoServiceImpl implements AdoptInfoService {
         AdoptInfoMapper adoptInfoMapper=sqlSession.getMapper(AdoptInfoMapper.class);
         adoptInfoMapper.updateByPrimaryKeySelective(adoptInfo);
     }
+
+    @Override
+    public List<AdoptInfo> findName(String username) {
+        AdoptInfoMapper adoptInfoMapper=sqlSession.getMapper(AdoptInfoMapper.class);
+        return adoptInfoMapper.findName(username);
+    }
 }

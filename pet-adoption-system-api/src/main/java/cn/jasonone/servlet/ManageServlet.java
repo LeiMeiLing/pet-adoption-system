@@ -22,6 +22,13 @@ import java.util.Map;
 @WebServlet("/manager/*")
 public class ManageServlet extends HttpServlet {
     ManagerService managerService = new ManagerServiceImpl();
+    Gson gson = new GsonBuilder()
+            .setDateFormat("yyyy-MM-dd HH:mm:ss")
+            // 是否显示值为null的字段
+            .serializeNulls()
+            // 是否格式化json
+            .setPrettyPrinting()
+            .create();
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             ManagerService managerService = new ManagerServiceImpl();
@@ -55,7 +62,6 @@ public class ManageServlet extends HttpServlet {
     }
 
     private void login(HttpServletRequest req, HttpServletResponse resp) throws IOException  {
-        Gson gson = new Gson();
         ManagerInfo managerInfo = gson.fromJson(req.getReader(), ManagerInfo.class);
         managerInfo=managerService.login(managerInfo);
         Map<String,Object> result = new HashMap<>();
@@ -85,12 +91,8 @@ public class ManageServlet extends HttpServlet {
 
     }
     private void register(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-//        String username = req.getParameter("username");
-//        String password = req.getParameter("password");
         ManagerService managerService = new ManagerServiceImpl();
-        Gson gson = new Gson();
         ManagerInfo managerInfo= gson.fromJson(req.getReader(), ManagerInfo.class);
-
         managerService.register(managerInfo);
         Map<String,Object> result = new HashMap<String, Object>();
         result.put("code", 200);

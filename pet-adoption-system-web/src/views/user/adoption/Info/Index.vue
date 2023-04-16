@@ -93,7 +93,6 @@ adoptionInfo.phone=userInfo.phone
 adoptionInfo.variety=route.query.variety
 adoptionInfo.petname=route.query.petName
 adoptionInfo.petSex=route.query.petSex
-
 const openSuccess = function() {
   insert(adoptionInfo).then(res=>{
     layer.msg(res.msg, { icon : 1, time: 1000})

@@ -23,4 +23,6 @@ public interface AdoptInfoService {
    AdoptInfo selectById(Integer id);
 
     void updateStatus(AdoptInfo adoptInfo);
+
+    List<AdoptInfo> findName(String username);
 }
