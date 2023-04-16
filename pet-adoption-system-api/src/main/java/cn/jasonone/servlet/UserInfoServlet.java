@@ -175,6 +175,7 @@ public class UserInfoServlet extends HttpServlet {
                 result1.put("data", some);
                 gson.toJson(result1, resp.getWriter());
                 sqlSession.commit();
+                break;
             case "/user/findName":
                 findName(req,resp);
                 sqlSession.commit();
@@ -240,11 +241,11 @@ public class UserInfoServlet extends HttpServlet {
     }
 
     private PageInfo<UserInfo> findSome(HttpServletRequest req, HttpServletResponse resp, Integer pageNum, Integer pageSize) throws IOException {
-        String userName = req.getParameter("userName");
+        String username = req.getParameter("username");
         String email = req.getParameter("email");
         String phone = req.getParameter("phone");
         UserInfo userInfo = new UserInfo();
-        userInfo.setUsername(userName);
+        userInfo.setUsername(username);
         userInfo.setEmail(email);
         userInfo.setPhone(phone);
         return userInfoService.selectNameOrType(pageNum, pageSize, userInfo);
