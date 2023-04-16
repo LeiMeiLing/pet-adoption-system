@@ -1,5 +1,5 @@
 <template>
-  <lay-row space="10" class="login">
+  <lay-row space="10" class="login" >
     <lay-col md="7" md-offset="16" lg="7" lg-offset="16" sm="24" xm="24">
       <lay-row class="title">
         <h1>登&emsp;录</h1>
@@ -10,7 +10,7 @@
           用户名：
         </lay-col>
         <lay-col md="16" lg="16" xm="24" sm="24">
-          <lay-input v-model="userInfo.username" placeholder="请输入用户名"></lay-input>
+          <lay-input v-model="userInfo.username" placeholder="请输入用户名" @keyup.enter="onLogin"></lay-input>
         </lay-col>
       </lay-row>
 
@@ -19,7 +19,7 @@
           密&emsp;码：
         </lay-col>
         <lay-col md="16" lg="16" xm="24" sm="24">
-          <lay-input v-model="userInfo.password" type="password" placeholder="请输入密码"></lay-input>
+          <lay-input  v-model="userInfo.password" type="password" placeholder="请输入密码" @keyup.enter="onLogin"></lay-input>
         </lay-col>
       </lay-row>
       <lay-row>
@@ -49,6 +49,8 @@ import {ref} from 'vue'
 import {login} from './api'
 import router from "../../../config/router.js";
 import {layer} from "@layui/layui-vue";
+
+
 
 
 const userInfo = ref({

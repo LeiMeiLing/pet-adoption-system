@@ -12,8 +12,6 @@
         <div class="img_box" @click="click(item)"><img v-bind:src="item.picture" alt=""></div>
         <div style="color: blue">宝贝名</div>   <div v-html="item.petName"></div>
         <lay-rate  :icons="['layui-icon-heart', 'layui-icon-heart-fill']" theme="#FE0000"></lay-rate>
-        <div style="color: #e1251b">内容</div><span>{{item.content}}</span><br>
-        <lay-button type="normal" radius @click="send">发表评论</lay-button>
       </li>
     </ul>
 
