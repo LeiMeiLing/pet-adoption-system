@@ -29,4 +29,6 @@ public interface PetKnowledgeMapper {
     List<PetKnowledge> selectByType(String essayType);
 
     List<PetKnowledge> selectByTime();
+
+    List<PetKnowledge> createMessages();
 }

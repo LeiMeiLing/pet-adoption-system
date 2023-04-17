@@ -7,17 +7,17 @@
     <div class="panel-container" shadow="hover" v-for="count in dataSource">
       <lay-panel>
         <img v-bind:src="count.picture">
-        <div class="text">
-             <h1 class="title" @click="onEssay">
-               {{count.title}}
-             </h1>
-              <div class="description">
-                {{count.description}}
-              </div>
-              <div class="authorAndCreateTime">
-                {{count.author}}&emsp;{{count.createTime}}
-              </div>
-        </div>
+        <lay-container>
+            <h1 class="title" @click="onEssay(count)">
+              {{count.title}}
+            </h1>
+            <div class="description">
+              {{count.description}}
+            </div>
+            <div class="authorAndCreateTime">
+              {{count.author}}&emsp;{{count.createTime}}
+            </div>
+        </lay-container>
       </lay-panel>
     </div>
   </div>
@@ -36,7 +36,7 @@ selectByTime().then(res=>{
   dataSource.length=0
   dataSource.push(...res.data)
 })
-const title1 = ref(["最新","养宠知识","宠物百科","宠物健康"])
+// const title1 = ref(["最新","养宠知识","宠物百科","宠物健康"])
 let type = ref("")
 const before1=function a1(id){
     let title = arr2.value[id-1].title;
@@ -52,10 +52,6 @@ const before1=function a1(id){
         dataSource.push(...res.data)
       })
     }
-
-
-
-
 }
 
 const arr2 = ref([
@@ -65,12 +61,13 @@ const arr2 = ref([
   {id:'4',title: '宠物健康', closable: false}
 ])
 
-function selectTitle(id){
-  return
-}
 
-function onEssay(){
-  router.push("/essay");
+
+function onEssay(count){
+  router.push({
+    path:'/essay',
+    query:count
+  })
 }
 </script>
 
@@ -86,23 +83,28 @@ img{
 }
 .layui-panel{
   display: flex;
+  margin-right: 20px;
 }
-.text{
-  margin-left: 50px;
-  &>div{
-    margin-top: 30px;
-  }
+.layui-container{
+  width:calc(100% - 150px);
+  height: 150px;
+
 }
 .title{
   cursor:pointer;
-  font-size: 28px;
+  font-size: 25px;
 }
 .description{
   color: #5b5454;
   font-size: 20px;
+  width: 100%;
+  height: 88px;
+  display: flex;
+  align-items: center;
 }
 .authorAndCreateTime{
   font-size: 20px;
   color: #5b5454;
+  margin-bottom: 5px;
 }
 </style>

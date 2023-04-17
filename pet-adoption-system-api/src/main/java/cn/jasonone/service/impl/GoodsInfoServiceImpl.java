@@ -1,8 +1,10 @@
 package cn.jasonone.service.impl;
 
 import cn.jasonone.bean.GoodsInfo;
+import cn.jasonone.bean.UserInfo;
 import cn.jasonone.mapper.GoodsInfoMapper;
 import cn.jasonone.service.GoodsInfoService;
+import cn.jasonone.until.PageInfoUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.Setter;
@@ -17,9 +19,8 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     @Override
     public PageInfo<GoodsInfo> findAll(int pageNum, int pageSize) {
         GoodsInfoMapper goodsInfoMapper = sqlSession.getMapper(GoodsInfoMapper.class);
-        PageHelper.startPage(pageNum, pageSize);
-        List<GoodsInfo> goods = goodsInfoMapper.selectAll();
-        return new PageInfo<>(goods);
+        List<GoodsInfo> goodsInfos = goodsInfoMapper.selectAll();
+        return PageInfoUtils.list2PageInfo(goodsInfos,pageNum,pageSize);
     }
 
     @Override
@@ -42,11 +43,9 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
 
 
     @Override
-    public PageInfo<GoodsInfo> selectNameOrType(int pageNum, int pageSize, GoodsInfo goods) {
+    public List<GoodsInfo> selectNameOrType( GoodsInfo goods) {
         GoodsInfoMapper goodsInfoMapper = sqlSession.getMapper(GoodsInfoMapper.class);
-        PageHelper.startPage(pageNum, pageSize);
-        List<GoodsInfo> goodsInfos = goodsInfoMapper.fuzzyQueries(goods);
-        return new PageInfo<>(goodsInfos);
+        return goodsInfoMapper.fuzzyQueries(goods);
     }
 
     @Override

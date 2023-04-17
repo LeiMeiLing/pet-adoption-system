@@ -32,9 +32,15 @@
         select * from goods_info
     </select>
     <select id="fuzzyQueries" resultType="cn.jasonone.bean.GoodsInfo">
-        select * from goods_info <where>
-        <if test="goodsType != null">goods_type like concat('%',#{goodsType},'%') </if>
+        select * from goods_info
+        <where>
+        <if test="id != null">id like concat('%',#{id},'%') </if>
+        <if test="goodsPicture != null">and goods_picture like concat('%',#{goodsPicture},'%')</if>
+        <if test="goodsType != null">and goods_type like concat('%',#{goodsType},'%') </if>
         <if test="goodsname != null">and goodsname like concat('%',#{goodsname},'%')</if>
+        <if test="goodsPrice != null">and goods_price like concat('%',#{goodsPrice},'%') </if>
+        <if test="goodsStatus != null">and goods_status like concat('%',#{goodsStatus},'%')</if>
+        <if test="goodsDesc != null">and goods_desc like concat('%',#{goodsDesc},'%')</if>
     </where>
     </select>
 

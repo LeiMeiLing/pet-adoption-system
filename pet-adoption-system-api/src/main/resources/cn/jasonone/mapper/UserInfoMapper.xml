@@ -13,6 +13,12 @@
             <result property="salt" column="salt" jdbcType="CHAR"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="sex" column="sex" jdbcType="VARCHAR"/>
+            <result property="age" column="age" jdbcType="INTEGER"/>
+            <result property="consignee" column="consignee" jdbcType="VARCHAR"/>
+            <result property="address" column="address" jdbcType="VARCHAR"/>
+
+
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -29,7 +35,7 @@
     </select>
 
     <select id="findByUsername" resultType="cn.jasonone.bean.UserInfo">
-        select <include refid="Base_Column_List"></include>
+        select *
         from user_info where username = #{username}
     </select>
 
@@ -98,29 +104,34 @@
     <update id="updateByPrimaryKeySelective" parameterType="cn.jasonone.bean.UserInfo">
         update user_info
         <set>
-                <if test="username != null">
-                    username = #{username,jdbcType=VARCHAR},
-                </if>
-                <if test="password != null">
-                    password = md5(#{password,jdbcType=CHAR}),
-                </if>
-                <if test="email != null">
-                    email = #{email,jdbcType=VARCHAR},
-                </if>
-                <if test="phone != null">
-                    phone = #{phone,jdbcType=VARCHAR},
-                </if>
-                <if test="salt != null">
-                    salt = #{salt,jdbcType=CHAR},
-                </if>
-                <if test="createTime != null">
-                    create_time = #{createTime,jdbcType=TIMESTAMP},
-                </if>
-                <if test="updateTime != null">
-                    update_time = #{updateTime,jdbcType=TIMESTAMP},
-                </if>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = md5(#{password,jdbcType=CHAR}),
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="salt != null">
+                salt = #{salt,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+                sex = #{sex,jdbcType=VARCHAR},
+                age = #{age,jdbcType=INTEGER},
+                consignee = #{consignee,jdbcType=VARCHAR},
+                address = #{address,jdbcType=VARCHAR},
+                sign = #{sign,jdbcType=VARCHAR}
         </set>
-        where   id = #{id,jdbcType=INTEGER} 
+        where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="cn.jasonone.bean.UserInfo">
         update user_info

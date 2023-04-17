@@ -25,4 +25,5 @@ public interface AdoptInfoService {
     void updateStatus(AdoptInfo adoptInfo);
 
     List<AdoptInfo> findName(String username);
+    List<AdoptInfo> findSome(AdoptInfo adoptInfo);
 }

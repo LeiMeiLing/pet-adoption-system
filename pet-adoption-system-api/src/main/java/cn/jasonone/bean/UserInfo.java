@@ -50,5 +50,30 @@ public class UserInfo implements Serializable {
      */
     private Date updateTime;
 
+    /**
+     * 性别
+     */
+    private String sex;
+
+    /**
+     * 年龄
+     */
+    private Integer age;
+
+    /**
+     * 收货人名字
+     */
+    private String consignee;
+
+    /**
+     * 地址
+     */
+    private String address;
+
+    /**
+     * 个性签名
+     */
+    private String sign;
+
     private static final long serialVersionUID = 1L;
 }

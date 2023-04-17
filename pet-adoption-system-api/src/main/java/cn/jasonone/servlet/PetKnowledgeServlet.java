@@ -72,6 +72,10 @@ public class PetKnowledgeServlet  extends HttpServlet {
                 selectByTime(req, resp);
                 sqlSession.commit();
                 break;
+            case "/petKnowledge/createMessages":
+                createMessages(req, resp);
+                sqlSession.commit();
+                break;
             default:
                 super.doGet(req, resp);
         }
@@ -98,6 +102,14 @@ public class PetKnowledgeServlet  extends HttpServlet {
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("code", 200);
         result.put("msg", "查找成功");
+        result.put("data", petKnowledges);
+        resp.getWriter().write(gson.toJson(result));
+    }
+    private void createMessages(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        List<PetKnowledge> petKnowledges = petKnowledgeService.createMessages();
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("code", 200);
+        result.put("msg", "生成成功");
         result.put("data", petKnowledges);
         resp.getWriter().write(gson.toJson(result));
     }

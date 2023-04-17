@@ -1,21 +1,17 @@
 <template>
-  <div class="user">
-<!--    <div class="up">
-      <lay-input :allow-clear="true" v-model="user.username" placeholder="输入用户名">
-        <template #prefix>用户名:</template>
+  <div class="Goods">
+   <div class="up">
+
+      <lay-input :allow-clear="true" v-model="goodsStore.goodsname" placeholder="输入商品名">
+        <template #prefix>商品名:</template>
       </lay-input>
 
-      <lay-input :allow-clear="true" v-model="user.email" placeholder="输入邮箱">
-        <template #prefix>邮箱:</template>
+      <lay-input :allow-clear="true" v-model="goodsStore.goodsType" placeholder="输入类型">
+        <template #prefix>商品类型:</template>
       </lay-input>
-
-      <lay-input :allow-clear="true" v-model="user.phone" placeholder="输入手机号">
-        <template #prefix>手机号:</template>
-      </lay-input>
-
       <lay-button type="normal" @click="find">
-        <lay-icon type="layui-icon-search" size="30" @click="showUser(row)"></lay-icon></lay-button>
-    </div>-->
+        <lay-icon type="layui-icon-search" size="30" @click="findSome"></lay-icon></lay-button>
+    </div>
 
 
     <div class="table">
@@ -23,19 +19,16 @@
                  :data-source="data"
                  :page="page"
                  @change="onPageChange"
-                 :default-toolbar="true"
                  even>
 
 
         <template #action="{row}">
-
-
-          <lay-button type="danger" radius size="sm" style="width: 40px" @click="deleteUser(row)">
+          <lay-button type="danger" radius size="sm" style="width: 40px" @click="deleteGoods(row)">
             <lay-icon type="layui-icon-delete" size="18"></lay-icon>
           </lay-button>
 
           <lay-button type="normal" radius size="sm" style="width: 40px">
-            <lay-icon type="layui-icon-edit" size="18" @click="showUser(row)"></lay-icon>
+            <lay-icon type="layui-icon-edit" size="18" @click="showGoods(row)"></lay-icon>
           </lay-button>
         </template>
 
@@ -54,24 +47,24 @@
 
       <lay-layer v-model="addStoreVisibel" :area="['400px','450px']">
         <lay-form-item label="类型">
-          <lay-input v-model="petStoreAdd.goodsType" placeholder="请输入类型"></lay-input>
+          <lay-input v-model="goodsStoreAdd.goodsType" placeholder="请输入类型"></lay-input>
         </lay-form-item>
 
         <lay-form-item label="名字">
-          <lay-input v-model="petStoreAdd.goodsname" placeholder="请输入名字"></lay-input>
+          <lay-input v-model="goodsStoreAdd.goodsname" placeholder="请输入名字"></lay-input>
         </lay-form-item>
 
         <input type="file" id="file" @change="handleFileChange" >
         <img :src="imgbase64" style="width: 100px"/>
 
         <lay-form-item label="价格">
-          <lay-input v-model="petStoreAdd.goodsPrice" placeholder="请输入价格"></lay-input>
+          <lay-input v-model="goodsStoreAdd.goodsPrice" placeholder="请输入价格"></lay-input>
         </lay-form-item>
         <lay-form-item label="描述">
-          <lay-input v-model="petStoreAdd.goodsDesc" placeholder="请输入描述"></lay-input>
+          <lay-input v-model="goodsStoreAdd.goodsDesc" placeholder="请输入描述"></lay-input>
         </lay-form-item>
         <lay-form-item label="状态">
-          <lay-input v-model="petStoreAdd.goodsStatus" placeholder="请输入状态"></lay-input>
+          <lay-input v-model="goodsStoreAdd.goodsStatus" placeholder="请输入状态"></lay-input>
         </lay-form-item>
 
 
@@ -81,24 +74,38 @@
 
       </lay-layer>
 
-<!--      <lay-layer v-model="updateUserDisplay" :area="['400px','450px']">-->
-<!--        <lay-form-item label="用户名称">-->
-<!--          <lay-input v-model="userInfoUpdate.username" placeholder="请输入用户名"></lay-input>-->
-<!--        </lay-form-item>-->
+      <lay-layer v-model="updateGoodsDisplay" :area="['400px','450px']">
+        <lay-form-item label="商品编号" >
+          <lay-input v-model="goodsInfoUpdate.id" placeholder="请输入商品名" disabled="disabled"></lay-input>
+        </lay-form-item>
+        <lay-form-item label="商品名称">
+          <lay-input v-model="goodsInfoUpdate.goodsname" placeholder="请输入商品名"></lay-input>
+        </lay-form-item>
 
-<!--        <lay-form-item label="邮箱">-->
-<!--          <lay-input v-model="userInfoUpdate.email" placeholder="请输入邮箱"></lay-input>-->
-<!--        </lay-form-item>-->
+        <lay-form-item label="商品类型">
+          <lay-input v-model="goodsInfoUpdate.goodsType" placeholder="请输入类型"></lay-input>
+        </lay-form-item>
 
-<!--        <lay-form-item label="手机号">-->
-<!--          <lay-input v-model="userInfoUpdate.phone" placeholder="请输入手机号"></lay-input>-->
-<!--        </lay-form-item>-->
+        <lay-form-item label="商品价格">
+          <lay-input v-model="goodsInfoUpdate.goodsPrice" placeholder="请输入价格"></lay-input>
+        </lay-form-item>
 
-<!--        <lay-form-item>-->
-<!--          <lay-button type="primary" @click="updateUserInfo" style="width: 80px">修改</lay-button>-->
-<!--        </lay-form-item>-->
+        <input type="file" id="file" @change="handleFileChange" >
+        <img :src="imgbase64" style="width: 100px"/>
 
-<!--      </lay-layer>-->
+        <lay-form-item label="商品描述">
+          <lay-input v-model="goodsInfoUpdate.goodsDesc" placeholder="请输入描述"></lay-input>
+        </lay-form-item>
+
+        <lay-form-item label="商品状态">
+          <lay-input v-model="goodsInfoUpdate.goodsStatus" placeholder="请输入状态"></lay-input>
+        </lay-form-item>
+
+        <lay-form-item>
+          <lay-button type="primary" @click="updateGoodsInfo" style="width: 80px">修改</lay-button>
+        </lay-form-item>
+
+      </lay-layer>
     </div>
 
 
@@ -141,24 +148,13 @@ export default {
 
 
 <script setup>
-import {onMounted, onUpdated, reactive, ref} from "vue";
-import {list} from "./api"
-// import {list, updateUser, findSome, deleteUserInfo} from "./api.js";
+import {onMounted, reactive, ref} from "vue";
+import {deleteGoodsInfo, list, add, findSome,updateGoods} from "./api"
 import {layer} from "@layui/layui-vue"
-import {add} from "./api";
-
-
-
-const username = ref("")
-const email = ref("")
-const phone = ref("")
-
-
-
 const columns = reactive([
   {title: "ID", key: "id", align: "center"},
-  {title: "商品类型", key: "goodsType", align: "center"},
   {title: "商品名称", key: "goodsname", align: "center"},
+  {title: "商品类型", key: "goodsType", align: "center"},
   {title: "商品价格", key: "goodsPrice", align: "center"},
   /*{title: "商品图片", key:"goodsPicture",align: "center"},*/
   {title: "商品描述", key: "goodsDesc", align: "center"},
@@ -170,35 +166,32 @@ const columns = reactive([
 
 const addStoreVisibel = ref(false)
 const data = reactive([])
-const updateStoreDisplay = ref(false)
+const updateGoodsDisplay = ref(false)
 //查询
-const petStore = reactive({
+const goodsStore = reactive({
   goodsType: "",
   goodsname: "",
-  goodsPrice: "",
-  goodsDesc: "",
-  goodsStatus: ""
+
 })
 
-const petStoreAdd = reactive({
+const goodsStoreAdd = reactive({
   goodsType: "",
   goodsname: "",
-  goodsPrice: "",
   goodsDesc: "",
   goodsStatus: "",
   goodsPicture:""
 })
-const userAdd = reactive({
-  username: "",
-  email: "",
-  phone: ""
-})
+
 //修改用户
-const userInfoUpdate = reactive({
-  id: "",
-  username: "",
-  email: "",
-  phone: "",
+const goodsInfoUpdate = reactive({
+  id:'',
+  goodsType: "",
+  goodsname: "",
+  goodsPicture:'',
+  goodsPrice: "",
+  goodsDesc: "",
+  goodsStatus: "",
+
 })
 
 
@@ -211,99 +204,94 @@ const page = reactive({
 })
 
 
-//绑定更新界面，更新用户信息
-// function updateUserInfo() {
-//   console.log(userInfoUpdate)
-//   updateUser(userInfoUpdate)
-//
-//   layer.msg("修改成功")
-//   updateUserDisplay.value = false
-//   find()
-// }
+// 绑定更新界面，更新用户信息
+function updateGoodsInfo() {
+  updateGoods(goodsInfoUpdate)
+  layer.msg("修改成功")
+  reload()
+  updateGoodsDisplay.value = false
+
+}
 
 function reload() {
-  list(petStore.goodsType, petStore.goodsname, petStore.goodsPrice,petStore.goodsDesc,petStore.goodsStatus, page.limit, page.current).then(res => {
+  list().then(res => {
     data.length = 0
-    console.log(res);
     data.push(...res.data.list)
     page.current = res.data.current
     page.total = res.data.total
   })
 }
 
-// function showUser(row) {
-//   updateUserDisplay.value = true
-//   userInfoUpdate.id = row.id
-//   userInfoUpdate.username = row.username
-//   userInfoUpdate.email = row.email
-//   userInfoUpdate.phone = row.phone
-// }
+function showGoods(row) {
+  updateGoodsDisplay.value = true
+  goodsInfoUpdate.id=row.id
+  goodsInfoUpdate.goodsname = row.goodsname
+  goodsInfoUpdate.goodsType= row.goodsType
+  goodsInfoUpdate.goodsDesc = row.goodsPrice
+  goodsInfoUpdate.goodsStatus=row.goodsStatus
+  goodsInfoUpdate.goodsPrice=row.goodsPrice
+  goodsInfoUpdate.goodsPicture=row.goodsPicture
+
+}
 
 
 //新增用户
 function onAdd() {
-  petStoreAdd.goodsPicture = abc
-  add(petStoreAdd)
+  goodsStoreAdd.goodsPicture = abc
+  add(goodsStoreAdd)
   reload()
   layer.msg("新增成功")
   addStoreVisibel.value = false;
   reload()
 }
-// //删除用户信息
-// function deleteUser(row) {
-//   // confirm(""+row.username+"是否要删除吗？")
-//   // deleteUserInfo(row.id)
-//   // find()
-//   layer.confirm(`是否删除${row.username}?`, {
-//     btn: [
-//       {
-//         text: "否",
-//         callback(id) {
-//           layer.close(id)
-//           find()
-//         }
-//       },
-//
-//       {
-//         text: "是",
-//         callback(id) {
-//           deleteUserInfo(row)
-//           layer.msg("删除成功")
-//           layer.close(id)
-//           find()
-//         }
-//       }
-//     ]
-//   })
-// }
-//
-//
-//
-// //查找用户信息
-// function find() {
-//   findSome(user.username, user.email, user.phone).then(res => {
-//     console.log(res);
-//     data.length = 0
-//     data.push(...res.data.list)
-//
-//   })
-// }
-//
-// function onPageChange({current, limit}) {
-//   page.current = current
-//   console.log(page.current);
-//   page.limit = limit
-//   console.log(page.limit);
-//   reload()
-// }
+//删除用户信息
+function deleteGoods(row) {
 
+  layer.confirm(`是否删除${row.goodsname}?`, {
+    btn: [
+      {
+        text: "否",
+        callback(id) {
+          layer.close(id)
+          find()
+        }
+      },
+
+      {
+        text: "是",
+        callback(id) {
+          deleteGoodsInfo(row)
+          layer.msg("删除成功")
+          layer.close(id)
+          find()
+        }
+      }
+    ]
+  })
+}
+
+
+
+//查找用户信息
+function find() {
+  findSome(goodsStore).then(res => {
+    console.log(res)
+    data.length = 0
+    data.push(...res.data)
+  })
+}
+
+function onPageChange({current, limit}) {
+  page.current = current
+  page.limit = limit
+
+}
 
 onMounted(reload)
-onUpdated(reload)
 </script>
 
 <style scoped lang="scss">
-.user {
+.Goods {
   width: 100%;
   height: 100%;
 
