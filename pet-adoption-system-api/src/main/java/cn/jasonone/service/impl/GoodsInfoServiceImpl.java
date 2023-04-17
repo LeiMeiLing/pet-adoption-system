@@ -52,7 +52,7 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     @Override
     public GoodsInfo selectById(Integer id) {
         GoodsInfoMapper goodsInfoMapper = sqlSession.getMapper(GoodsInfoMapper.class);
-        GoodsInfo goodsInfo = goodsInfoMapper.selectByPrimaryKey((long) id);
+        GoodsInfo goodsInfo = goodsInfoMapper.selectByPrimaryKey(id);
         return goodsInfo;
     }
 }

@@ -19,10 +19,10 @@
                     价格：<span class="num">&yen;{{ goodsInfo.goodsPrice }}</span>
                 </lay-card>
                 <lay-card shadow="never">
-                    数量:<lay-button type="default" radius @click="reduce">-</lay-button>
+                    数量:<lay-button type="default" @click="reduce">-</lay-button>
 <!--                    数量：{{ goodsInfo.goodsPrice }}-->
                     <lay-input v-model="count" type="number" :max="99" :min="1" class="input1"></lay-input>
-                    <lay-button type="default" radius @click="increase">+</lay-button>
+                    <lay-button type="default" @click="increase">+</lay-button>
                 </lay-card>
 
             </div>
@@ -50,6 +50,8 @@ const cartInfo = reactive({
     productId: '',
     quantity: '',
     price: '',
+    goodsName:'',
+    goodsPicture:''
 });
 const userInfo = useLogin().userInfo;
 
@@ -58,10 +60,12 @@ function join(){
     cartInfo.productId=goodsInfo.id;
     cartInfo.quantity=count.value;
     cartInfo.price=(goodsInfo.goodsPrice) * count.value;
+    cartInfo.goodsName=goodsInfo.goodsname
+    cartInfo.goodsPicture=goodsInfo.goodsPicture
     joinCart(cartInfo).then(res=>{
         layer.msg(res.msg,{ icon : 1, time: 1000})
     }).catch(err=>{
-        layer.msg(err.msg,{ icon : 2, time: 1000})
+        layer.msg('添加失败',{ icon : 2, time: 1000})
     })
 }
 function reduce(){
