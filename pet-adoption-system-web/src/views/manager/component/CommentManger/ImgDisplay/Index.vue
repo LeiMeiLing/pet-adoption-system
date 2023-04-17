@@ -29,7 +29,7 @@
     </lay-table>
   </div>
 
-  <lay-page :limit="limit1.a" :total="total1.a" showCount showPage @change="change1"></lay-page>
+  <lay-page :limit="limit1.a" :total="total1.a" showCount showPage @change="change1" :limits="limits1"></lay-page>
 
 </template>
 
@@ -50,6 +50,7 @@ let limit1 = reactive({
 let total1 = reactive({
   a:""
 })
+let limits1 = reactive([3,5,10,20,30])
 
 const comment = reactive({
   username:"",

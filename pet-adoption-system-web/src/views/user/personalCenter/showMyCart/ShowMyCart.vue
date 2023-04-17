@@ -30,7 +30,6 @@ const userInfo = useLogin().userInfo;
 let dataSource = reactive([])
 
 showMyCart(userInfo.id).then(res=>{
-    console.log(res)
     dataSource.push(...res.data.list);
     console.log(dataSource)
 

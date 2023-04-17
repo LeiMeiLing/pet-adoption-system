@@ -33,7 +33,12 @@ public interface PetIssueMapper {
 
     int insertSelective(PetIssue record);
 
-    PetIssue selectByPrimaryKey(Long id);
+    /**
+     * 通过发布者id找宠物秀
+     * @param id
+     * @return
+     */
+    List<PetIssue> selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(PetIssue record);
 

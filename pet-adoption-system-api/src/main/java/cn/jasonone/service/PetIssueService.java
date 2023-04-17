@@ -16,4 +16,6 @@ public interface PetIssueService {
      * 删除宠物秀
      */
     void del(Long id);
+
+    List<PetIssue> findMy(Long id);
 }

@@ -32,4 +32,10 @@ public class PetIssueServiceImpl implements PetIssueService {
         PetIssueMapper petIssueMapper = sqlSession.getMapper(PetIssueMapper.class);
         petIssueMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public List<PetIssue> findMy(Long id) {
+        PetIssueMapper petIssueMapper = sqlSession.getMapper(PetIssueMapper.class);
+        return petIssueMapper.selectByPrimaryKey(id);
+    }
 }

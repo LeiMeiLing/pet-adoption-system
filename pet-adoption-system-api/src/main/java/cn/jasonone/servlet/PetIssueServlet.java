@@ -49,7 +49,10 @@ public class PetIssueServlet extends HttpServlet {
                 find(req,resp,pageNum,pageSize);
                 sqlSession.commit();
                 break;
-
+            case "/petIssue/findMy":
+                findMy(req,resp);
+                sqlSession.commit();
+                break;
             default:
                 super.doPut(req, resp);
         }
@@ -88,6 +91,15 @@ public class PetIssueServlet extends HttpServlet {
         result.put("code", 200);
         result.put("msg", "获取成功");
         result.put("data",all);
+        resp.getWriter().write(gson.toJson(result));
+    }
+    private void findMy(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String id = req.getParameter("id");
+        List<PetIssue> my = petIssueService.findMy(Long.valueOf(id));
+        Map<String,Object> result = new HashMap<>();
+        result.put("code", 200);
+        result.put("msg", "获取成功");
+        result.put("data",my);
         resp.getWriter().write(gson.toJson(result));
     }
 }

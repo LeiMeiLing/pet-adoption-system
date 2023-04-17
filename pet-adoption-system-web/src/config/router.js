@@ -70,7 +70,15 @@ const routes = [
             path: '/myCart',
             name: 'myCart',
             component: () => import('../views/user/personalCenter/showMyCart/ShowMyCart.vue')
-        },]
+        },
+            {//个人宠物秀
+            path: '/petShow1',
+            name: 'petShow1',
+            component: () => import('../views/user/personalCenter/petShow/Index.vue')
+        },
+
+
+        ]
     },
     {
         path: '/',

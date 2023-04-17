@@ -17,11 +17,11 @@
         create_time,pet_name,picture
     </sql>
 
-    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <select id="selectByPrimaryKey" resultType="cn.jasonone.bean.PetIssue">
         select
-        <include refid="Base_Column_List" />
+        *
         from pet_issue
-        where  id = #{id,jdbcType=INTEGER} 
+        where  comment_id = #{commentId}
     </select>
     <select id="findAll" resultType="cn.jasonone.bean.PetIssue">
         select * from pet_issue
