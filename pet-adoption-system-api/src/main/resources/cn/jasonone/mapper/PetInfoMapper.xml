@@ -28,6 +28,9 @@
         from pet_info
         where  pet_id = #{petId,jdbcType=INTEGER} 
     </select>
+    <select id="findAll" resultType="cn.jasonone.bean.PetInfo">
+        select * from pet_info
+    </select>
     <select id="findAllPet" resultType="cn.jasonone.bean.PetInfo">
         select
         <include refid="Base_Column_List" />

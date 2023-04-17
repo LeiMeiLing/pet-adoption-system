@@ -8,35 +8,46 @@
           <div>
             <img @click="onAdoption(item)" :src="item.petPicture">
           </div>
-          <lay-field>
-            <h2>{{ item.petName }}</h2>
+          <lay-field :title="item.petName">
             <div>{{ item.description }}</div>
           </lay-field>
         </div>
       </div>
 
-      <!--      <div>
-              <div>
-              <img src="../../../../public/宠物1.png">
-                <lay-field title="Kitty">描述
-                </lay-field>
-            </div>
-            </div>-->
     </lay-body>
+    <lay-page :limit="limit1.a" :total="total1.a" showCount showPage @change="change1"></lay-page>
   </lay-header>
 </template>
 
 <script setup>
 import {reactive} from "vue";
 import router from "../../../config/router.js";
-import {list} from "./api.js";
+import {list,findAll} from "./api.js";
 
 let dataSource = reactive([])
-list().then(res => {
-  dataSource.length = 0
-  dataSource.push(...res.data);
-})
 
+let limit1 = reactive({
+  a:""
+})
+let total1 = reactive({
+  a:""
+})
+findAll(1,3).then(res=>{
+  dataSource.length=0
+  dataSource.push(...res.data.list);
+  console.log(res)
+  limit1.a = res.data.pageSize
+  total1.a = res.data.total
+})
+const change1 = ({ current, limit }) => {
+  findAll(current,3).then(res=>{
+    dataSource.length = 0
+    dataSource.push(...res.data.list)
+    console.log(dataSource);
+    limit1.a = res.data.pageSize
+    total1.a = res.data.total
+  })
+}
 function onAdoption(item) {
   router.push({
     path: '/info',
@@ -46,17 +57,17 @@ function onAdoption(item) {
 </script>
 
 <style scoped lang="scss">
-.content-div {
+/*.content-div {
   display: inline-block;
-}
+}*/
 
 .layui-header {
-  margin-top: 30px;
+  margin-top: 20px;
   height: 600px;
   width: 1500px;
 
   .layui-body {
-    height: 1000px;
+    height: 600px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -89,27 +100,22 @@ function onAdoption(item) {
 
   h1 {
     font-size: 60px;
-    margin-bottom: 20px;
-  }
-
-  h2 {
-    margin-bottom: 10px;
   }
 
   .layui-field {
-    margin-top: 30px;
+    margin-top: 20px;
     width: 350px;
-    height: 220px;
+    height: 210px;
     text-align: center;
   }
 }
 
 .content {
-  height: 1000px;
+  height: 500px;
   width: 1200px;
-  flex-wrap: wrap;
+  /*flex-wrap: wrap;*/
   margin-left: 50px;
   display: flex;
-  word-wrap: break-word;
+ /* word-wrap: break-word;*/
 }
 </style>

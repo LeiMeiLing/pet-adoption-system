@@ -1,6 +1,7 @@
 package cn.jasonone.mapper;
 
 import cn.jasonone.bean.PetInfo;
+import cn.jasonone.bean.PetIssue;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ public interface PetInfoMapper {
 
     int deleteByPrimaryKey(Long id);
     List<PetInfo> findAllPet();
+    List<PetInfo> findAll();
     int insert(PetInfo record);
 
     int insertSelective(PetInfo record);
