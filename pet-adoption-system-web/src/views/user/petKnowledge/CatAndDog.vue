@@ -1,10 +1,10 @@
 <template>
   <div class="cat&dog">
-    <lay-tab type="brief" v-model="current1">
-      <lay-tab-item title="最新" id="1" @click="last"></lay-tab-item>
-      <lay-tab-item title="养宠知识" id="2" @click=""></lay-tab-item>
-      <lay-tab-item title="宠物百科" id="3" @click=""></lay-tab-item>
-      <lay-tab-item title="宠物健康" id="4" @click=""></lay-tab-item>
+    <lay-tab type="brief" v-model="current1" @change="a ">
+      <lay-tab-item title="最新" id="1"></lay-tab-item>
+      <lay-tab-item title="养宠知识" id="2"></lay-tab-item>
+      <lay-tab-item title="宠物百科" id="3"></lay-tab-item>
+      <lay-tab-item title="宠物健康" id="4"></lay-tab-item>
     </lay-tab>
     <div class="panel-container" shadow="hover" v-for="count in dataSource">
       <lay-panel>
@@ -33,12 +33,15 @@ import {findAll, selectByTime, selectByType} from "./api.js";
 import {useRouter} from "vue-router";
 const router=useRouter();
 let dataSource=reactive([])
-function last(){
+
   selectByTime().then(res=>{
 
     dataSource.length=0
     dataSource.push(...res.data)
   })
+
+function a(){
+    console.log(1111)
 }
 function onClick(essayType){
   selectByType(essayType).then(res=>{

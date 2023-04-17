@@ -66,6 +66,10 @@ const routes = [
             path: '/transfer',
             name: 'transfer',
             component: () => import('../views/user/personalCenter/transfer/Transfer.vue')
+        },{//转送宠物
+            path: '/myCart',
+            name: 'myCart',
+            component: () => import('../views/user/personalCenter/showMyCart/ShowMyCart.vue')
         },]
     },
     {

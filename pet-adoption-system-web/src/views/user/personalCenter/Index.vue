@@ -10,6 +10,7 @@
           <lay-menu-item id="4" @click="visible3=true">修改密码</lay-menu-item>
           <lay-menu-item id="5" to="/application">领养申请</lay-menu-item>
           <lay-menu-item id="6">转送宠物</lay-menu-item>
+          <lay-menu-item id="8" to="myCart">我的购物车</lay-menu-item>
           <lay-menu-item id="7" @click="exit">退出登录</lay-menu-item>
         </lay-menu>
       </lay-side>
