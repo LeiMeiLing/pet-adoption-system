@@ -2,19 +2,19 @@
 <div class="register">
   <lay-form :model="userInfo" class="register-form">
     <h1 class="title">欢迎使用宠物领养系统</h1>
-    <lay-form-item label="用户名" :label-position="labelPosition" prop="username">
+    <lay-form-item label="用户名" :label-position="labelPosition" >
       <lay-input placeholder="请输入用户名" v-model="userInfo.username"></lay-input>
     </lay-form-item>
-    <lay-form-item label="密码" :label-position="labelPosition" prop="password">
+    <lay-form-item label="密码" :label-position="labelPosition" >
       <lay-input placeholder="请输入密码" v-model="userInfo.password" type="password"></lay-input>
     </lay-form-item>
-    <lay-form-item label="确认密码" :label-position="labelPosition" prop="checkPassword">
+    <lay-form-item label="确认密码" :label-position="labelPosition" >
       <lay-input placeholder="请再次输入密码" v-model="userInfo.checkPassword" type="password"></lay-input>
     </lay-form-item>
-    <lay-form-item label="邮箱" :label-position="labelPosition" prop="email">
+    <lay-form-item label="邮箱" :label-position="labelPosition" >
       <lay-input placeholder="请输入邮箱" v-model="userInfo.email" type="email"></lay-input>
     </lay-form-item>
-    <lay-form-item label="电话" :label-position="labelPosition" prop="phone">
+    <lay-form-item label="电话" :label-position="labelPosition" >
       <lay-input placeholder="请输入电话" v-model="userInfo.phone"></lay-input>
     </lay-form-item>
     <lay-form-item class="btn">
@@ -44,12 +44,18 @@ const regPhone = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0
 const labelPosition = ref('right');
 
 function onRegister(){
-  if ( userInfo.value.password!== userInfo.value.checkPassword){
-    layer.confirm('两次输入的密码不一致哦，请重新输入')
+  if (userInfo.value.username.length===0){
+    layer.msg("用户名不能为空!");
+  }else if (userInfo.value.password.length < 6){
+    layer.msg("密码必须大于等于6位");
+  }else if (userInfo.value.password!== userInfo.value.checkPassword){
+    layer.msg('两次输入的密码不一致哦，请重新输入',{ time: 2000 })
+  }else if (userInfo.value.email.length===0){
+    layer.msg("邮箱不能为空哦！");
   }else if (!regEmail.test(userInfo.value.email)) {
-    layer.confirm('邮箱格式不正确，请检查')
+    layer.msg('邮箱格式不正确，请检查',{ time: 2000 })
   }  else if (!regPhone.test(userInfo.value.phone)){
-    layer.confirm('电话格式不正确，请检查')
+    layer.msg('电话格式不正确，请检查',{ time: 2000 })
   }else{
     register(userInfo.value).then(res=>{
       layer.msg(res.msg)

@@ -30,7 +30,7 @@
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from pet_issue
-        where  id = #{id,jdbcType=INTEGER} 
+        where  id = #{id}
     </delete>
     <insert id="insert"  parameterType="cn.jasonone.bean.PetIssue" >
         insert into pet_issue

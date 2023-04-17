@@ -25,5 +25,5 @@ public interface TransferInfoMapper {
     int updateByPrimaryKeySelective(TransferInfo record);
 
     int updateByPrimaryKey(TransferInfo record);
-
+    List<TransferInfo> findName(String transferName);
 }

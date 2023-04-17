@@ -1,7 +1,7 @@
 import http from "../../../../config/http.js";
 
 export function findAll(id){
-    return http.get("/comment?issueId="+id).then(res=>{
+    return http.get("/comment/findAll?issueId="+id).then(res=>{
         return res
     })
 }

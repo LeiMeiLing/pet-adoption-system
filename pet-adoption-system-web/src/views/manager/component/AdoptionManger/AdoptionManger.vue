@@ -1,4 +1,22 @@
 <template>
+  <div class="up">
+    <lay-input :allow-clear="true"  placeholder="输入用户名">
+      <template #prefix>用户名:</template>
+    </lay-input>
+
+    <lay-input :allow-clear="true"  placeholder="输入邮箱">
+      <template #prefix>邮箱:</template>
+    </lay-input>
+
+    <lay-input :allow-clear="true"  placeholder="输入手机号">
+      <template #prefix>手机号:</template>
+    </lay-input>
+
+    <lay-button type="normal" @click="find">
+      <lay-icon type="layui-icon-search" size="30" ></lay-icon></lay-button>
+  </div>
+
+
   <div class="table">
     <lay-table :columns="columns"
                :data-source="data"

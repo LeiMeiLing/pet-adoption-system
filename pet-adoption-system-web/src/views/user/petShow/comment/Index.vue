@@ -59,7 +59,7 @@ import useLogin from "../../../../stores/LoginStore.js"
 import {useRoute} from "vue-router";
 import {layer} from "@layui/layui-vue";
 import {findAll, findName} from "./api.js";
-import {onMounted, reactive} from "vue";
+import {onMounted, onUpdated, reactive} from "vue";
 
 
 
@@ -70,16 +70,14 @@ const loginInfo = useLogin().userInfo
 let dataSource = reactive([])
 
 function sub(){
-
   layer.msg("发表成功",500)
-  reload()
+  onUpdated()
 }
 
 function reload(){
   findAll(route.query.id).then(res=>{
     dataSource.length = 0
     dataSource.push(...res.data)
-    console.log(dataSource)
   })
 }
 

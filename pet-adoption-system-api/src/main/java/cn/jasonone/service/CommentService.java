@@ -19,6 +19,14 @@ public interface CommentService {
      * 获得宠物秀的评论
      */
     List<Comment> findAll(Long id);
+    /**
+     * 删除评论
+     */
+    void deleteComment(Long id);
 
+    /**
+     * 通过用户名或评论信息查评论
+     */
+    List<Comment> findByUsernameOrComment(Comment comment);
 
 }

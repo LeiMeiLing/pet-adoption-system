@@ -28,3 +28,11 @@ export function add(row){
         return res;
     })
 }
+
+export function delShow(id){
+    return http.delete("/petIssue",{
+        data:{
+            id:id
+        }
+    })
+}

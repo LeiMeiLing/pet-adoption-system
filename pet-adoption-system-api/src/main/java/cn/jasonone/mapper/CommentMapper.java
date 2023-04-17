@@ -25,7 +25,20 @@ public interface CommentMapper {
      */
     List<Comment> selectAllByIssueIdCommentList(Long issueId);
 
+    /**
+     * 通过id删除评论
+     * @param id
+     * @return
+     */
     int deleteByPrimaryKey(Long id);
+
+
+    /**
+     * 模糊查询用户名，评论
+     * @param record
+     * @return
+     */
+    List<Comment> findAllByCommentNameAndContent(Comment record);
 
     int insertSelective(Comment record);
 

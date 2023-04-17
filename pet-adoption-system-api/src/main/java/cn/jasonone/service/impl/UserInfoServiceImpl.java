@@ -8,6 +8,7 @@ import cn.jasonone.mapper.ManagerInfoMapper;
 import cn.jasonone.mapper.UserInfoMapper;
 import cn.jasonone.service.UserInfoService;
 import cn.hutool.core.util.RandomUtil;
+import cn.jasonone.until.PageInfoUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.Setter;
@@ -82,9 +83,8 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public PageInfo<UserInfo> userFindAll(int pageNum, int pageSize) {
         UserInfoMapper userInfoMapper = sqlSession.getMapper(UserInfoMapper.class);
-        PageHelper.startPage(pageNum, pageSize);
         List<UserInfo> userInfos = userInfoMapper.userFindAll();
-        return new PageInfo<>(userInfos);
+        return PageInfoUtils.list2PageInfo(userInfos,pageNum,pageSize);
     }
     /*
     在管理员界面根据用户id删除用户信息

@@ -25,4 +25,16 @@ public class CommentServiceImpl implements CommentService {
         return commentMapper.selectAllByIssueIdCommentList(id);
 
     }
+
+    @Override
+    public void deleteComment(Long id) {
+        CommentMapper commentMapper = sqlSession.getMapper(CommentMapper.class);
+        commentMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public List<Comment> findByUsernameOrComment(Comment comment) {
+        CommentMapper commentMapper = sqlSession.getMapper(CommentMapper.class);
+        return commentMapper.findAllByCommentNameAndContent(comment);
+    }
 }

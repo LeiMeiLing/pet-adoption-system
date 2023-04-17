@@ -55,6 +55,8 @@
         </lay-form-item>
 
       </lay-layer>
+
+      <lay-page :limit="limit1.a" :total="total1.a" showCount showPage @change="change1"></lay-page>
     </div>
 
 
@@ -65,8 +67,22 @@
 
 <script setup>
 import {onMounted, onUpdated, reactive, ref} from "vue";
-import {list, updateUser, findSome, deleteUserInfo} from "./api.js";
+import {list, updateUser, findSome, deleteUserInfo,page} from "./api.js";
 import {layer} from "@layui/layui-vue"
+
+
+
+const change1 = ({ current, limit }) => {
+  console.log(current)
+  console.log(limit)
+  page(current,limit).then(res=>{
+    data.length = 0
+    data.push(...res.data.list)
+    limit1.a = res.data.pageSize
+    total1.a = res.data.total
+  })
+}
+
 
 
 const username = ref("")
@@ -113,21 +129,34 @@ const userInfoUpdate = reactive({
 
 //绑定更新界面，更新用户信息
 function updateUserInfo() {
-  console.log(userInfoUpdate)
   updateUser(userInfoUpdate)
   layer.msg("修改成功")
   updateUserDisplay.value = false
   reload()
 }
 
+let limit1 = reactive({
+  a:""
+})
+let total1 = reactive({
+  a:""
+})
+let limits1 = ref([10,20,30,40,50,60])
+
+
 function reload() {
   list().then(res => {
     data.length = 0
-    console.log(res.data);
     data.push(...res.data.list)
-
   })
 }
+
+list().then(res => {
+  data.length = 0
+  data.push(...res.data.list)
+  limit1.a = res.data.pageSize
+  total1.a = res.data.total
+})
 
 function showUser(row) {
   updateUserDisplay.value = true
@@ -146,23 +175,21 @@ function deleteUser(row) {
   layer.confirm(`是否删除${row.username}?`, {
     btn: [
       {
+        text: "是",
+        callback(id) {
+          deleteUserInfo(row1.id)
+          reload()
+          layer.msg("删除成功")
+          layer.close(id)
+          reload()
+        } },
+      {
         text: "否",
         callback(id) {
           layer.close(id)
           reload()
         }
-      },
 
-      {
-        text: "是",
-        callback(id) {
-          deleteUserInfo(row1.id)
-          console.log(row1.id);
-          reload()
-          layer.msg("删除成功")
-          layer.close(id)
-          reload()
-        }
       }
     ]
   })
@@ -186,7 +213,7 @@ function find() {
 
 
 onMounted(reload)
-onUpdated(reload)
+/*onUpdated(reload)*/
 </script>
 
 <style scoped lang="scss">

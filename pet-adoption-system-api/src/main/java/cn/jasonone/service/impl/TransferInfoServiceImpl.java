@@ -45,4 +45,10 @@ public class TransferInfoServiceImpl implements TransferInfoService {
         List<TransferInfo> transferInfos = mapper.selectStatus();
         return transferInfos;
     }
+
+    @Override
+    public List<TransferInfo> findAll(String transferName) {
+        TransferInfoMapper mapper = sqlSession.getMapper(TransferInfoMapper.class);
+        return mapper.findName(transferName);
+    }
 }

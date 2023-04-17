@@ -69,13 +69,19 @@
 
 
     <lay-row space="10">
+
       <lay-col>
+
         <lay-table :columns="columns"
                    :data-source="data"
                    :page="page"
                    @change="change"
                    :default-toolbar="true"
                     >
+
+
+
+
           <template #action="{row}">
             <lay-button type="danger" size="sm" @click="petDelete(row)">
               <lay-icon type="layui-icon-delete" size="20px">
@@ -120,6 +126,7 @@
 </template>
 
 <script>
+
 var _fileObj;
 var abc;
 
@@ -147,6 +154,8 @@ export default {
   submit() {
   }
 }
+
+
 </script>
 
 
@@ -156,6 +165,8 @@ export default {
 import {onMounted, reactive, ref} from 'vue';
 import { layer } from "@layui/layer-vue";
 import { findSome, list, petDele,add,updatePet} from "./api.js";
+
+
 
 
 
@@ -283,3 +294,4 @@ const page = ref({
 
 
 </style>
+

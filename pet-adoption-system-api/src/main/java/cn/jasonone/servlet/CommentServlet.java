@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet("/comment")
+@WebServlet("/comment/*")
 public class CommentServlet extends HttpServlet {
     CommentService commentService = new CommentServiceImpl();
     @Override
@@ -54,14 +54,49 @@ public class CommentServlet extends HttpServlet {
                 .setPrettyPrinting()
                 .create();
 
-        String issueId = req.getParameter("issueId");
-        List<Comment> all = commentService.findAll(Long.valueOf(issueId));
+        String requestURI = req.getRequestURI();
+        requestURI = requestURI.substring(req.getContextPath().length());
+        switch (requestURI) {
+            case "/comment/findAll":
+                String issueId = req.getParameter("issueId");
+                List<Comment> all = commentService.findAll(Long.valueOf(issueId));
+                Map<String,Object> result = new HashMap<>();
+                result.put("code", 200);
+                result.put("msg", "查询成功");
+                result.put("data",all);
+                gson.toJson(result,resp.getWriter());
+                sqlSession.commit();
+                break;
+            case "/comment/findSome":
+                String issueId1 = req.getParameter("issueId");
+                String commentName = req.getParameter("commentName");
+                String content = req.getParameter("content");
+                Comment comment = new Comment();
+                comment.setIssueId(Integer.valueOf(issueId1));
+                comment.setCommentName(commentName);
+                comment.setContent(content);
+                List<Comment> byUsernameOrComment = commentService.findByUsernameOrComment(comment);
+                Map<String,Object> result1 = new HashMap<>();
+                result1.put("code", 200);
+                result1.put("msg", "查询成功");
+                result1.put("data",byUsernameOrComment);
+                gson.toJson(result1,resp.getWriter());
+                sqlSession.commit();
+                break;
+        }
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
+        commentService.setSqlSession(sqlSession);
+        Gson gson = new Gson();
+        String id = req.getParameter("id");
+        commentService.deleteComment(Long.valueOf(id));
         Map<String,Object> result = new HashMap<>();
         result.put("code", 200);
-        result.put("msg", "查询成功");
-        result.put("data",all);
+        result.put("msg", "删除成功");
         gson.toJson(result,resp.getWriter());
-
-
+        sqlSession.commit();
     }
 }
