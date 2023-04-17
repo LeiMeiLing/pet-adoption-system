@@ -19,10 +19,10 @@
                     价格：<span class="num">&yen;{{ goodsInfo.goodsPrice }}</span>
                 </lay-card>
                 <lay-card shadow="never">
-                    数量:<lay-button type="default" radius @click="reduce">-</lay-button>
+                    数量:<lay-button type="default" @click="reduce">-</lay-button>
 <!--                    数量：{{ goodsInfo.goodsPrice }}-->
                     <lay-input v-model="count" type="number" :max="99" :min="1" class="input1"></lay-input>
-                    <lay-button type="default" radius @click="increase">+</lay-button>
+                    <lay-button type="default" @click="increase">+</lay-button>
                 </lay-card>
 
             </div>
