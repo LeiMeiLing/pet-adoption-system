@@ -3,6 +3,7 @@ package cn.jasonone.servlet;
 import cn.jasonone.bean.PetIssue;
 import cn.jasonone.service.PetIssueService;
 import cn.jasonone.service.impl.PetIssueServiceImpl;
+import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.ibatis.session.SqlSession;
@@ -33,13 +34,20 @@ public class PetIssueServlet extends HttpServlet {
         petIssueService.setSqlSession(sqlSession);
         String requestURI = req.getRequestURI();
         requestURI = requestURI.substring(req.getContextPath().length());
+        String page = req.getParameter("page");
+        String limit = req.getParameter("limit");
+        int pageNum = 1;
+        int pageSize = 10;
+        if (page != null) {
+            pageNum = Integer.parseInt(page);
+        }
+        if (limit != null) {
+            pageSize = Integer.parseInt(limit);
+        }
         switch (requestURI) {
             case "/petIssue/findAll":
-                find(req,resp);
+                find(req,resp,pageNum,pageSize);
                 sqlSession.commit();
-                break;
-            case "/petstore/update":
-
                 break;
 
             default:
@@ -74,8 +82,8 @@ public class PetIssueServlet extends HttpServlet {
         sqlSession.commit();
     }
 
-    private void find(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        List<PetIssue> all = petIssueService.findAll();
+    private void find(HttpServletRequest req, HttpServletResponse resp,int pageNum , int pageSize) throws IOException {
+        PageInfo<PetIssue> all = petIssueService.findAll(pageNum,pageSize);
         Map<String,Object> result = new HashMap<>();
         result.put("code", 200);
         result.put("msg", "获取成功");

@@ -2,7 +2,7 @@
   <div class="center">
     <img class="background">
     <div  class="return" @click="onReturn">
-      <lay-icon color="#fff" size="45px" type="layui-icon-return"></lay-icon><p>返回</p>
+      <lay-icon color="#fff" size="45px" type="layui-icon-home"></lay-icon><p>首页</p>
     </div>
     <img src="/public/宠物1.png" @click="signleImg" class="headPicture">
     <h1>我的小喵</h1>

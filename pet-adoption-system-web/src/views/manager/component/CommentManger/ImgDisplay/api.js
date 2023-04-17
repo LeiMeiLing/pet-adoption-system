@@ -1,11 +1,20 @@
 import http from "../../../../../config/http.js";
 
-export function findAll(issueId){
-    return http.get("/comment/findAll?issueId="+issueId,{
-    }).then(res=>{
-        return res;
-    })
+export function findAll(issueId,page,limit){
+    if(page != null||limit != null){
+        return http.get("/comment/findAll?issueId="+issueId+"&page="+page+"&limit="+limit,{
+        }).then(res=>{
+            return res;
+        })
+    }else {
+        return http.get("/comment/findAll?issueId="+issueId,{
+        }).then(res=>{
+            return res;
+        })
+    }
+
 }
+
 
 export function deleteComment(id){
     return http.delete("/comment?id="+id,{
