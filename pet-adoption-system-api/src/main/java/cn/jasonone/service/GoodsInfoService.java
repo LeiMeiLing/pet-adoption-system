@@ -4,6 +4,8 @@ import cn.jasonone.bean.GoodsInfo;
 import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.session.SqlSession;
 
+import java.util.List;
+
 public interface GoodsInfoService {
     void setSqlSession(SqlSession session);
     //查询所有并分页
@@ -15,7 +17,7 @@ public interface GoodsInfoService {
     //修改商品
     void update(GoodsInfo goods);
     //根据商品类型和名字模糊查询
-    PageInfo<GoodsInfo> selectNameOrType(int pageNum, int pageSize, GoodsInfo goods);
+    List<GoodsInfo> selectNameOrType(GoodsInfo goods);
 
     GoodsInfo selectById(Integer id);
 }

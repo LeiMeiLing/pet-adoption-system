@@ -42,11 +42,9 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
 
 
     @Override
-    public PageInfo<GoodsInfo> selectNameOrType(int pageNum, int pageSize, GoodsInfo goods) {
+    public List<GoodsInfo> selectNameOrType( GoodsInfo goods) {
         GoodsInfoMapper goodsInfoMapper = sqlSession.getMapper(GoodsInfoMapper.class);
-        PageHelper.startPage(pageNum, pageSize);
-        List<GoodsInfo> goodsInfos = goodsInfoMapper.fuzzyQueries(goods);
-        return new PageInfo<>(goodsInfos);
+        return goodsInfoMapper.fuzzyQueries(goods);
     }
 
     @Override

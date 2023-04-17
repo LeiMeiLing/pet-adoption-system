@@ -7,6 +7,11 @@ export function list(){
     })
 }
 
+export function findSome(search){
+    return http.get("/adoption/findSome?username="+search.userName+"&petStatus="+search.Status).then(res=>{
+        return res;
+    })
+}
 export function update(adoptionInfo,status,describe){
     return http.post("/adoption/update", {
         id:adoptionInfo.id,

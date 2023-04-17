@@ -39,6 +39,20 @@
         from adopt_info
         where username = #{usernamejdbcType=VARCHAR}
     </select>
+    <select id="findSome" resultType="cn.jasonone.bean.AdoptInfo">
+        select * from adopt_info
+        <where>
+            <if test="id != null">and pet_id like concat('%',#{id},'%') </if>
+            <if test="username != null">and username like concat('%',#{username},'%') </if>
+            <if test="petname != null">and petName like concat('%',#{petname},'%') </if>
+            <if test="variety != null">and variety like concat('%',#{variety},'%')</if>
+            <if test="petSex != null">and pet_sex like concat('%',#{petSex},'%')</if>
+            <if test="petStatus != null">and pet_status like concat('%',#{petStatus},'%')</if>
+            <if test="describe != null">and describe like concat('%',#{describe},'%')</if>
+            <if test="phone != null">and phone like concat('%',#{phone},'%')</if>
+        </where>
+
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from adopt_info

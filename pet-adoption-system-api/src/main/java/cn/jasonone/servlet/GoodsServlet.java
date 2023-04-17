@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @WebServlet("/petstore/*")
@@ -56,7 +57,7 @@ public class GoodsServlet extends HttpServlet {
                 sqlSession.commit();
                 break;
             case "/petstore/findSome":
-                PageInfo<GoodsInfo> some = findSome(req, resp, pageNum, pageSize,gs);
+                List<GoodsInfo> some = findSome(req, resp);
                 Map<String,Object> result1 = new HashMap<>();
                 result1.put("code", 200);
                 result1.put("msg", "获取成功");
@@ -117,8 +118,6 @@ public class GoodsServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
         gs.setSqlSession(sqlSession);
-
-
         GoodsInfo goods = gson.fromJson(req.getReader(), GoodsInfo.class);
         gs.delete((long)goods.getId());
         Map<String,Object> result = new HashMap<>();
@@ -152,14 +151,14 @@ public class GoodsServlet extends HttpServlet {
         resp.getWriter().write(gson.toJson(result));
     }
 
-    private PageInfo<GoodsInfo> findSome(HttpServletRequest req, HttpServletResponse resp, Integer pageNum, Integer pageSize, GoodsInfoService gs) throws IOException{
+    private List<GoodsInfo> findSome(HttpServletRequest req, HttpServletResponse resp) throws IOException{
 
         String goodsname = req.getParameter("goodsname");
         String goodsType = req.getParameter("goodsType");
         GoodsInfo goods = new GoodsInfo();
         goods.setGoodsname(goodsname);
         goods.setGoodsType(goodsType);
-        return gs.selectNameOrType(pageNum,pageSize,goods);
+        return gs.selectNameOrType(goods);
     }
     private GoodsInfo findId(HttpServletRequest req, HttpServletResponse resp, GoodsInfoService gs){
         String str = req.getParameter("goodsId");

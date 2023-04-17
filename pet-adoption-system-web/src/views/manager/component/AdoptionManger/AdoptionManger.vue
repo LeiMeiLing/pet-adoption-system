@@ -1,19 +1,29 @@
 <template>
+
   <div class="up">
-    <lay-input :allow-clear="true"  placeholder="输入用户名">
-      <template #prefix>用户名:</template>
-    </lay-input>
+    <lay-row class="content">
+      <lay-col md="10">
+        <lay-input :allow-clear="true"  placeholder="输入用户名" v-model="search.userName">
+          <template #prefix>用户名:</template>
+        </lay-input>
+      </lay-col>
+        <lay-col md="4">
 
-    <lay-input :allow-clear="true"  placeholder="输入邮箱">
-      <template #prefix>邮箱:</template>
-    </lay-input>
+          <lay-tooltip >
+            <lay-select v-model="search.Status"  placeholder="请选择" >
+              <lay-select-option :value="1" label="审核通过" ></lay-select-option>
+              <lay-select-option :value="2" label="审核不通过" ></lay-select-option>
+              <lay-select-option :value="3" label="待审核" ></lay-select-option>
+            </lay-select>
+          </lay-tooltip>
+        </lay-col>
 
-    <lay-input :allow-clear="true"  placeholder="输入手机号">
-      <template #prefix>手机号:</template>
-    </lay-input>
 
-    <lay-button type="normal" @click="find">
-      <lay-icon type="layui-icon-search" size="30" ></lay-icon></lay-button>
+      <lay-button type="normal" @click="find">
+        <lay-icon type="layui-icon-search" size="30" ></lay-icon>
+      </lay-button>
+    </lay-row>
+
   </div>
 
 
@@ -25,24 +35,30 @@
         <template #action="{row}">
           <lay-tooltip content="审核管理">
             <lay-select v-model="value.num" placeholder="请选择">
-              <lay-select-option :value.num=3  label="默认" @click="updateStatus(row)"></lay-select-option>
-              <lay-select-option :value.num=1  label="同意" @click="updateStatus(row)"></lay-select-option>
-              <lay-select-option :value.num=2  label="不同意" @click="updateStatus(row)"></lay-select-option>
+              <lay-select-option :value=3  label="默认" @click="updateStatus(row)"></lay-select-option>
+              <lay-select-option :value=1  label="同意" @click="updateStatus(row)"></lay-select-option>
+              <lay-select-option :value=2  label="不同意" @click="updateStatus(row)"></lay-select-option>
             </lay-select>
           </lay-tooltip>
         </template>
+
     </lay-table>
 
 </div>
 </template>
 
 <script setup>
-import {onMounted, reactive} from "vue";
-import {list, update} from "./api.js";
+import {onMounted, reactive, ref} from "vue";
+import {findSome, list, update} from "./api.js";
 import {layer} from "@layui/layui-vue";
 const data = reactive([])
-const value=reactive({
+const search=reactive({
+  userName:'',
+  Status:''
+})
 
+
+const value=reactive({
   num:""
 })
 const columns = reactive([
@@ -64,6 +80,26 @@ function reload(){
     data.push(...res.data)
   })
 }
+
+function find(){
+  switch (search.Status){
+    case 1:
+      search.Status="审核通过"
+      break;
+    case 2:
+      search.Status="审核不通过"
+          break;
+    default:
+      search.Status="待审核"
+      break;
+  }
+  findSome(search).then(res=>{
+    data.length=0
+    data.push(...res.data)
+  })
+
+
+}
 function updateStatus(row){
     if(value.num==1){
       const status="审核通过"
@@ -82,14 +118,15 @@ function updateStatus(row){
         reload()
       })
     }
-    else{
-      layer.msg("修改错误")
-    }
+
 
 }
 onMounted(reload)
 </script>
 
 <style scoped>
+.content{
+  display: flex;
 
+}
 </style>
