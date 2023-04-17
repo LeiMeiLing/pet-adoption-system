@@ -115,7 +115,7 @@ const petInfo=ref({
 }
 .transfer-info{
   margin-top: 30px;
-  height: 400px;
+  height: 500px;
   width: 400px;
 
 }

@@ -68,13 +68,13 @@
 
       <div class="side">
         <lay-quote>宠物资讯</lay-quote>
-        <a href="https://www.chongbaibai.com/infor/4111.html">
+        <a href="https://www.chongbaibai.com/infor/4111.html" target="_Blank">
           巴吉度犬适合家养吗（详解不建议养巴吉度犬的六个理由）
         </a><br><br>
-        <a href="https://www.chongbaibai.com/infor/4090.html">
+        <a href="https://www.chongbaibai.com/infor/4090.html" target="_Blank">
           宠物狗有哪些品种（适合新手养的犬种推荐）
         </a><br><br>
-        <a href="https://www.chongbaibai.com/infor/4104.html">
+        <a href="https://www.chongbaibai.com/infor/4104.html" target="_Blank">
           比熊犬好养吗（附：比熊的正确饲养方法讲解）
         </a><br><br>
       </div>
@@ -172,6 +172,7 @@ onUpdated(select)
   width:1000px ;
   display: flex;
   align-items: center;
+  margin-left: 40px;
 
 }
 .content-right{
@@ -188,6 +189,7 @@ h1{
 .layui-panel{
   display: flex;
   align-items: center;
+  margin-left: 20px;
 }
 .side{
   margin-top: 20px;
