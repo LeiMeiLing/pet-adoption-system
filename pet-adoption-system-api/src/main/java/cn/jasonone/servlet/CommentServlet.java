@@ -3,6 +3,7 @@ package cn.jasonone.servlet;
 import cn.jasonone.bean.Comment;
 import cn.jasonone.service.CommentService;
 import cn.jasonone.service.impl.CommentServiceImpl;
+import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.ibatis.session.SqlSession;
@@ -54,12 +55,23 @@ public class CommentServlet extends HttpServlet {
                 .setPrettyPrinting()
                 .create();
 
+        String page = req.getParameter("page");
+        String limit = req.getParameter("limit");
+        int pageNum = 1;
+        int pageSize = 10;
+        if (page != null) {
+            pageNum = Integer.parseInt(page);
+        }
+        if (limit != null) {
+            pageSize = Integer.parseInt(limit);
+        }
+
         String requestURI = req.getRequestURI();
         requestURI = requestURI.substring(req.getContextPath().length());
         switch (requestURI) {
             case "/comment/findAll":
                 String issueId = req.getParameter("issueId");
-                List<Comment> all = commentService.findAll(Long.valueOf(issueId));
+                PageInfo<Comment> all = commentService.findAll(Long.valueOf(issueId),pageNum,pageSize);
                 Map<String,Object> result = new HashMap<>();
                 result.put("code", 200);
                 result.put("msg", "查询成功");
@@ -75,7 +87,7 @@ public class CommentServlet extends HttpServlet {
                 comment.setIssueId(Integer.valueOf(issueId1));
                 comment.setCommentName(commentName);
                 comment.setContent(content);
-                List<Comment> byUsernameOrComment = commentService.findByUsernameOrComment(comment);
+                PageInfo<Comment> byUsernameOrComment = commentService.findByUsernameOrComment(comment,pageNum,pageSize);
                 Map<String,Object> result1 = new HashMap<>();
                 result1.put("code", 200);
                 result1.put("msg", "查询成功");

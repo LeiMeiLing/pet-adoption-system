@@ -11,6 +11,8 @@
     </div>
 
   </div>
+
+  <lay-page :limit="limit1.a" :total="total1.a" showCount showPage @change="change1"></lay-page>
 </template>
 
 
@@ -21,6 +23,7 @@ import router from "../../../../config/router";
 import {ErrorIcon} from '@layui/icons-vue';
 import {layer} from "@layui/layui-vue";
 import {deleteComment} from "./ImgDisplay/api.js";
+import {page} from "../userDisplay/api.js";
 
 
 const petIssueDisplay = reactive({
@@ -59,12 +62,35 @@ function del(row){
 
 }
 
+const change1 = ({ current, limit }) => {
+  findAll(current,limit).then(res=>{
+    dataSource.length = 0
+    dataSource.push(...res.data.list)
+    limit1.a = res.data.pageSize
+    total1.a = res.data.total
+  })
+}
+
+let limit1 = reactive({
+  a:""
+})
+let total1 = reactive({
+  a:""
+})
+
 function reload() {
   findAll().then(res => {
     dataSource.length = 0
-    dataSource.push(...res.data);
+    dataSource.push(...res.data.list);
   })
 }
+
+findAll().then(res => {
+  dataSource.length = 0
+  dataSource.push(...res.data.list);
+  limit1.a = res.data.pageSize
+  total1.a= res.data.total
+})
 
 function click(item){
   router.push({
