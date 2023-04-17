@@ -14,7 +14,7 @@
         <template #prefix>手机号:</template>
       </lay-input>
 
-      <lay-button type="normal" @click="find">
+      <lay-button type="normal" @click="findA">
         <lay-icon type="layui-icon-search" size="30" ></lay-icon></lay-button>
     </div>
 
@@ -194,10 +194,13 @@ function deleteUser(row) {
 }
 
 //查找用户信息
-function find() {
-  findSome(user.username, user.email, user.phone).then(res => {
+function findA() {
+  findSome(user).then(res => {
     data.length = 0
     data.push(...res.data.list)
+    console.log(res)
+    limit1.a = res.data.pageSize
+    total1.a = res.data.total
   })
 }
 
@@ -210,7 +213,7 @@ function find() {
 // }
 
 
-onMounted(reload)
+/*onMounted(reload)*/
 /*onUpdated(reload)*/
 </script>
 

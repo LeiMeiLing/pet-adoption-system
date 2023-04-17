@@ -48,7 +48,7 @@ public interface GoodsInfoMapper {
 
     int insertSelective(GoodsInfo record);
 
-    GoodsInfo selectByPrimaryKey(Long id);
+    GoodsInfo selectByPrimaryKey(Integer id);
 
 
 

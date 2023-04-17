@@ -68,6 +68,15 @@
 
       <div class="side">
         <lay-quote>宠物资讯</lay-quote>
+        <a href="https://www.chongbaibai.com/infor/4111.html" target="_Blank">
+          巴吉度犬适合家养吗（详解不建议养巴吉度犬的六个理由）
+        </a><br><br>
+        <a href="https://www.chongbaibai.com/infor/4090.html" target="_Blank">
+          宠物狗有哪些品种（适合新手养的犬种推荐）
+        </a><br><br>
+        <a href="https://www.chongbaibai.com/infor/4104.html" target="_Blank">
+          比熊犬好养吗（附：比熊的正确饲养方法讲解）
+        </a><br><br>
       </div>
     </lay-side>
   </lay-layout>
@@ -75,19 +84,14 @@
 </template>
 
 <script setup>
-import {onMounted, reactive, ref} from "vue";
+import {onMounted, onUpdated, reactive, ref} from "vue";
 import router from "../../../config/router.js";
 import userLongin from "../../../stores/LoginStore"
 import {insert, select} from "./api.js";
 import {layer} from "@layui/layui-vue";
 
 const userInfo = userLongin().userInfo
-const time=ref('2023年4月12日')
 
-const title=ref('新西兰的宠物牛奶（牛奶先生零乳糖令人耳目一新）')
-const data=ref('新西兰一直给人的印象就是广阔的草原，以及它孕育出的优质奶源，' +
-    '尤其在人类婴幼儿奶粉方面尤其突出，新西兰的奶源可以说是奶粉竞争力以及品质的体现。' +
-    '不仅仅是对人产业，对于宠物营养品行业来说，新西兰奶源也颇受高端宠物奶粉品牌青睐。')
 const visible=ref(false)
 function onInfo(item){
   router.push({path:'/detailed',query:item})
@@ -116,11 +120,14 @@ function onCommit(){
 }
 
 let dataSource = reactive([])
+
 select().then(res=>{
   dataSource.length=0
   dataSource.push(...res.data);
 })
+
 onMounted(select)
+onUpdated(select)
 
 </script>
 
@@ -165,6 +172,8 @@ onMounted(select)
   width:1000px ;
   display: flex;
   align-items: center;
+  margin-left: 40px;
+
 }
 .content-right{
   margin-left: 10px;
@@ -180,6 +189,7 @@ h1{
 .layui-panel{
   display: flex;
   align-items: center;
+  margin-left: 20px;
 }
 .side{
   margin-top: 20px;

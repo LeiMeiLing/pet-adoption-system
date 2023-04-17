@@ -10,14 +10,16 @@ Content-Type:  application/json; charset=UTF-8
 
 
 ###
-PUT localhost:8000
+PUT localhost:8000/shoppingCart/join
 Content-Type:  application/json; charset=UTF-8
 
 {
   "userId": "1",
   "productId": "1",
   "quantity": "1",
-  "price": "1"
+  "price": "1",
+  "goodsName": "1",
+  "goodsPicture": "1"
 }
 
 ###
@@ -53,6 +55,8 @@ Content-Type: application/json; charset=UTF-8
 ###模糊查询
 GET localhost:8000/user/findSome?username=1
 
+###
+GET localhost:8000/shoppingCart/MyCart?userId=12
 
 ###
 PUT localhost:8000/petstore/add
@@ -111,5 +115,9 @@ Content-Type: application/json
 {
   "id": 43
 }
+
+###随机生成6条宠物知识
+GET localhost:8000/petKnowledge/createMessages
+Content-Type: application/json
 
 

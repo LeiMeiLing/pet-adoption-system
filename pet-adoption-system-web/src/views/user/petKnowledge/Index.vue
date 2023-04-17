@@ -1,7 +1,5 @@
 <template>
   <div class="petKnowledge">
-<!--        <h1>欢&emsp;迎</h1>-->
-
     <lay-split-panel style="height: 450px">
       <lay-split-panel-item :space="1200" >
         <div class="picture"></div>
@@ -12,14 +10,14 @@
           几句话关于我们的宠物领养
         </div>
         <div class="text1">面对这样可爱的猫和狗谁能不喜爱呢？伤心时，它总是在我身边陪伴着我;开心时，我总会和它一起分享，它成了我形影不离的好朋友。</div>
-        <div class="qrcode">
+        <div class="content">
           <ul>
             <li>最新</li>
             <li>养宠知识</li>
             <li>宠物百科</li>
             <li>宠物健康</li>
           </ul>
-          <lay-qrcode text="https://www.chongbaibai.com/" :width="250" color="#009688"></lay-qrcode>
+          <lay-qrcode text="https://www.chongbaibai.com/" :width="250"  color="#009688" class="qrcode"></lay-qrcode>
         </div>
         <div class="tip">
           扫描二维码了解更多宠物小知识
@@ -59,31 +57,30 @@ const router=useRouter();
 }
 .petKnowledge{
   margin: 35px;
-  font-size: 28px;
+  font-size: 25px;
 }
 .text{
-  font-size: 50px;
-}
-
-.text1{
-  font-size: 31px;
+  font-weight: bolder;
 }
 ul{
   color: #5b5454;
+  font-size: 20px;
+  margin-top: 20px;
 }
 li::before{
   content: '💖 ';
-  line-height: 60px;
+  line-height: 50px;
   text-align: center;
 }
-.qrcode{
+.content{
   display: flex;
   justify-content: space-between;
 }
 
 .tip{
   float: right;
-  font-size: 18px;
+  font-size: 15px;
+  margin-right: 17px;
 }
 //.btns{
 //  display: flex;
