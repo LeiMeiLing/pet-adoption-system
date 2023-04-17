@@ -110,4 +110,8 @@ Content-Type: application/json
   "id": 43
 }
 
+###随机生成6条宠物知识
+GET localhost:8000/petKnowledge/createMessages
+Content-Type: application/json
+
 

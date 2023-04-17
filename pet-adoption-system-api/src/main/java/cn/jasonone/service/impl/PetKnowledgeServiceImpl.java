@@ -46,6 +46,14 @@ public class PetKnowledgeServiceImpl implements PetKnowledgeService {
         list=petKnowledgeMapper.selectByTime();
         return list;
     }
+    //随机生成6条宠物知识
+    @Override
+    public List<PetKnowledge> createMessages() {
+        List<PetKnowledge> list;
+        PetKnowledgeMapper petKnowledgeMapper = sqlSession.getMapper(PetKnowledgeMapper.class);
+        list=petKnowledgeMapper.createMessages();
+        return list;
+    }
 
 
 }

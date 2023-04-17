@@ -24,5 +24,11 @@ export function findAll(){
         return res;
     })
 }
+export function createMessages(){
+    return http.get("/petKnowledge/createMessages",{
+    }).then(res=>{
+        return res;
+    })
+}
 
 
