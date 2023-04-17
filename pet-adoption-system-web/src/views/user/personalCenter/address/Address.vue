@@ -2,17 +2,33 @@
   <div class="address">
     <lay-icon type="layui-icon-close" ></lay-icon>
     <h1>收货地址</h1>
-    <lay-form>
-      <lay-form-item label="收货人："><lay-input></lay-input></lay-form-item>
-      <lay-form-item label="手机号码："><lay-input></lay-input></lay-form-item>
-      <lay-form-item label="详细地址："><lay-input></lay-input></lay-form-item>
-      <lay-button type="primary" fluid >保存收货地址</lay-button>
+    <lay-form :model="display">
+      <lay-form-item label="收货人："><lay-input v-model="userInfo.consignee"></lay-input></lay-form-item>
+      <lay-form-item label="手机号码："><lay-input ></lay-input></lay-form-item>
+      <lay-form-item label="详细地址："><lay-input v-model="userInfo.address"></lay-input></lay-form-item>
+      <lay-button type="primary" fluid @click="onUpdate()">保存收货地址</lay-button>
     </lay-form>
 
   </div>
 </template>
 
 <script setup>
+import userLogin from "../../../../stores/LoginStore"
+import {updateUser} from "./api.js";
+import {ref} from "vue";
+import {layer} from "@layui/layui-vue";
+
+
+const userInfo = userLogin().userInfo
+
+const display = ref(false)
+
+
+function onUpdate(){
+  updateUser(userInfo)
+  layer.msg("收货地址已保存",{time: 1500})
+  display.value = false
+}
 
 </script>
 

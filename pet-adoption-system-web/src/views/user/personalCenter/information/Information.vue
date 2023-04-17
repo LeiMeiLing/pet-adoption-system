@@ -2,10 +2,10 @@
     <div class="information">
       <lay-form v-model="visible">
         <lay-avatar :src="src" radius ></lay-avatar>
-        <lay-form-item label="年龄：" ><lay-input ></lay-input ></lay-form-item>
-        <lay-form-item label="性别："><lay-input></lay-input></lay-form-item>
-        <lay-form-item label="手机号："><lay-input v-model="updateUserInfo.phone"></lay-input></lay-form-item>
-        <lay-form-item label="邮箱地址："><lay-input v-model="updateUserInfo.email"></lay-input></lay-form-item>
+        <lay-form-item label="年龄：" ><lay-input v-model="userInfo.age"></lay-input ></lay-form-item>
+        <lay-form-item label="性别："><lay-input v-model="userInfo.sex"></lay-input></lay-form-item>
+        <lay-form-item label="手机号："><lay-input v-model="userInfo.phone"></lay-input></lay-form-item>
+        <lay-form-item label="邮箱地址："><lay-input v-model="userInfo.email"></lay-input></lay-form-item>
         <lay-form-item label="个性签名："></lay-form-item>
         <lay-textarea placeholder="请输入描述"  ></lay-textarea>
         <br>
@@ -22,20 +22,19 @@ import userLogin from "../../../../stores/LoginStore"
 import {updateUser} from "./api.js";
 import {layer} from "@layui/layui-vue";
 
-const userInfo = userLogin().userInfo
-const updateUserInfo=reactive({
-  ...userInfo
-})
+const userInfo = userLogin().userInfo;
 
 
 
-const visible = ref(true)
+
+
+const visible = ref(false)
 const src = "/public/宠物1.png";
 
 
 function onUpdate(){
-  updateUser(updateUserInfo)
-  layer.confirm(`保存成功!`)
+  updateUser(userInfo)
+  layer.msg(`保存成功!` ,{ time: 1500 })
   visible.value = false
 }
 </script>

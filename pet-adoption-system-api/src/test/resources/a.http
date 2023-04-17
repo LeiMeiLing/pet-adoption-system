@@ -2,7 +2,7 @@ PUT localhost:8000/user/register
 Content-Type:  application/json; charset=UTF-8
 
 {
-  "username": "张一",
+  "username": "张一z",
   "password": "123",
   "email": "abc@xyz.com",
   "phone": "+8801712345678"
@@ -42,14 +42,16 @@ Content-Type: application/json; charset=UTF-8
 
 
 {
-  "id": 74,
-  "username": "1",
+  "id": 107,
+  "username": "李四",
   "email": "123@qq.com",
-  "phone": "08123856789"
+  "phone": "08123856789",
+  "consignee":  "Jimmy",
+  "address": "32 Baker Street"
 }
 
 ###模糊查询
-GET localhost:8000/user/findSome?userName=a
+GET localhost:8000/user/findSome?username=1
 
 
 ###

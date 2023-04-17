@@ -31,6 +31,9 @@ const router=useRouter();
 </script>
 
 <style scoped lang="scss">
+.menu{
+  overflow-y: auto;
+}
 .layui-body::-webkit-scrollbar{
   display: none;
 }

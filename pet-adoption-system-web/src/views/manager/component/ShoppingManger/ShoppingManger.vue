@@ -21,7 +21,6 @@
     <div class="table">
       <lay-table :columns="columns"
                  :data-source="data"
-                 :page="page"
                  @change="onPageChange"
                  :default-toolbar="true"
                  even>
@@ -80,6 +79,7 @@
         </lay-form-item>
 
       </lay-layer>
+      <lay-page :limit="limit1.a" :total="total1.a" showCount showPage @change="change1"></lay-page>
 
 <!--      <lay-layer v-model="updateUserDisplay" :area="['400px','450px']">-->
 <!--        <lay-form-item label="用户名称">-->
@@ -100,7 +100,6 @@
 
 <!--      </lay-layer>-->
     </div>
-
 
   </div>
 
@@ -142,7 +141,7 @@ export default {
 
 <script setup>
 import {onMounted, onUpdated, reactive, ref} from "vue";
-import {list} from "./api"
+import {list, page} from "./api"
 // import {list, updateUser, findSome, deleteUserInfo} from "./api.js";
 import {layer} from "@layui/layui-vue"
 import {add} from "./api";
@@ -153,6 +152,14 @@ const username = ref("")
 const email = ref("")
 const phone = ref("")
 
+let limits1 = ref([6,8,10,20])
+
+let limit1 = reactive({
+  a:""
+})
+let total1 = reactive({
+  a: ""
+})
 
 
 const columns = reactive([
@@ -202,13 +209,13 @@ const userInfoUpdate = reactive({
 })
 
 
-const page = reactive({
-  total: 10,
-  limit: 8,
-  current: 1,
-  showRefresh: true,
-  limits: [3, 4, 5, 6, 7, 8]
-})
+// const page = reactive({
+//   total: 10,
+//   limit: 8,
+//   current: 1,
+//   showRefresh: true,
+//   limits: [3, 4, 5, 6, 7, 8]
+// })
 
 
 //绑定更新界面，更新用户信息
@@ -221,13 +228,22 @@ const page = reactive({
 //   find()
 // }
 
+const change1 = ({ current, limit }) => {
+  page(current,limit).then(res=>{
+    data.length = 0
+    data.push(...res.data.list)
+    limit1.a = res.data.pageSize
+    total1.a = res.data.total
+  })
+}
+
 function reload() {
   list(petStore.goodsType, petStore.goodsname, petStore.goodsPrice,petStore.goodsDesc,petStore.goodsStatus, page.limit, page.current).then(res => {
     data.length = 0
     console.log(res);
     data.push(...res.data.list)
-    page.current = res.data.current
-    page.total = res.data.total
+    limit1.a = res.data.pageSize
+    total1.a = res.data.total
   })
 }
 
