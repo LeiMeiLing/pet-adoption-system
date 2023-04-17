@@ -73,8 +73,6 @@ import {layer} from "@layui/layui-vue"
 
 
 const change1 = ({ current, limit }) => {
-  console.log(current)
-  console.log(limit)
   page(current,limit).then(res=>{
     data.length = 0
     data.push(...res.data.list)

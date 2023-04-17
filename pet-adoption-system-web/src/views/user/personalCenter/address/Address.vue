@@ -4,7 +4,7 @@
     <h1>收货地址</h1>
     <lay-form :model="display">
       <lay-form-item label="收货人："><lay-input v-model="userInfo.consignee"></lay-input></lay-form-item>
-      <lay-form-item label="手机号码："><lay-input ></lay-input></lay-form-item>
+      <lay-form-item label="手机号码："><lay-input v-model="userInfo.phone"></lay-input></lay-form-item>
       <lay-form-item label="详细地址："><lay-input v-model="userInfo.address"></lay-input></lay-form-item>
       <lay-button type="primary" fluid @click="onUpdate()">保存收货地址</lay-button>
     </lay-form>

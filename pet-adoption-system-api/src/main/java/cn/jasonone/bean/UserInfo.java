@@ -70,5 +70,10 @@ public class UserInfo implements Serializable {
      */
     private String address;
 
+    /**
+     * 个性签名
+     */
+    private String sign;
+
     private static final long serialVersionUID = 1L;
 }

@@ -35,7 +35,7 @@
     </select>
 
     <select id="findByUsername" resultType="cn.jasonone.bean.UserInfo">
-        select <include refid="Base_Column_List"></include>
+        select *
         from user_info where username = #{username}
     </select>
 
@@ -128,7 +128,8 @@
                 sex = #{sex,jdbcType=VARCHAR},
                 age = #{age,jdbcType=INTEGER},
                 consignee = #{consignee,jdbcType=VARCHAR},
-                address = #{address,jdbcType=VARCHAR}
+                address = #{address,jdbcType=VARCHAR},
+                sign = #{sign,jdbcType=VARCHAR}
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
