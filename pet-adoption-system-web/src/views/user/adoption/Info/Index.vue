@@ -142,5 +142,6 @@ h1{
 .content{
   padding:5px;
   font-size: 20px;
+  color: #568356;
 }
 </style>

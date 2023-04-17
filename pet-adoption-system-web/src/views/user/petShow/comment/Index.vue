@@ -1,8 +1,13 @@
 <template>
   <div class="container">
 
-    宠物名<b style="color: #1aa2d4">{{ route.query.petName }}</b><br>
-    <img :src="route.query.picture" style="Display: inline-block"><b>{{ route.query.content }}</b>
+
+
+    <div class="content">
+     <b style="color: #1aa2d4;font-size: 22px">{{ route.query.petName }}</b>
+      <div style="margin-top: 20px">{{ route.query.content }}</div>
+  <img :src="route.query.picture" style="Display: inline-block">
+</div>
 
 <!--发布评论区域-->
     <div class="comment-send">
@@ -10,14 +15,14 @@
          <span class="comment-avatar">
 <!--                     <img src="avatar1.jpg" alt="头像" >-->
            <br><br>
-                      <div>{{ loginInfo.username }}:</div>
+                      <div style="font-size: 18px">{{ loginInfo.username }}:</div>
                  </span>
         <textarea class="comment-send-input" name="content" form="commentForm" cols="80" rows="5"
-                  placeholder="请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。"></textarea>
+                  placeholder="请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。" style="height: 40px;margin-top: 15px"></textarea>
         <input  name="issueId"  v-model="route.query.id" type="hidden"/>
         <input  name="commentId" v-model="loginInfo.id" type="hidden"/>
         <input  name="commentName" v-model="loginInfo.username" type="hidden"/>
-        <input class="comment-send-button" type="submit" value="发表评论" @click="sub">
+        <input class="comment-send-button" type="submit" value="发表评论" style="height: 40px;margin-top: 16px" @click="sub">
       </form>
       <iframe id="iframe" name="iframe" style="display:none;"></iframe>
     </div>
@@ -34,7 +39,8 @@
 
         <div class="comment-content">
           <br>
-          <p class="comment-content-name">{{ comment.commentName }}</p>
+          <p class="comment-content-name">
+            <lay-icon type="layui-icon-username"></lay-icon>{{ comment.commentName }}</p>
           <p class="comment-content-article">{{ comment.content }}</p>
           <p class="comment-content-footer" >
 <!--            <span class="comment-content-footer-id">#2</span>-->
@@ -95,7 +101,14 @@ onMounted(reload)
 
 
 
-<style scoped>
+<style scoped lang="scss">
+.content{
+ margin-top: 10px;
+  font-size: 18px;
+}
+img{
+  margin-top: 10px;
+}
 * {
   margin: 0;
   padding: 0;
@@ -139,11 +152,11 @@ onMounted(reload)
 .comment-content-name {
   color: #6d757a;
   font-size: 12px;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
 
 .comment-content-article {
-  font-size: 14px;
+  font-size: 16px;
   margin-bottom: 10px;
 }
 
