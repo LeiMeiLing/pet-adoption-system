@@ -18,6 +18,17 @@ export function updateGoods(row) {
     })
 }
 
+
+/*
+    分页
+    */
+export function page(page,limit){
+    return http.get("/petstore/findAll?page="+page+"&limit="+limit,{
+    }).then(res=>{
+        return res;
+    })
+}
+
 /*
 查询所有
  */

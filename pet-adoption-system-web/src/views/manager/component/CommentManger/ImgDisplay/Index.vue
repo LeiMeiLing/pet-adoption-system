@@ -29,6 +29,8 @@
     </lay-table>
   </div>
 
+  <lay-page :limit="limit1.a" :total="total1.a" showCount showPage @change="change1"></lay-page>
+
 </template>
 
 <script setup>
@@ -42,6 +44,13 @@ const route = useRoute();
 
 const data = reactive([])
 
+let limit1 = reactive({
+  a:""
+})
+let total1 = reactive({
+  a:""
+})
+
 const comment = reactive({
   username:"",
   content:"",
@@ -51,9 +60,36 @@ const comment = reactive({
 function find(){
   findSome(comment).then(res=>{
     data.length = 0
-    data.push(...res.data)
+    data.push(...res.data.list)
   })
 }
+
+
+function reload(){
+  findAll(route.query.id).then(res=>{
+    data.length = 0
+    data.push(...res.data.list)
+  })
+}
+findAll(route.query.id).then(res=>{
+  data.length = 0
+  data.push(...res.data.list)
+  limit1.a = res.data.pageSize
+  total1.a = res.data.total
+})
+const change1 = ({ current, limit }) => {
+  console.log(current)
+  console.log(limit)
+  findAll(route.query.id,current,limit).then(res=>{
+    data.length = 0
+    data.push(...res.data.list)
+    limit1.a = res.data.pageSize
+    total1.a = res.data.total
+  })
+}
+
+
+
 
 function deleteCommentA(row){
   layer.confirm(`是否确认删除？`, {
@@ -82,13 +118,6 @@ function deleteCommentA(row){
 
 }
 
-function reload(){
-  findAll(route.query.id).then(res=>{
-    data.length = 0
-    data.push(...res.data)
-  })
-}
-reload()
 
 
 

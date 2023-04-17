@@ -8,7 +8,6 @@
     <img :src="route.query.petPicture">
     <div>
       <lay-form class="pet-info">
-
         <lay-form-item label="宠物编号:" >
           <div class="content">{{ route.query.petId }}</div>
         </lay-form-item>
@@ -116,7 +115,7 @@ function back(){
 <style scoped lang="scss">
 .pet-info{
   margin-top: 20px;
-  height: 600px;
+  height: 800px;
   width: 400px;
   overflow: hidden;
 }
@@ -133,8 +132,11 @@ h1{
   margin-bottom: 30px;
 }
 .layui-body{
-  height: 500px;
+  height: 800px;
   display: flex;
+  &::-webkit-scrollbar{
+    display: none;
+  }
 }
 .layui-form-item{
   font-size: 20px;
@@ -142,5 +144,6 @@ h1{
 .content{
   padding:5px;
   font-size: 20px;
+  color: #568356;
 }
 </style>

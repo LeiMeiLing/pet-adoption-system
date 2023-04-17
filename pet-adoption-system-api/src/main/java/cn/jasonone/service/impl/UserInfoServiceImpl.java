@@ -109,6 +109,6 @@ public class UserInfoServiceImpl implements UserInfoService {
         UserInfoMapper userInfoMapper = sqlSession.getMapper(UserInfoMapper.class);
         PageHelper.startPage(pageNum, pageSize);
         List<UserInfo> userInfos = userInfoMapper.fuzzyQueries(userInfo);
-        return new PageInfo<>(userInfos);
+        return PageInfoUtils.list2PageInfo(userInfos,pageNum,pageSize);
     }
 }

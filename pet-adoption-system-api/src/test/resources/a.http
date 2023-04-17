@@ -2,7 +2,7 @@ PUT localhost:8000/user/register
 Content-Type:  application/json; charset=UTF-8
 
 {
-  "username": "张一",
+  "username": "张一z",
   "password": "123",
   "email": "abc@xyz.com",
   "phone": "+8801712345678"
@@ -10,14 +10,16 @@ Content-Type:  application/json; charset=UTF-8
 
 
 ###
-PUT localhost:8000
+PUT localhost:8000/shoppingCart/join
 Content-Type:  application/json; charset=UTF-8
 
 {
   "userId": "1",
   "productId": "1",
   "quantity": "1",
-  "price": "1"
+  "price": "1",
+  "goodsName": "1",
+  "goodsPicture": "1"
 }
 
 ###
@@ -42,15 +44,19 @@ Content-Type: application/json; charset=UTF-8
 
 
 {
-  "id": 74,
-  "username": "1",
+  "id": 107,
+  "username": "李四",
   "email": "123@qq.com",
-  "phone": "08123856789"
+  "phone": "08123856789",
+  "consignee":  "Jimmy",
+  "address": "32 Baker Street"
 }
 
 ###模糊查询
-GET localhost:8000/user/findSome?userName=a
+GET localhost:8000/user/findSome?username=1
 
+###
+GET localhost:8000/shoppingCart/MyCart?userId=12
 
 ###
 PUT localhost:8000/petstore/add
@@ -109,5 +115,9 @@ Content-Type: application/json
 {
   "id": 43
 }
+
+###随机生成6条宠物知识
+GET localhost:8000/petKnowledge/createMessages
+Content-Type: application/json
 
 

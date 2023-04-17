@@ -1,7 +1,7 @@
 <template>
 
 <div>
-    <div class="selectShopping" v-if="goodsInfo.goodsStatus==1">
+    <div class="selectShopping" >
       <lay-input placeholder="请输入商品名进行查询" v-model="goodsInfo.goodsName" prefix-icon="layui-icon-search">
       </lay-input>
       <lay-input placeholder="请输入商品类型进行查询" v-model="goodsInfo.goodsType" prefix-icon="layui-icon-search">
@@ -11,8 +11,8 @@
 
 
     <div id="app">
-        <ul v-for="(item,index) in dataSource">
-            <li class="item">
+        <ul v-for="(item,index) in dataSource" >
+            <li class="item" v-if="item.goodsStatus===1">
                 <div class="img_box" @click="click(item)"><img v-bind:src="item.goodsPicture" alt=""></div>
                 <p v-html="item.goodsDesc"></p>
                 <span :style="{color:'red'}">&yen;{{item.goodsPrice}}</span>

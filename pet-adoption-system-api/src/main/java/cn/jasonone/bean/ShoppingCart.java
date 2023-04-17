@@ -45,5 +45,15 @@ public class ShoppingCart implements Serializable {
      */
     private Date updatedAt;
 
+    /**
+     * 商品名
+     */
+    private String goodsName;
+
+    /**
+     * 商品图片
+     */
+    private String goodsPicture;
+
     private static final long serialVersionUID = 1L;
 }
