@@ -83,7 +83,7 @@ function sub(){
 function reload(){
   findAll(route.query.id).then(res=>{
     dataSource.length = 0
-    dataSource.push(...res.data)
+    dataSource.push(...res.data.list)
   })
 }
 

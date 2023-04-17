@@ -1,8 +1,11 @@
 package cn.jasonone.service.impl;
 
 import cn.jasonone.bean.PetIssue;
+import cn.jasonone.bean.UserInfo;
 import cn.jasonone.mapper.PetIssueMapper;
 import cn.jasonone.service.PetIssueService;
+import cn.jasonone.until.PageInfoUtils;
+import com.github.pagehelper.PageInfo;
 import lombok.Setter;
 import org.apache.ibatis.session.SqlSession;
 
@@ -19,9 +22,9 @@ public class PetIssueServiceImpl implements PetIssueService {
     }
 
     @Override
-    public List<PetIssue> findAll() {
+    public PageInfo<PetIssue> findAll(int pageNum , int pageSize) {
         PetIssueMapper petIssueMapper = sqlSession.getMapper(PetIssueMapper.class);
-        return petIssueMapper.findAll();
+        return PageInfoUtils.list2PageInfo(petIssueMapper.findAll(),pageNum,pageSize);
     }
 
     @Override

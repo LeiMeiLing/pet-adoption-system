@@ -3,6 +3,8 @@ package cn.jasonone.service.impl;
 import cn.jasonone.bean.Comment;
 import cn.jasonone.mapper.CommentMapper;
 import cn.jasonone.service.CommentService;
+import cn.jasonone.until.PageInfoUtils;
+import com.github.pagehelper.PageInfo;
 import lombok.Setter;
 import org.apache.ibatis.session.SqlSession;
 
@@ -20,9 +22,9 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> findAll(Long id) {
+    public PageInfo<Comment> findAll(Long id,int pageNum , int pageSize) {
         CommentMapper commentMapper = sqlSession.getMapper(CommentMapper.class);
-        return commentMapper.selectAllByIssueIdCommentList(id);
+        return PageInfoUtils.list2PageInfo(commentMapper.selectAllByIssueIdCommentList(id),pageNum,pageSize);
 
     }
 
@@ -33,8 +35,8 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> findByUsernameOrComment(Comment comment) {
+    public PageInfo<Comment> findByUsernameOrComment(Comment comment,int pageNum , int pageSize) {
         CommentMapper commentMapper = sqlSession.getMapper(CommentMapper.class);
-        return commentMapper.findAllByCommentNameAndContent(comment);
+        return PageInfoUtils.list2PageInfo(commentMapper.findAllByCommentNameAndContent(comment),pageNum,pageSize);
     }
 }

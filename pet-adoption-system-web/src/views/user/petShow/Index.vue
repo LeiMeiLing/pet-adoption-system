@@ -1,11 +1,11 @@
 <template>
 
-  <AdditionIcon size="150px" id="bbc" @click="go">
-  </AdditionIcon>
 
 
-  <div>
-
+<div class="a">
+  <div class="a2">
+    <AdditionIcon size="150px" id="bbc" @click="go">
+    </AdditionIcon>
 
     <ul v-for="(item,index) in dataSource">
       <li class="item">
@@ -14,6 +14,8 @@
         <lay-rate  :icons="['layui-icon-heart', 'layui-icon-heart-fill']" theme="#FE0000"></lay-rate>
       </li>
     </ul>
+
+
 
 
 
@@ -40,6 +42,10 @@
 
 
   </div>
+  <div class="a1">
+    <lay-page :limit="limit1.a" :total="total1.a" showCount showPage @change="change1"></lay-page>
+  </div>
+</div>
 </template>
 
 <script>
@@ -78,6 +84,8 @@ export default {
   submit() {
   }
 }
+
+
 </script>
 
 <script setup>
@@ -159,12 +167,36 @@ const goodsInfo = reactive({
 
 });
 
-function find(){
-  findAll().then(res=>{
-    dataSource.length=0
-    dataSource.push(...res.data);
+const change1 = ({ current, limit }) => {
+  findAll(current,6).then(res=>{
+    dataSource.length = 0
+    dataSource.push(...res.data.list)
+    console.log(dataSource);
+    limit1.a = res.data.pageSize
+    total1.a = res.data.total
   })
 }
+
+let limit1 = reactive({
+  a:""
+})
+let total1 = reactive({
+  a:""
+})
+
+function find(){
+  findAll(1,6).then(res=>{
+    dataSource.length=0
+    dataSource.push(...res.data.list);
+  })
+}
+
+findAll(1,6).then(res=>{
+  dataSource.length=0
+  dataSource.push(...res.data.list);
+  limit1.a = res.data.pageSize
+  total1.a = res.data.total
+})
 
 
 let dataSource = reactive([]
@@ -178,6 +210,9 @@ onMounted(find)
 </script>
 
 <style scoped lang="scss">
+.a>.a2{
+ height: 300px;
+}
 #bbc{
   float: right;
 }
