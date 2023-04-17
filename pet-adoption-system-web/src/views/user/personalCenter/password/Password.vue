@@ -1,11 +1,10 @@
 <template>
   <div class="password" >
-    <lay-icon type="layui-icon-close" ></lay-icon>
-    <h1>修改密码</h1>
     <lay-form >
       <lay-form-item label="原密码："><lay-input v-model="userInfo.oldPassword" ></lay-input></lay-form-item>
       <lay-form-item label="新密码："><lay-input v-model="userInfo.newPassword"></lay-input></lay-form-item>
       <lay-form-item label="确认密码："><lay-input v-model="userInfo.confirmPassword"></lay-input></lay-form-item>
+      <br>
       <lay-button type="primary" fluid="" @click="save">保存</lay-button>
     </lay-form>
     </div>
@@ -49,7 +48,8 @@ function save(){
 
 <style scoped lang="scss">
 .password{
-  height: 500px;
+  font-size: 18px;
+  height: 300px;
   width: 400px;
   color: #ffffff;
   line-height: 38px;
@@ -60,14 +60,11 @@ function save(){
 .layui-icon{
   float: right;
 }
-h1{
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  border-bottom: 5px solid #3a5e3a;
-}
 
 .layui-form-item{
   border-bottom: 2px solid #426c42;
+}
+.layui-input{
+  margin-bottom: 5px;
 }
 </style>

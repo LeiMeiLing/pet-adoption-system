@@ -1,10 +1,7 @@
 <template>
   <div class="center">
     <img class="background">
-    <div  class="return" @click="onReturn">
-      <lay-icon color="#fff" size="45px" type="layui-icon-home"></lay-icon><p>首页</p>
-    </div>
-    <img src="/public/宠物1.png" @click="signleImg" class="headPicture">
+    <lay-avatar :src="src" radius></lay-avatar>
     <h1>我的小喵</h1>
     <div class="introduction">
       <lay-icon type="layui-icon-list" size="28px"></lay-icon>
@@ -32,11 +29,6 @@ import Invitation from "../invitation/Invitation.vue";
 import Album from "./Album.vue";
 const current2 = ref("1")
 
-const router=useRouter();
-const headPicture=ref("/public/宠物1.png")
-function onReturn(){
-  router.push('/');
-}
 const signleImg = function() {
   layer.photos("/public/宠物1.png")
 }
@@ -54,21 +46,12 @@ const signleImg = function() {
   position: absolute;
   background-size: cover;
 }
-.return{
-  position: relative;
-  display: flex;
-  font-size: 38px;
-  color: #ffffff;
-  left:2%;
+.layui-avatar {
+  height: 200px;
+  width: 200px;
+  margin-bottom: 5px;
 }
-.headPicture{
-  height: 150px;
-  width: 150px;
-  border-radius: 50%;
-  position: relative;
-  top:220px;
-  left: 5%;
-}
+
 h1{
   position: absolute;
   top:355px;
