@@ -34,6 +34,7 @@ public class PetInfoServlet extends HttpServlet {
             .create();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
         petInfo.setSqlSession(sqlSession);
         String requestURI = req.getRequestURI();
@@ -97,11 +98,16 @@ public class PetInfoServlet extends HttpServlet {
         petInfo.setSqlSession(sqlSession);
         String requestURI = req.getRequestURI();
         requestURI = requestURI.substring(req.getContextPath().length());
+
         switch (requestURI) {
             case "/pet/add":
-                add(req, resp);
+                PetInfo petInfo1 = gson.fromJson(req.getReader(), PetInfo.class);
+                petInfo.add(petInfo1);
+                HashMap<Object, Object> map = new HashMap<>();
+                map.put("code",200);
+                map.put("msg","添加成功");
+                resp.getWriter().write(gson.toJson(map));
                 sqlSession.commit();
-                sqlSession.close();
                 break;
             case "/pet/update":
                 update(req, resp);
@@ -113,17 +119,17 @@ public class PetInfoServlet extends HttpServlet {
     }
 
 
-    protected void add(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        PetInfo petInfo1 = gson.fromJson(req.getReader(), PetInfo.class);
-        System.out.println(petInfo1);
-        petInfo.add(petInfo1);
-
-        HashMap<Object, Object> map = new HashMap<>();
-        map.put("code",200);
-        map.put("msg","添加成功");
-        resp.getWriter().write(gson.toJson(map));
-    }
+//    protected void add(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//
+//        PetInfo petInfo1 = gson.fromJson(req.getReader(), PetInfo.class);
+//        System.out.println(petInfo1);
+//        petInfo.add(petInfo1);
+//
+//        HashMap<Object, Object> map = new HashMap<>();
+//        map.put("code",200);
+//        map.put("msg","添加成功");
+//        resp.getWriter().write(gson.toJson(map));
+//    }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
