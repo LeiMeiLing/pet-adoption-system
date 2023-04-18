@@ -52,10 +52,10 @@
     </delete>
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.jasonone.bean.PetKnowledge" useGeneratedKeys="true">
         insert into pet_knowledge
-        ( id,title,author
+        ( title,author
         ,description,content,create_time,essay_type,picture
         )
-        values (#{id,jdbcType=INTEGER},#{title,jdbcType=VARCHAR},#{author,jdbcType=VARCHAR}
+        values (#{title,jdbcType=VARCHAR},#{author,jdbcType=VARCHAR}
         ,#{description},#{content},#{createTime,jdbcType=TIMESTAMP}
         ,#{essayType,jdbcType=VARCHAR},#{picture}
         )
@@ -79,8 +79,8 @@
                 <if test="description != null">#{description},</if>
                 <if test="content != null">#{content},</if>
                 <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
-                <if test="essayType != null">#{essayType,jdbcType=VARCHAR}</if>
-                <if test="picture != null">#{picture}</if>
+                <if test="essayType != null">#{essayType,jdbcType=VARCHAR},</if>
+                <if test="picture != null">#{picture},</if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="cn.jasonone.bean.PetKnowledge">

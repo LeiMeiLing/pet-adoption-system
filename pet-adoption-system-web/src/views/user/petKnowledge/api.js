@@ -1,6 +1,7 @@
 import http from "../../../config/http.js"
-export function insert(){
+export function insert(petKownledge){
     return http.put("/petKnowledge/insert",{
+        ...petKownledge
     }).then(res=>{
         return res;
     })

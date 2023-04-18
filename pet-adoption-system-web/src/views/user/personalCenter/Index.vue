@@ -11,8 +11,8 @@
           <lay-menu-item id="4" @click="visible3=true"><lay-icon type="layui-icon-key"></lay-icon>&emsp;修改密码</lay-menu-item>
           <lay-menu-item id="5" to="/application"><lay-icon type="layui-icon-log"></lay-icon>&emsp;领养申请</lay-menu-item>
           <lay-menu-item id="6" to="transfer2"><lay-icon type="layui-icon-time"></lay-icon>&emsp;转送宠物</lay-menu-item>
-          <lay-menu-item id="7" to="/petShow1"><lay-icon type="layui-icon-fire"></lay-icon> 我的宠物秀 </lay-menu-item>
-          <lay-menu-item id="8" to="myCart"><lay-icon type="layui-icon-cart-simple"></lay-icon>&emsp;购物车</lay-menu-item>
+          <lay-menu-item id="7" to="/petShow1"><lay-icon type="layui-icon-fire"></lay-icon>&emsp;我的宠物秀 </lay-menu-item>
+          <lay-menu-item id="8" to="myCart"><lay-icon type="layui-icon-cart-simple"></lay-icon>&emsp;我的购物车</lay-menu-item>
           <lay-menu-item id="9" @click="exit"><lay-icon type="layui-icon-logout"></lay-icon>&emsp;退出登录</lay-menu-item>
         </lay-menu>
       </lay-side>
@@ -92,6 +92,7 @@ const changeOpenKeys = (val) => {
 </script>
 
 <style scoped lang="scss">
+
 .personalCenter {
   height: 100%;
   width: 100%;

@@ -74,8 +74,8 @@ function onUpdate() {
   }
 }
 .layui-form{
-  margin-left: 100px;
-  margin-right: 100px;
+  margin-left: 150px;
+  margin-right: 150px;
 }
 .layui-icon {
   float: right;
@@ -83,8 +83,8 @@ function onUpdate() {
 
 
 .layui-avatar {
-  height: 150px;
-  width: 150px;
+  height: 160px;
+  width: 160px;
   margin-bottom: 5px;
 }
 
@@ -92,14 +92,16 @@ function onUpdate() {
   border-bottom: 2px solid #426c42;
 }
 
-.layui-input {
+.layui-input,.layui-select {
   margin-bottom: 5px;
 }
 
 .layui-textarea {
   background-color: #638863;
 }
-.layui-select{
-
+.layui-body{
+  height: 100%;
+  width: 100%;
 }
+
 </style>

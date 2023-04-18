@@ -4,6 +4,7 @@
       <lay-tab-item v-for="a in arr2" :key="a"  :id="a.id" :title="a.title" :closable="a.closable">
       </lay-tab-item>
     </lay-tab>
+
     <div class="panel-container" shadow="hover" v-for="count in dataSource">
       <lay-panel>
         <img v-bind:src="count.picture">
@@ -29,9 +30,10 @@ import {reactive, ref} from 'vue'
 const current1 = ref("1")
 import {findAll, selectByTime, selectByType} from "./api.js";
 import {useRouter} from "vue-router";
+import Release from "./Release.vue";
 const router=useRouter();
 let dataSource=reactive([])
-
+const visible=ref(false)
 selectByTime().then(res=>{
   dataSource.length=0
   dataSource.push(...res.data)

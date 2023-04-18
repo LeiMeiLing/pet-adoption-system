@@ -113,9 +113,9 @@ p{
   margin-top: 10px;
 }
 img{
-  width: 350px;
+  width: 500px;
   height: 350px ;
-  margin-left: 35%;
+  margin-left: 30%;
 }
 .icon{
   display: flex;

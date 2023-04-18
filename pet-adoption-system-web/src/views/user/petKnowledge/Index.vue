@@ -22,7 +22,9 @@
         <div class="tip">
           扫描二维码了解更多宠物小知识
         </div>
-
+<!--        <lay-button @click="onRelease">-->
+<!--            发布-->
+<!--        </lay-button>-->
 
         <!--        <div class="btns">-->
 <!--          <lay-button type="primary" @click="onDog">汪星人</lay-button>-->
@@ -37,8 +39,11 @@
 <script setup>
 import {useRouter} from "vue-router";
 import CatAndDog from '../petKnowledge/CatAndDog.vue'
+import Release from "./Release.vue";
 const router=useRouter();
-
+// function onRelease(){
+//   router.push('/release')
+// }
 </script>
 <style scoped lang="scss">
 //h1{
@@ -52,11 +57,11 @@ const router=useRouter();
 .picture{
   width: 90%;
   height: 90% ;
-  background: url("/public/注册.png");
+  background: url("../../../../../public/petKnowledge.jpeg");
   background-size: cover;
 }
 .petKnowledge{
-  margin: 35px;
+  margin:50px 100px;
   font-size: 25px;
 }
 .text{
