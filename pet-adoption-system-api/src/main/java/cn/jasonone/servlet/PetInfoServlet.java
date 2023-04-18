@@ -101,6 +101,7 @@ public class PetInfoServlet extends HttpServlet {
             case "/pet/add":
                 add(req, resp);
                 sqlSession.commit();
+                sqlSession.close();
                 break;
             case "/pet/update":
                 update(req, resp);
@@ -113,11 +114,11 @@ public class PetInfoServlet extends HttpServlet {
 
 
     protected void add(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
-        petInfo.setSqlSession(sqlSession);
 
         PetInfo petInfo1 = gson.fromJson(req.getReader(), PetInfo.class);
+        System.out.println(petInfo1);
         petInfo.add(petInfo1);
+
         HashMap<Object, Object> map = new HashMap<>();
         map.put("code",200);
         map.put("msg","添加成功");

@@ -71,19 +71,14 @@ public class ShoppingCartServlet extends HttpServlet {
         }
     }
 
-
-
     private void updateShopping(HttpServletRequest req, HttpServletResponse resp) {
         String shoppingCarts = req.getParameter("shoppingCart");
-        System.out.println(shoppingCarts);
         String[] split = shoppingCarts.split(",");
             ShoppingCart shoppingCart = new ShoppingCart();
             for (int i1 = 0; i1 < (split.length)/2;i1++) {
-                System.out.println(Integer.valueOf(split[2 * i1]));
                 shoppingCart.setId(Integer.valueOf(split[2*i1]));
                 shoppingCart.setQuantity(Integer.valueOf(split[2*i1+1]));
                 shoppingCartService.update(shoppingCart);
-
             }
 
 

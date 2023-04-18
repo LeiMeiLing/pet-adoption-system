@@ -150,8 +150,12 @@ export default {
 
       let that = this
       fr.onload = function () {
-        that.imgbase64 = fr.result
-        abc=that.imgbase64
+        if (fr.result.length > 64*1024){
+          layer.msg("图片太大,请重新选择")
+          that.imgbase64=""
+        }else {
+          that.imgbase64 = fr.result
+          abc=that.imgbase64}
       }
     }
   },
@@ -170,13 +174,9 @@ import {onMounted, reactive, ref} from 'vue';
 import { layer } from "@layui/layer-vue";
 import { findSome, list, petDele,add,updatePet} from "./api.js";
 
-
-
-
-
 const addPetVisibel = ref(false)
 const updatePetDisplay = ref(false)
-const addPetVisibel = ref(false)
+
 const petAdd = reactive({
   variety: "",
   petName: "",
@@ -208,17 +208,9 @@ function showPet(row) {
 
 }
 
-const addPetVisibel = ref(false)
-const petAdd = reactive({
-  variety: "",
-  petName: "",
-  petSex: "",
-  petStatus: "",
-  petPicture:"",
-  description:""
-})
 function onAdd() {
   petAdd.petPicture = abc
+  console.log(petAdd)
   add(petAdd)
   layer.msg("新增成功")
   addPetVisibel.value = false;
