@@ -5,7 +5,7 @@
     <h1>{{ userInfo.username }}</h1>
     <div class="introduction">
       <lay-icon type="layui-icon-list" size="32px"></lay-icon>
-      <div>{{userInfo.sign}}</div>
+      <div>个性签名：{{userInfo.sign}}</div>
     </div>
 
       <lay-tab type="brief" v-model="current2" class="tab">
@@ -164,7 +164,7 @@ h1{
 .introduction{
   position: absolute;
   top:470px;
-  left:15%;
+  left:19%;
   display: flex;
 }
 .tab{
