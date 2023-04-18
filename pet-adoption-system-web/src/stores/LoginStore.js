@@ -31,5 +31,4 @@ export default defineStore("loginInfo", {
             return () => !!this.token;
         }
     }
-
 })

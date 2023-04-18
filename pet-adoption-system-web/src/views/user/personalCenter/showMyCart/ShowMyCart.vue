@@ -5,6 +5,8 @@
         <lay-button size="sm" class="btn">
           <lay-icon type="layui-icon-unlink"></lay-icon></lay-button>
       </template>
+
+
       <template v-slot:active="{ row }" v-for="data in dataSource">
         <div class="goodsInfo">
           <img :src="data.goodsPicture" style="height: 50px;width:100px;margin-right: 20px">
@@ -15,6 +17,10 @@
         <div><lay-input-number v-model="data.quantity" :step="1"></lay-input-number></div>
       </template>
     </lay-table>
+
+
+
+    
 <!--      <div v-for="data in dataSource">
           {{data}}
           <img v-bind:src="data.goodsPicture" alt="">
