@@ -17,8 +17,6 @@
     <div class="table">
       <lay-table :columns="columns"
                  :data-source="data"
-                 :page="page"
-                 @change="onPageChange"
                  even>
         <template #goodsPicture="{ row }">
           <img :src="row.goodsPicture">
@@ -46,6 +44,9 @@
           </lay-tooltip>
         </template>
       </lay-table>
+
+
+      <lay-page :limit="limit1.a" :total="total1.a" showCount showPage @change="change1" :limits="limits1"></lay-page>
 
 
       <lay-layer v-model="addStoreVisibel" :area="['400px','450px']">
@@ -154,6 +155,23 @@ export default {
 import {onMounted, reactive, ref} from "vue";
 import {deleteGoodsInfo, list, add, findSome,updateGoods} from "./api"
 import {layer} from "@layui/layui-vue"
+
+let limit1 = reactive({
+  a: ""
+})
+let total1 = reactive({
+  a: ""
+})
+let limits1 = ref([3, 5, 10, 20])
+
+const change1 = ({current, limit}) => {
+  list(current, limit).then(res => {
+    data.length = 0
+    data.push(...res.data.list)
+    limit1.a = res.data.pageSize
+    total1.a = res.data.total
+  })
+}
 const columns = reactive([
   {title: "ID", key: "id", align: "center"},
   {title: "商品名称", key: "goodsname", align: "center"},
@@ -198,13 +216,7 @@ const goodsInfoUpdate = reactive({
 })
 
 
-const page = reactive({
-  total: 10,
-  limit: 8,
-  current: 1,
-  showRefresh: true,
-  limits: [4,6,8,10,20]
-})
+
 
 
 // 绑定更新界面，更新用户信息
@@ -220,9 +232,10 @@ function reload() {
   list().then(res => {
     data.length = 0
     data.push(...res.data.list)
-    page.current = res.data.current
-    page.total = res.data.total
+    limit1.a = res.data.pageSize
+    total1.a = res.data.total
   })
+
 }
 
 function showGoods(row) {
@@ -284,11 +297,7 @@ function find() {
   })
 }
 
-function onPageChange({current, limit}) {
-  page.current = current
-  page.limit = limit
 
-}
 
 onMounted(reload)
 </script>

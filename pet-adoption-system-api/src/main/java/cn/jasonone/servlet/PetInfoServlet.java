@@ -7,6 +7,7 @@ import cn.jasonone.service.GoodsInfoService;
 import cn.jasonone.service.PetInfoService;
 import cn.jasonone.service.impl.GoodsInfoServiceImpl;
 import cn.jasonone.service.impl.PetInfoServiceImpl;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -50,7 +51,7 @@ public class PetInfoServlet extends HttpServlet {
         }
         switch (requestURI) {
             case "/pet/findAll":
-                List<PetInfo> pets= petInfo.findAllPet();
+                PageInfo<PetInfo> pets= petInfo.findAllPet(pageNum,pageSize);
                 Map<String,Object> result = new HashMap<>();
                 result.put("code", 200);
                 result.put("msg", "获取成功");
@@ -113,8 +114,6 @@ public class PetInfoServlet extends HttpServlet {
 
 
     protected void add(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        SqlSession sqlSession = (SqlSession) req.getAttribute("sqlSession");
-        petInfo.setSqlSession(sqlSession);
 
         PetInfo petInfo1 = gson.fromJson(req.getReader(), PetInfo.class);
         petInfo.add(petInfo1);

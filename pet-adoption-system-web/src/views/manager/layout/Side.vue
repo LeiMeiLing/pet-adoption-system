@@ -5,7 +5,7 @@
         系统管理
       </template>
       <lay-menu-item id="user-manager" to="/userDisplay">用户管理</lay-menu-item>
-      <lay-menu-item id="role-manager" to="/petInfo">宠物管理</lay-menu-item>
+      <lay-menu-item id="role-manager" to="/petManger">宠物管理</lay-menu-item>
       <lay-menu-item id="permission-manager" to="/shopping">商城管理</lay-menu-item>
       <lay-menu-item id="comment=manager" to="/comment">评论管理</lay-menu-item>
       <lay-menu-item id="image-manager" to="/adoption">领养管理</lay-menu-item>

@@ -163,8 +163,8 @@ const routes = [
             name: 'userDisplay',
             component: () => import('../views/manager/component/userDisplay/UserDisplay.vue')
         }, {
-            path: '/petInfo',
-            name: "petInfo",
+            path: '/petManger',
+            name: "petManger",
             component: () => import('../views/manager/component/petManager/petManger.vue')
         }, {
             path: '/adoption',

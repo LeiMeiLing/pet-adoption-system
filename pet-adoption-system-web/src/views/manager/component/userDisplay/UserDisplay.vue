@@ -71,6 +71,13 @@ import {list, updateUser, findSome, deleteUserInfo,page} from "./api.js";
 import {layer} from "@layui/layui-vue"
 
 
+let limit1 = reactive({
+  a:""
+})
+let total1 = reactive({
+  a:""
+})
+let limits1 = ref([10,20,30,40,50,60])
 
 const change1 = ({ current, limit }) => {
   page(current,limit).then(res=>{
@@ -115,15 +122,6 @@ const userInfoUpdate = reactive({
   phone: "",
 })
 
-//
-// const page = reactive({
-//   total: 10,
-//   limit: 8,
-//   current: 1,
-//   showRefresh: true,
-//   limits: [3, 4, 5, 6, 7, 8]
-// })
-
 
 //绑定更新界面，更新用户信息
 function updateUserInfo() {
@@ -133,13 +131,7 @@ function updateUserInfo() {
   reload()
 }
 
-let limit1 = reactive({
-  a:""
-})
-let total1 = reactive({
-  a:""
-})
-let limits1 = ref([10,20,30,40,50,60])
+
 
 
 function reload() {

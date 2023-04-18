@@ -24,6 +24,6 @@ public interface PetInfoService {
     List<PetInfo> selectNameOrType(PetInfo petInfo);
     PageInfo<PetInfo> findAll(int pageNum , int pageSize);
 
-    List<PetInfo> findAllPet();
+    PageInfo<PetInfo> findAllPet(int pageNum, int pageSize);
 }
 
