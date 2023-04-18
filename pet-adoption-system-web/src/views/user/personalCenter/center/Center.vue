@@ -138,12 +138,15 @@ function del(row){
 .center{
   width: 100%;
   height: 100%;
+
 }
 .background{
   height: 350px;
   width: 100%;
+  background: url("/public/注册.png");
   position: absolute;
   background-size: cover;
+
 }
 .layui-avatar {
   height: 200px;
