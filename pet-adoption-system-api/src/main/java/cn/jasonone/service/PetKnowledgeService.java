@@ -36,4 +36,5 @@ public interface PetKnowledgeService {
      * 随机获得6条宠物知识
      */
     List<PetKnowledge> createMessages();
+
 }

@@ -117,11 +117,16 @@ const routes = [
             name: 'petKnowledge',
             component: () => import('../views/user/petKnowledge/Index.vue')
         }, {
-            //宠物知识详细信息界面
+            //宠物知识文章界面
             path: '/essay',
             name: 'essay',
             component: () => import('../views/user/petKnowledge/Essay.vue')
-        }, {
+        },{
+            //宠物知识发布界面
+            path: '/release',
+            name: 'release',
+            component: () => import('../views/user/petKnowledge/Release.vue')
+        },{
             //宠物转让界面
             path: '/transfer',
             name: 'transfer',
