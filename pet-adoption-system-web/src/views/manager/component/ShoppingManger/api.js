@@ -32,11 +32,19 @@ export function page(page,limit){
 /*
 查询所有
  */
-export function list(){
-    return http.get("/petstore/findAll",{
-    }).then(res=>{
-        return res;
-    })
+export function list(page,limit){
+    if (page != null || limit != null){
+        return http.get("/petstore/findAll?page="+page+"&limit="+limit,{
+        }).then(res=>{
+            return res;
+        })
+    }else {
+        return http.get("/petstore/findAll",{
+        }).then(res=>{
+            return res;
+        })
+    }
+
 }
 /*
 模糊查询

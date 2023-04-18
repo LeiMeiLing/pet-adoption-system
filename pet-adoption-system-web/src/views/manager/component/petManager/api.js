@@ -1,10 +1,17 @@
 import http from "../../../../config/http";
-export function list(){
-    return http.get("/pet/findAll", {
+export function list(page,limit){
+    if (page != null || limit != null){
+        return http.get("/pet/findAll?page="+page+"&limit="+limit, {
+        }).then(res=>{
+            return res;
+        })
+    }else {
+        return http.get("/pet/findAll", {
+        }).then(res=>{
+            return res;
+        })
+    }
 
-    }).then(res=>{
-        return res;
-    })
 }
 export function findSome(petInfo){
     return http.get("/pet/findSome?petName="+petInfo.petName+"&variety="+petInfo.variety+"&petSex="+petInfo.petSex+"&petStatus="+petInfo.petStatus)

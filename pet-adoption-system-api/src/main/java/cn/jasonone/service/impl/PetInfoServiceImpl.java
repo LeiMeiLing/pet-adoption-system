@@ -60,9 +60,9 @@ public class PetInfoServiceImpl implements PetInfoService {
     }
 
     @Override
-    public List<PetInfo> findAllPet() {
+    public PageInfo<PetInfo> findAllPet(int pageNum, int pageSize) {
         PetInfoMapper petInfoMapper = sqlSession.getMapper(PetInfoMapper.class);
-        return petInfoMapper.findAllPet();
+        return PageInfoUtils.list2PageInfo(petInfoMapper.findAllPet(),pageNum,pageSize);
     }
 
 }
