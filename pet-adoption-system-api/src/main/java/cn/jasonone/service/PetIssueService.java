@@ -17,5 +17,12 @@ public interface PetIssueService {
      */
     void del(Long id);
 
-    List<PetIssue> findMy(Long id);
+    /**
+     * 用名字找宠物秀
+     * @param petIssue
+     * @return
+     */
+    PageInfo<PetIssue> findByName(PetIssue petIssue,int pageNum , int pageSize);
+
+    PageInfo<PetIssue> findMy(Long id,int pageNum , int pageSize);
 }

@@ -35,7 +35,6 @@ let total1 = reactive({
 findAll(1,3).then(res=>{
   dataSource.length=0
   dataSource.push(...res.data.list);
-  console.log(res)
   limit1.a = res.data.pageSize
   total1.a = res.data.total
 })

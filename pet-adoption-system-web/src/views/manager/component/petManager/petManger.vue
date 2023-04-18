@@ -79,6 +79,10 @@
                    :default-toolbar="true"
                     >
 
+          <template #pic = "{ row }">
+            <img :src="row.petPicture">
+          </template>
+
 
 
 
@@ -236,6 +240,7 @@ const page = ref({
       {title: "宠物ID", key:"petId", align:'center'},
       {title: "宠物名", key:"petName", align:'center'},
       {title: "品种", key:"variety", align:'center'},
+      {title: "宠物图片", customSlot:"pic", align:'center'},
       {title: "性别", key:"petSex", align:'center'},
       {title: "领养状态", key:"petStatus", align:'center'},
       {title: "创建时间", key:"creatTime", align:'center'},
@@ -248,6 +253,7 @@ const page = ref({
     list().then(res=>{
       data.length=0
       data.push(...res.data)
+      console.log(data)
     })
     }
     function petDelete(petInfo){
@@ -274,7 +280,6 @@ const page = ref({
     }
 
     function find(){
-      console.log(petInfo)
     findSome(petInfo).then(res=>{
       console.log(res);
       data.length=0;
