@@ -17,7 +17,7 @@
             <result property="age" column="age" jdbcType="INTEGER"/>
             <result property="consignee" column="consignee" jdbcType="VARCHAR"/>
             <result property="address" column="address" jdbcType="VARCHAR"/>
-
+            <result property="location" column="location" jdbcType="VARCHAR"/>
 
     </resultMap>
 
@@ -129,7 +129,8 @@
                 age = #{age,jdbcType=INTEGER},
                 consignee = #{consignee,jdbcType=VARCHAR},
                 address = #{address,jdbcType=VARCHAR},
-                sign = #{sign,jdbcType=VARCHAR}
+                sign = #{sign,jdbcType=VARCHAR},
+                location = #{location,jdbcType=VARCHAR}
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>

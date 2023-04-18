@@ -203,7 +203,7 @@ const page = reactive({
   limit: 8,
   current: 1,
   showRefresh: true,
-  limits: [3, 4, 5, 6, 7, 8]
+  limits: [4,6,8,10,20]
 })
 
 
