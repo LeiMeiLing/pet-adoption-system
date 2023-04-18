@@ -2,6 +2,7 @@ package cn.jasonone.servlet;
 
 import cn.jasonone.bean.GoodsInfo;
 import cn.jasonone.bean.PetInfo;
+import cn.jasonone.bean.PetIssue;
 import cn.jasonone.service.GoodsInfoService;
 import cn.jasonone.service.PetInfoService;
 import cn.jasonone.service.impl.GoodsInfoServiceImpl;
@@ -37,7 +38,16 @@ public class PetInfoServlet extends HttpServlet {
         petInfo.setSqlSession(sqlSession);
         String requestURI = req.getRequestURI();
         requestURI = requestURI.substring(req.getContextPath().length());
-
+        String page = req.getParameter("page");
+        String limit = req.getParameter("limit");
+        int pageNum = 1;
+        int pageSize = 3;
+        if (page != null) {
+            pageNum = Integer.parseInt(page);
+        }
+        if (limit != null) {
+            pageSize = Integer.parseInt(limit);
+        }
         switch (requestURI) {
             case "/pet/findAll":
                 List<PetInfo> pets= petInfo.findAllPet();
@@ -55,6 +65,10 @@ public class PetInfoServlet extends HttpServlet {
                 result1.put("msg", "获取成功");
                 result1.put("data",some);
                 resp.getWriter().write(gson.toJson(result1));
+                sqlSession.commit();
+                break;
+            case "/pet/find":
+                find(req,resp,pageNum,pageSize);
                 sqlSession.commit();
                 break;
             default:
@@ -138,5 +152,13 @@ public class PetInfoServlet extends HttpServlet {
         petInfo1.setVariety(variety);
         return petInfo.selectNameOrType(petInfo1);
 
+    }
+    private void find(HttpServletRequest req, HttpServletResponse resp,int pageNum , int pageSize) throws IOException {
+        PageInfo<PetInfo> all = petInfo.findAll(pageNum,pageSize);
+        Map<String,Object> result = new HashMap<>();
+        result.put("code", 200);
+        result.put("msg", "获取成功");
+        result.put("data",all);
+        resp.getWriter().write(gson.toJson(result));
     }
 }

@@ -5,3 +5,9 @@ export function list(){
         return res;
     })
 }
+export function findAll(page,limit){
+        return http.get("/pet/find?page="+page+"&limit="+limit,{
+        }).then(res=>{
+            return res;
+        })
+}

@@ -49,7 +49,14 @@ public class PetIssueServlet extends HttpServlet {
                 find(req,resp,pageNum,pageSize);
                 sqlSession.commit();
                 break;
-
+            case "/petIssue/findMy":
+                findMy(req,resp,pageNum,pageSize);
+                sqlSession.commit();
+                break;
+            case "/petIssue/findByName":
+                findByName(req,resp,pageNum,pageSize);
+                sqlSession.commit();
+                break;
             default:
                 super.doPut(req, resp);
         }
@@ -89,6 +96,27 @@ public class PetIssueServlet extends HttpServlet {
         result.put("msg", "获取成功");
         result.put("data",all);
         resp.getWriter().write(gson.toJson(result));
+    }
+    private void findMy(HttpServletRequest req, HttpServletResponse resp,int pageNum , int pageSize) throws IOException {
+        String id = req.getParameter("id");
+        PageInfo<PetIssue> my = petIssueService.findMy(Long.valueOf(id),pageNum ,pageSize);
+        Map<String,Object> result = new HashMap<>();
+        result.put("code", 200);
+        result.put("msg", "获取成功");
+        result.put("data",my);
+        resp.getWriter().write(gson.toJson(result));
+    }
+
+    private void findByName(HttpServletRequest req, HttpServletResponse resp,int pageNum , int pageSize) throws IOException {
+        String petName = req.getParameter("petName");
+        PetIssue petIssue = new PetIssue();
+        petIssue.setPetName(petName);
+        PageInfo<PetIssue> byName = petIssueService.findByName(petIssue,pageNum,pageSize);
+        Map<String,Object> result = new HashMap<>();
+        result.put("code", 200);
+        result.put("msg", "获取成功");
+        result.put("data",byName);
+        gson.toJson(result,resp.getWriter());
     }
 }
 

@@ -199,9 +199,7 @@ findAll(1,6).then(res=>{
 })
 
 
-let dataSource = reactive([]
-
-)
+let dataSource = reactive([])
 
 onMounted(find)
 /*onUpdated(find)*/

@@ -31,9 +31,21 @@ public interface PetIssueMapper {
      */
     List<PetIssue> findAll();
 
+    /**
+     * 通过宠物名找宠物秀
+     * @param record
+     * @return
+     */
+    List<PetIssue> findAllByPetName(PetIssue record);
+
     int insertSelective(PetIssue record);
 
-    PetIssue selectByPrimaryKey(Long id);
+    /**
+     * 通过发布者id找宠物秀
+     * @param id
+     * @return
+     */
+    List<PetIssue> selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(PetIssue record);
 

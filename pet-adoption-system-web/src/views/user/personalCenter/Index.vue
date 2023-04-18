@@ -4,14 +4,15 @@
       <lay-side>
         <lay-menu class="menu" :selected-key="selectedKey" @change-selected-Key="changeSelectedKey"
                   @change-open-keys="changeOpenKeys" v-model:openKeys="openKeys2" :tree="true">
-          <lay-menu-item id="1" to="center">个人中心</lay-menu-item>
-          <lay-menu-item id="2" @click="visible1=true">个人信息</lay-menu-item>
-          <lay-menu-item id="3" @click="visible2=true">收货地址</lay-menu-item>
-          <lay-menu-item id="4" @click="visible3=true">修改密码</lay-menu-item>
-          <lay-menu-item id="5" to="/application">领养申请</lay-menu-item>
-          <lay-menu-item id="6" to="/transfer2">转送宠物</lay-menu-item>
-          <lay-menu-item id="8" to="myCart">我的购物车</lay-menu-item>
-          <lay-menu-item id="7" @click="exit">退出登录</lay-menu-item>
+          <lay-menu-item id="10" to="/home"><lay-icon type="layui-icon-home"></lay-icon>&emsp;首&emsp;&emsp;页</lay-menu-item>
+          <lay-menu-item id="1" to="center"><lay-icon type="layui-icon-username"></lay-icon>&emsp;个人中心</lay-menu-item>
+          <lay-menu-item id="2" to="/information"><lay-icon type="layui-icon-edit"></lay-icon>&emsp;个人信息</lay-menu-item>
+          <lay-menu-item id="3" @click="visible2=true"><lay-icon type="layui-icon-location"></lay-icon>&emsp;收货地址</lay-menu-item>
+          <lay-menu-item id="4" @click="visible3=true"><lay-icon type="layui-icon-key"></lay-icon>&emsp;修改密码</lay-menu-item>
+          <lay-menu-item id="5" to="/application"><lay-icon type="layui-icon-log"></lay-icon>&emsp;领养申请</lay-menu-item>
+          <lay-menu-item id="6" to="transfer2"><lay-icon type="layui-icon-time"></lay-icon>&emsp;转送宠物</lay-menu-item>
+          <lay-menu-item id="8" to="myCart"><lay-icon type="layui-icon-cart-simple"></lay-icon>&emsp;购物车</lay-menu-item>
+          <lay-menu-item id="9" @click="exit"><lay-icon type="layui-icon-logout"></lay-icon>&emsp;退出登录</lay-menu-item>
         </lay-menu>
       </lay-side>
       <lay-body>

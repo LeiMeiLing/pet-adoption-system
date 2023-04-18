@@ -16,4 +16,13 @@ public interface PetIssueService {
      * 删除宠物秀
      */
     void del(Long id);
+
+    /**
+     * 用名字找宠物秀
+     * @param petIssue
+     * @return
+     */
+    PageInfo<PetIssue> findByName(PetIssue petIssue,int pageNum , int pageSize);
+
+    PageInfo<PetIssue> findMy(Long id,int pageNum , int pageSize);
 }

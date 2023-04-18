@@ -29,14 +29,14 @@
     </lay-table>
   </div>
 
-  <lay-page :limit="limit1.a" :total="total1.a" showCount showPage @change="change1"></lay-page>
+  <lay-page :limit="limit1.a" :total="total1.a" showCount showPage @change="change1" :limits="limits1"></lay-page>
 
 </template>
 
 <script setup>
 import {useRoute} from "vue-router";
 import {reactive} from "vue";
-import {findAll,deleteComment,findSome} from "./api.js";
+import {findAll, deleteComment, findSome} from "./api.js";
 import {layer} from "@layui/layui-vue";
 import router from "../../../../../config/router.js";
 
@@ -50,6 +50,7 @@ let limit1 = reactive({
 let total1 = reactive({
   a:""
 })
+let limits1 = reactive([3,5,10,20,30])
 
 const comment = reactive({
   username:"",
@@ -61,26 +62,26 @@ function find(){
   findSome(comment).then(res=>{
     data.length = 0
     data.push(...res.data.list)
+    limit1.a = res.data.pageSize
+    total1.a = res.data.total
   })
 }
 
 
 function reload(){
-  findAll(route.query.id).then(res=>{
+  findAll(comment).then(res=>{
     data.length = 0
     data.push(...res.data.list)
   })
 }
-findAll(route.query.id).then(res=>{
+findAll(comment).then(res=>{
   data.length = 0
   data.push(...res.data.list)
   limit1.a = res.data.pageSize
   total1.a = res.data.total
 })
 const change1 = ({ current, limit }) => {
-  console.log(current)
-  console.log(limit)
-  findAll(route.query.id,current,limit).then(res=>{
+  findSome(comment,current,limit).then(res=>{
     data.length = 0
     data.push(...res.data.list)
     limit1.a = res.data.pageSize

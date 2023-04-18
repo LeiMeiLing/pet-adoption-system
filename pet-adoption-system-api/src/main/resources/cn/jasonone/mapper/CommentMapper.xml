@@ -37,9 +37,9 @@
     </select>
     <select id="findAllByCommentNameAndContent" resultType="cn.jasonone.bean.Comment">
         select * from comment <where>
-        <if test="commentName != null">comment_name like concat('%',#{commentName},'%')</if>
+        issue_id = #{issueId,jdbcType=INTEGER}
+        <if test="commentName != null">and comment_name like concat('%',#{commentName},'%')</if>
         <if test="content != null">and content like concat('%',#{content},'%')</if>
-        <if test="issueId != null">and issue_id like concat('%',#{issueId},'%')</if>
     </where>
     </select>
 

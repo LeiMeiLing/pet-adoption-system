@@ -2,6 +2,7 @@ package cn.jasonone.service;
 
 import cn.jasonone.bean.GoodsInfo;
 import cn.jasonone.bean.PetInfo;
+import cn.jasonone.bean.PetIssue;
 import cn.jasonone.mapper.GoodsInfoMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -21,6 +22,7 @@ public interface PetInfoService {
     void deletePet(Long id);
     void update(PetInfo petInfo);
     List<PetInfo> selectNameOrType(PetInfo petInfo);
+    PageInfo<PetInfo> findAll(int pageNum , int pageSize);
 
     List<PetInfo> findAllPet();
 }

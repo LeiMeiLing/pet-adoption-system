@@ -1,15 +1,25 @@
 <template>
   <div>
+<div class="up">
+  <lay-input :allow-clear="true"  v-model="name.a" placeholder="输入宠物名" >
+    <template #prefix>宠物名:</template>
+  </lay-input>
+    <lay-button type="normal" @click="findA">
+      <lay-icon type="layui-icon-search" size="30px" ></lay-icon></lay-button>
+</div>
+
+  <div>
     <div id="app">
       <ul v-for="(item,index) in dataSource">
         <li class="item">
           <div class="img_box" @click="click(item)"><img v-bind:src="item.picture" alt=""></div>
-          <div style="color: blue">宝贝名</div>   <div v-html="item.petName"></div> <ErrorIcon @click="del(item.id)"></ErrorIcon>
+          <div style="color: blue">宠物名</div>   <div v-html="item.petName"></div> <ErrorIcon @click="del(item.id)"></ErrorIcon>
         </li>
       </ul>
 
     </div>
 
+  </div>
   </div>
 
   <lay-page :limit="limit1.a" :total="total1.a" showCount showPage @change="change1"></lay-page>
@@ -18,12 +28,21 @@
 
 <script setup>
 import {onMounted, onUpdated, reactive, ref} from "vue";
-import {findAll, findSome,delShow} from "./api.js";
+import {findAll,delShow} from "./api.js";
 import router from "../../../../config/router";
 import {ErrorIcon} from '@layui/icons-vue';
 import {layer} from "@layui/layui-vue";
 import {deleteComment} from "./ImgDisplay/api.js";
 import {page} from "../userDisplay/api.js";
+
+function findA(){
+  findAll(name.a).then(res=>{
+    dataSource.length = 0
+    dataSource.push(...res.data.list)
+    limit1.a = res.data.pageSize
+    total1.a= res.data.total
+  })
+}
 
 
 const petIssueDisplay = reactive({
@@ -63,13 +82,16 @@ function del(row){
 }
 
 const change1 = ({ current, limit }) => {
-  findAll(current,limit).then(res=>{
+  findAll(name.a,current,limit).then(res=>{
     dataSource.length = 0
     dataSource.push(...res.data.list)
-    limit1.a = res.data.pageSize
-    total1.a = res.data.total
+
   })
 }
+
+let name = reactive({
+  a:""
+})
 
 let limit1 = reactive({
   a:""
@@ -79,7 +101,7 @@ let total1 = reactive({
 })
 
 function reload() {
-  findAll().then(res => {
+  findAll("").then(res => {
     dataSource.length = 0
     dataSource.push(...res.data.list);
   })
@@ -188,6 +210,20 @@ body {
   height: 16px;
   font-size: 12px;
   font-style: normal;
+}
+
+.up {
+  display: flex;
+
+  .layui-input-has-prefix {
+    width: 25%;
+    margin-left: 20px;
+  }
+
+  .layui-select {
+    margin-left: 20px;
+  }
+
 }
 
 </style>

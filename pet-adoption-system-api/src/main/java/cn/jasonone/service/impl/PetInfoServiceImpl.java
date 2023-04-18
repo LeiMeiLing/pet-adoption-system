@@ -4,6 +4,7 @@ import cn.jasonone.bean.PetInfo;
 import cn.jasonone.mapper.PetInfoMapper;
 import cn.jasonone.service.PetInfoService;
 
+import cn.jasonone.until.PageInfoUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.Setter;
@@ -50,6 +51,12 @@ public class PetInfoServiceImpl implements PetInfoService {
         PetInfoMapper petInfoMapper = sqlSession.getMapper(PetInfoMapper.class);
 
         return petInfoMapper.findSome(petInfo);
+    }
+
+    @Override
+    public PageInfo<PetInfo> findAll(int pageNum, int pageSize) {
+        PetInfoMapper petInfoMapper = sqlSession.getMapper(PetInfoMapper.class);
+        return PageInfoUtils.list2PageInfo(petInfoMapper.findAll(),pageNum,pageSize);
     }
 
     @Override
