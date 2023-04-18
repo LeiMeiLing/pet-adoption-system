@@ -51,11 +51,11 @@ public class PetInfoServlet extends HttpServlet {
         }
         switch (requestURI) {
             case "/pet/findAll":
-                List<PetInfo> pets= petInfo.findAllPet();
+                PageInfo<PetInfo> allPet = petInfo.findAllPet(pageNum, pageSize);
                 Map<String,Object> result = new HashMap<>();
                 result.put("code", 200);
                 result.put("msg", "获取成功");
-                result.put("data",pets);
+                result.put("data",allPet);
                 resp.getWriter().write(gson.toJson(result));
                 sqlSession.commit();
                 break;
