@@ -30,7 +30,6 @@ public interface UserInfoMapper {
 
     UserInfo selectByPrimaryKey(Long id);
 
-
     /*
     根据用户id修改用户信息
      */

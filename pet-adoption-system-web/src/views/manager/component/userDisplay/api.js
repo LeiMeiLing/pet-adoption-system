@@ -34,7 +34,7 @@ export function page(page,limit){
     模糊查询
      */
 export function findSome(user){
-    return http.get("/user/findSome?userName="+user.username+"&email="+user.email+"&phone="+user.phone,{
+    return http.get("/user/findSome?username="+user.username+"&email="+user.email+"&phone="+user.phone,{
     }).then(res=>{
         return res;
     })

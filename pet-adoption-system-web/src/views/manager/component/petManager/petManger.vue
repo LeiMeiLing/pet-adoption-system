@@ -172,6 +172,7 @@ import { findSome, list, petDele,add,updatePet} from "./api.js";
 
 const addPetVisibel = ref(false)
 const updatePetDisplay = ref(false)
+const addPetVisibel = ref(false)
 const petAdd = reactive({
   variety: "",
   petName: "",
@@ -202,6 +203,16 @@ function showPet(row) {
   petInfoUpdate.petPicture=row.petPicture
 
 }
+
+const addPetVisibel = ref(false)
+const petAdd = reactive({
+  variety: "",
+  petName: "",
+  petSex: "",
+  petStatus: "",
+  petPicture:"",
+  description:""
+})
 function onAdd() {
   petAdd.petPicture = abc
   add(petAdd)

@@ -31,7 +31,7 @@ public class ShoppingCart implements Serializable {
     private Integer quantity;
 
     /**
-     * 商品价格
+     * 总价
      */
     private Double price;
 
@@ -54,6 +54,10 @@ public class ShoppingCart implements Serializable {
      * 商品图片
      */
     private String goodsPicture;
+    /**
+     * 商品单价
+     */
+    private Float unitPrice;
 
     private static final long serialVersionUID = 1L;
 }

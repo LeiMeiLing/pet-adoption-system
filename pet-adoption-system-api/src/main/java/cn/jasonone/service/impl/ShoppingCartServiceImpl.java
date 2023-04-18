@@ -27,4 +27,33 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         List<ShoppingCart> shoppingCarts = shoppingCartMapper.selectByUserId(shoppingCart);
         return new PageInfo<>(shoppingCarts);
     }
+
+    @Override
+    public void deleteGoods(ShoppingCart shoppingCart) {
+        ShoppingCartMapper shoppingCartMapper = sqlSession.getMapper(ShoppingCartMapper.class);
+        shoppingCartMapper.deleteByPrimaryKey(Long.valueOf(shoppingCart.getId()));
+
+    }
+
+    @Override
+    public ShoppingCart findSome(String id) {
+        ShoppingCartMapper shoppingCartMapper = sqlSession.getMapper(ShoppingCartMapper.class);
+        return shoppingCartMapper.selectByPrimaryKey(Long.valueOf(id));
+
+
+
+
+    }
+
+    @Override
+    public void delete(String s) {
+        ShoppingCartMapper mapper = sqlSession.getMapper(ShoppingCartMapper.class);
+        mapper.deleteByPrimaryKey(Long.valueOf(s));
+    }
+
+    @Override
+    public void update(ShoppingCart shoppingCart) {
+        ShoppingCartMapper mapper = sqlSession.getMapper(ShoppingCartMapper.class);
+        mapper.updateByPrimaryKeySelective(shoppingCart);
+    }
 }

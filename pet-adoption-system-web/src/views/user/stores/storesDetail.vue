@@ -51,7 +51,8 @@ const cartInfo = reactive({
     quantity: '',
     price: '',
     goodsName:'',
-    goodsPicture:''
+    goodsPicture:'',
+    unitPrice:''
 });
 const userInfo = useLogin().userInfo;
 
@@ -59,11 +60,13 @@ function join(){
     cartInfo.userId=userInfo.id;
     cartInfo.productId=goodsInfo.id;
     cartInfo.quantity=count.value;
+    cartInfo.unitPrice=goodsInfo.goodsPrice
     cartInfo.price=(goodsInfo.goodsPrice) * count.value;
     cartInfo.goodsName=goodsInfo.goodsname
     cartInfo.goodsPicture=goodsInfo.goodsPicture
     joinCart(cartInfo).then(res=>{
-        layer.msg(res.msg,{ icon : 1, time: 1000})
+      console.log(cartInfo);
+      layer.msg(res.msg,{ icon : 1, time: 1000})
     }).catch(err=>{
         layer.msg('添加失败',{ icon : 2, time: 1000})
     })

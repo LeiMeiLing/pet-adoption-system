@@ -13,12 +13,14 @@
             <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
             <result property="updatedAt" column="updated_at" jdbcType="TIMESTAMP"/>
             <result property="goodsName" column="goods_name" jdbcType="VARCHAR"/>
+            <result property="goodsPicture" column="goods_picture" jdbcType="VARCHAR"/>
+            <result property="unitPrice" column="unit_price" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,user_id,product_id,
         quantity,price,created_at,
-        updated_at,goods_name,goods_picture
+        updated_at,goods_name,goods_picture,unit_price
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -40,10 +42,10 @@
     </delete>
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.jasonone.bean.ShoppingCart" useGeneratedKeys="true">
         insert into shopping_cart
-        ( user_id,product_id
+        ( user_id,product_id,unit_price
         ,quantity,price,goods_name,goods_picture
         )
-        values (#{userId,jdbcType=INTEGER},#{productId,jdbcType=INTEGER}
+        values (#{userId,jdbcType=INTEGER},#{productId,jdbcType=INTEGER},#{unitPrice,jdbcType=FLOAT}
         ,#{quantity,jdbcType=INTEGER},#{price,jdbcType=FLOAT},#{goodsName,jdbcType=VARCHAR},#{goodsPicture,jdbcType=BLOB}
         )
     </insert>
@@ -59,6 +61,7 @@
                 <if test="updatedAt != null">updated_at,</if>
                 <if test="goodsName != null">goods_name,</if>
                 <if test="goodsPicture != null">goods_picture,</if>
+                <if test="unitPrice != null">unit_price,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
                 <if test="id != null">#{id,jdbcType=INTEGER},</if>
@@ -70,6 +73,7 @@
                 <if test="updatedAt != null">#{updatedAt,jdbcType=TIMESTAMP},</if>
                 <if test="goodsName != null">#{goodsName,jdbcType=VARCHAR},</if>
                 <if test="goodsPicture != null">#{goodsPicture,jdbcType=BLOB},</if>
+                <if test="unitPrice != null">#{unitPrice,jdbcType=FLOAT},</if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="cn.jasonone.bean.ShoppingCart">
@@ -99,6 +103,9 @@
                 <if test="goodsPicture != null">
                     goods_picture = #{goodsPicture,jdbcType=BLOB},
                 </if>
+            <if test="unitPrice != null">
+                unit_price = #{unitPrice,jdbcType=FLOAT},
+            </if>
         </set>
         where   id = #{id,jdbcType=INTEGER} 
     </update>
@@ -112,7 +119,8 @@
             created_at =  #{createdAt,jdbcType=TIMESTAMP},
             updated_at =  #{updatedAt,jdbcType=TIMESTAMP},
             goods_name =  #{goodsName,jdbcType=VARCHAR},
-            goods_picture =  #{goodsPicture,jdbcType=BLOB}
+            goods_picture =  #{goodsPicture,jdbcType=BLOB},
+            unit_price =  #{unitPrice,jdbcType=FLOAT}
         where   id = #{id,jdbcType=INTEGER} 
     </update>
 </mapper>
