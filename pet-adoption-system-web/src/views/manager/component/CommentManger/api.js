@@ -2,27 +2,25 @@ import http from "../../../../config/http";
 import axios from "axios";
 
 
-export function findAll(page,limit){
+export function findAll(petName,page,limit){
     if(page != null||limit != null){
-        return http.get("/petIssue/findAll?page="+page+"&limit="+limit,{
+        return http.get("/petIssue/findByName?page="+page+"&limit="+limit+"&petName="+petName,{
         }).then(res=>{
             return res;
         })
-    }else {
-    return http.get("/petIssue/findAll", {
+    }else if (petName != null){
+    return http.get("/petIssue/findByName?petName="+petName, {
     }).then(res=>{
         return res;
     })
+    }else {
+        return http.get("/petIssue/findAll", {
+        }).then(res=>{
+            return res;
+        })
     }
 }
 
-export function findSome(goodsName , goodsType){
-    return http.get("/petstore/findSome?goodsname="+goodsName+"&goodsType="+goodsType, {
-
-    }).then(res=>{
-        return res;
-    })
-}
 
 export function add(row){
     return http.put("/petIssue", {

@@ -33,9 +33,16 @@ public class PetIssueServiceImpl implements PetIssueService {
         petIssueMapper.deleteByPrimaryKey(id);
     }
 
+
     @Override
-    public List<PetIssue> findMy(Long id) {
+    public PageInfo<PetIssue> findByName(PetIssue petIssue,int pageNum , int pageSize) {
         PetIssueMapper petIssueMapper = sqlSession.getMapper(PetIssueMapper.class);
-        return petIssueMapper.selectByPrimaryKey(id);
+        return PageInfoUtils.list2PageInfo(petIssueMapper.findAllByPetName(petIssue),pageNum,pageSize);
+    }
+
+    @Override
+    public PageInfo<PetIssue> findMy(Long id,int pageNum , int pageSize) {
+        PetIssueMapper petIssueMapper = sqlSession.getMapper(PetIssueMapper.class);
+        return PageInfoUtils.list2PageInfo(petIssueMapper.selectByPrimaryKey(id),pageNum,pageSize);
     }
 }

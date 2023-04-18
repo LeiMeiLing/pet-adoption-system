@@ -26,6 +26,9 @@
     <select id="findAll" resultType="cn.jasonone.bean.PetIssue">
         select * from pet_issue
     </select>
+    <select id="findAllByPetName" resultType="cn.jasonone.bean.PetIssue">
+        select * from pet_issue where pet_name like concat('%',#{petName,jdbcType=VARCHAR},'%')
+    </select>
 
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
