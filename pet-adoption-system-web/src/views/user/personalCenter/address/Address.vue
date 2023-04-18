@@ -6,7 +6,7 @@
       <lay-form-item label="所在地区：">
         <lay-cascader :options="options" decollator=" " :changeOnSelect="true" allow-clear v-model="userInfo.address"></lay-cascader>
       </lay-form-item>
-      <lay-form-item label="详细地址："><lay-input v-model="userInfo.sign"></lay-input></lay-form-item>
+      <lay-form-item label="详细地址："><lay-input v-model="userInfo.location"></lay-input></lay-form-item>
       <br>
       <lay-button type="primary" fluid @click="onUpdate()">保存收货地址</lay-button>
     </lay-form>

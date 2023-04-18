@@ -18,9 +18,7 @@
       <lay-body>
         <router-view></router-view>
       </lay-body>
-      <lay-layer :title="'个人信息'" v-model="visible1">
-        <information v-model="visible1"></information>
-      </lay-layer>
+
       <lay-layer :title="'收货地址'" v-model="visible2">
         <Address/>
       </lay-layer>
@@ -74,7 +72,6 @@ function exit() {
   })
 }
 
-const visible1 = ref(false)
 const visible2 = ref(false)
 const visible3 = ref(false)
 const openKeys2 = ref(["1"])

@@ -23,6 +23,7 @@
         <br>
         <lay-button type="primary" fluid @click="onUpdate()">保存个人信息</lay-button>
       </lay-form>
+      <br v-for="count in 6">
     </lay-panel>
 
 </template>
