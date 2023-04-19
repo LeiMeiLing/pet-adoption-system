@@ -21,6 +21,9 @@
     </div>
 
 </div>
+
+  <lay-page :limit="limit1.a" :total="total1.a" showCount showPage @change="change1" :limits="limits1"></lay-page>
+
 </template>
 
 
@@ -28,11 +31,31 @@
 import {reactive, ref} from "vue";
 import {findAll, findSome} from "./api.js";
 import router from "../../../config/router.js";
+import {list} from "../../manager/component/ShoppingManger/api.js";
+
+let limit1 = reactive({
+  a: ""
+})
+let total1 = reactive({
+  a: ""
+})
+let limits1 = ref([3, 5, 10, 20])
+
+const change1 = ({current, limit}) => {
+  findAll(current, limit).then(res => {
+    dataSource.length = 0
+    dataSource.push(...res.data.list)
+    limit1.a = res.data.pageSize
+    total1.a = res.data.total
+  })
+}
 
 let dataSource = reactive([])
 findAll().then(res=>{
     dataSource.length=0
     dataSource.push(...res.data.list);
+  limit1.a = res.data.pageSize
+  total1.a = res.data.total
 })
 
 function click(item){
